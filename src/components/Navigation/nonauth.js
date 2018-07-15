@@ -5,9 +5,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import Account from '@material-ui/icons/AccountCircle'
+import Person from '@material-ui/icons/PersonAdd'
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { withStyles } from '@material-ui/core/styles';
 import * as routes from '../../constants/routes';
@@ -52,8 +55,8 @@ class NavigationNonAuth extends React.Component {
 
         const sideList = (
             <div className={classes.list}>
-                <List><ListItem button onClick={() => this.redirect(routes.LOGIN)}><ListItemText>Login</ListItemText></ListItem></List>
-                <List><ListItem button onClick={() => this.redirect(routes.SIGN_UP)}><ListItemText>Sign Up</ListItemText></ListItem></List>
+                <List><ListItem button onClick={() => this.redirect(routes.LOGIN)}><ListItemIcon><Account /></ListItemIcon><ListItemText primary="Login" /></ListItem></List>
+                <List><ListItem button onClick={() => this.redirect(routes.SIGN_UP)}><ListItemIcon><Person /></ListItemIcon><ListItemText primary="Sign Up" /></ListItem></List>
             </div>
         );
 
