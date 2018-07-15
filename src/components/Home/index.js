@@ -18,7 +18,7 @@ class HomePage extends Component {
 
     return (
       <div>
-        <h1>Personal Wallet</h1>
+        <h1>My Wallet</h1>
 
       </div>
     );

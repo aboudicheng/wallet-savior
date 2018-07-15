@@ -1,16 +1,18 @@
 import React from 'react'
 import { withRouter } from 'react-router'
-import { Link } from 'react-router-dom';
 import { auth } from '../../firebase';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import Home from '@material-ui/icons/Home'
+import Settings from '@material-ui/icons/Settings'
+import Exit from '@material-ui/icons/ExitToApp'
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { withStyles } from '@material-ui/core/styles';
 import * as routes from '../../constants/routes';
@@ -50,13 +52,19 @@ class NavigationAuth extends React.Component {
         this.props.history.push(route)
     }
 
+    signOut = () => {
+        auth.doSignOut();
+        this.redirect(routes.LOGIN)
+    }
+
     render() {
         const { classes } = this.props;
 
         const sideList = (
             <div className={classes.list}>
-                <List><ListItem button onClick={() => this.redirect(routes.LOGIN)}><ListItemText>Login</ListItemText></ListItem></List>
-                <List><ListItem button onClick={() => this.redirect(routes.SIGN_UP)}><ListItemText>Sign Up</ListItemText></ListItem></List>
+                <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Home /></ListItemIcon><ListItemText primary="Home" /></ListItem></List>
+                <List><ListItem button onClick={() => this.redirect(routes.ACCOUNT)}><ListItemIcon><Settings /></ListItemIcon><ListItemText primary="Account" /></ListItem></List>
+                <List><ListItem button onClick={this.signOut}><ListItemIcon><Exit /></ListItemIcon><ListItemText primary="Sign Out" /></ListItem></List>
             </div>
         );
 
@@ -82,9 +90,6 @@ class NavigationAuth extends React.Component {
                         <Typography variant="title" color="inherit" className={classes.flex}>
                             Wallet $avior
             </Typography>
-                        <Button color="inherit"><Link to={routes.HOME}>Home</Link></Button>
-                        <Button color="inherit"><Link to={routes.ACCOUNT}>Account</Link></Button>
-                        <Button color="inherit" onClick={auth.doSignOut}><Link to={routes.ACCOUNT}>Sign Out</Link></Button>
                     </Toolbar>
                 </AppBar>
             </div>
