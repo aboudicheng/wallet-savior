@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
@@ -8,7 +8,7 @@ import * as routes from '../../constants/routes';
 
 const SignInPage = ({ history }) =>
   <div>
-    <h1>SignIn</h1>
+    <h1>Login</h1>
     <SignInForm history={history} />
     <PasswordForgetLink />
     <SignUpLink />
@@ -88,8 +88,16 @@ class SignInForm extends Component {
   }
 }
 
+const SignInLink = () =>
+  <p>
+    Already have an account?
+    <p></p>
+    Click <Link to={routes.SIGN_IN}>here</Link> to login
+  </p>
+
 export default withRouter(SignInPage);
 
 export {
   SignInForm,
+  SignInLink
 };

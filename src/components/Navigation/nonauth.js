@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,6 +9,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import { withStyles } from '@material-ui/core/styles';
 import * as routes from '../../constants/routes';
 
@@ -42,12 +45,17 @@ class NavigationNonAuth extends React.Component {
         this.setState({ open });
     };
 
+    redirect = (route) => {
+        this.props.history.push(route)
+    }
+
     render() {
         const { classes } = this.props;
 
         const sideList = (
             <div className={classes.list}>
-                <List><Button color="inherit" fullWidth={true}>Stuff</Button></List>
+                <List><ListItem button onClick={() => this.redirect(routes.SIGN_IN)}><ListItemText>Login</ListItemText></ListItem></List>
+                <List><ListItem button onClick={() => this.redirect(routes.SIGN_UP)}><ListItemText>Sign Up</ListItemText></ListItem></List>
             </div>
         );
 
@@ -81,4 +89,4 @@ class NavigationNonAuth extends React.Component {
     }
 }
 
-export default withStyles(styles)(NavigationNonAuth);
+export default withRouter(withStyles(styles)(NavigationNonAuth));

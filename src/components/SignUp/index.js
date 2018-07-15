@@ -3,7 +3,7 @@ import {
   Link,
   withRouter,
 } from 'react-router-dom';
-
+import { SignInLink } from '../SignIn'
 import { auth, db } from '../../firebase';
 import * as routes from '../../constants/routes';
 
@@ -110,6 +110,8 @@ class SignUpForm extends Component {
         </button>
 
         { error && <p>{error.message}</p> }
+
+        <SignInLink />
       </form>
     );
   }

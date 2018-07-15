@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom';
 import { auth } from '../../firebase';
 import AppBar from '@material-ui/core/AppBar';
@@ -9,6 +10,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import { withStyles } from '@material-ui/core/styles';
 import * as routes from '../../constants/routes';
 
@@ -43,12 +46,17 @@ class NavigationAuth extends React.Component {
         this.setState({ open });
     };
 
+    redirect = (route) => {
+        this.props.history.push(route)
+    }
+
     render() {
         const { classes } = this.props;
 
         const sideList = (
             <div className={classes.list}>
-                <List>Stuff</List>
+                <List><ListItem button onClick={() => this.redirect(routes.SIGN_IN)}><ListItemText>Login</ListItemText></ListItem></List>
+                <List><ListItem button onClick={() => this.redirect(routes.SIGN_UP)}><ListItemText>Sign Up</ListItemText></ListItem></List>
             </div>
         );
 
@@ -72,7 +80,7 @@ class NavigationAuth extends React.Component {
                         </Drawer>
 
                         <Typography variant="title" color="inherit" className={classes.flex}>
-                            Title
+                            Wallet $avior
             </Typography>
                         <Button color="inherit"><Link to={routes.HOME}>Home</Link></Button>
                         <Button color="inherit"><Link to={routes.ACCOUNT}>Account</Link></Button>
@@ -84,4 +92,4 @@ class NavigationAuth extends React.Component {
     }
 }
 
-export default withStyles(styles)(NavigationAuth);
+export default withRouter(withStyles(styles)(NavigationAuth));
