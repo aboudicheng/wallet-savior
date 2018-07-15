@@ -3,7 +3,8 @@ import {
   BrowserRouter as Router,
   Route,
 } from 'react-router-dom';
-
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 import Navigation from '../Navigation';
 import SignUpPage from '../SignUp';
 import SignInPage from '../SignIn';
@@ -16,21 +17,31 @@ import * as routes from '../../constants/routes';
 
 import './index.css';
 
-const App = () =>
+const styles = theme => ({
+  root: {
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 4,
+    paddingBottom: theme.spacing.unit * 4,
+  },
+});
+
+const App = (props) =>
   <Router basename={process.env.PUBLIC_URL}>
     <div className="app">
       <Navigation />
 
       <div className="container">
-        <Route exact path={routes.SIGN_UP} component={() => <SignUpPage />} />
-        <Route exact path={routes.LOGIN} component={() => <SignInPage />} />
-        <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForgetPage />} />
-        <Route exact path={routes.HOME} component={() => <HomePage />} />
-        <Route exact path={routes.ACCOUNT} component={() => <AccountPage />} />
-        <Route exact path={routes.GROUP} component={() => <Group />} />
+        <Paper className={props.classes.root} elevation={5}>
+          <Route exact path={routes.SIGN_UP} component={() => <SignUpPage />} />
+          <Route exact path={routes.LOGIN} component={() => <SignInPage />} />
+          <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForgetPage />} />
+          <Route exact path={routes.HOME} component={() => <HomePage />} />
+          <Route exact path={routes.ACCOUNT} component={() => <AccountPage />} />
+          <Route exact path={routes.GROUP} component={() => <Group />} />
+        </Paper>
       </div>
 
     </div>
   </Router>
 
-export default withAuthentication(App);
+export default withAuthentication(withStyles(styles)(App));

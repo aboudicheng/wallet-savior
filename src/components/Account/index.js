@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
+import Divider from '@material-ui/core/Divider';
 import DeleteAccount from './deleteAccount'
 import PasswordChangeForm from '../PasswordChange';
 import withAuthorization from '../Session/withAuthorization';
@@ -10,7 +11,7 @@ const AccountPage = ({ authUser }) =>
     <h1>Account: {authUser.email}</h1>
     <h2>Change Password</h2>
     <PasswordChangeForm />
-    <hr />
+    <Divider />
     <h2>Delete Account</h2>
     <DeleteAccount />
   </div>
