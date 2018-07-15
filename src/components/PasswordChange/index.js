@@ -1,6 +1,26 @@
 import React, { Component } from 'react';
-
+import TextField from '@material-ui/core/TextField';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import { auth } from '../../firebase';
+
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    margin: '0 auto',
+    flexWrap: 'wrap',
+    width: 300,
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 300,
+  },
+  button: {
+    margin: theme.spacing.unit,
+  },
+});
 
 const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
@@ -44,28 +64,33 @@ class PasswordChangeForm extends Component {
       passwordOne !== passwordTwo ||
       passwordOne === '';
 
+    const { classes } = this.props
+
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
+      <form onSubmit={this.onSubmit} className={classes.container}>
+        <TextField
+          id="passwordOne"
+          label="New Password"
+          className={classes.textField}
           value={passwordOne}
           onChange={event => this.setState(updateByPropertyName('passwordOne', event.target.value))}
-          type="password"
-          placeholder="New Password"
+          margin="normal"
         />
-        <input
+        <TextField
+          id="passwordTwo"
+          label="Confirm New Password"
+          className={classes.textField}
           value={passwordTwo}
           onChange={event => this.setState(updateByPropertyName('passwordTwo', event.target.value))}
-          type="password"
-          placeholder="Confirm New Password"
+          margin="normal"
         />
-        <button disabled={isInvalid} type="submit">
-          Reset My Password
-        </button>
+        
+        <Button variant="contained" color="primary" disabled={isInvalid} type="submit" className={classes.button}>Reset password</Button>
 
-        { error && <p>{error.message}</p> }
+        {error && <p>{error.message}</p>}
       </form>
     );
   }
 }
 
-export default PasswordChangeForm;
+export default withStyles(styles)(PasswordChangeForm);

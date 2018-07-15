@@ -1,13 +1,33 @@
 import React, { Component } from 'react';
+import TextField from '@material-ui/core/TextField';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-
 import { auth } from '../../firebase';
 import * as routes from '../../constants/routes';
 
-const PasswordForgetPage = () =>
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    margin: '0 auto',
+    flexWrap: 'wrap',
+    width: 300,
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 300,
+  },
+  button: {
+    margin: theme.spacing.unit,
+  },
+});
+
+const PasswordForgetPage = ({ classes }) =>
   <div>
-    <h1>PasswordForget</h1>
-    <PasswordForgetForm />
+    <h1>Password Forget</h1>
+    <PasswordForgetForm classes={classes}/>
   </div>
 
 const updateByPropertyName = (propertyName, value) => () => ({
@@ -48,17 +68,20 @@ class PasswordForgetForm extends Component {
 
     const isInvalid = email === '';
 
+    const { classes } = this.props
+
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          value={this.state.email}
+      <form onSubmit={this.onSubmit} className={classes.container}>
+      <TextField
+          id="email"
+          label="Email Address"
+          className={classes.textField}
+          value={email}
           onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
-          type="text"
-          placeholder="Email Address"
+          margin="normal"
         />
-        <button disabled={isInvalid} type="submit">
-          Reset My Password
-        </button>
+
+        <Button variant="contained" color="primary" disabled={isInvalid} type="submit" className={classes.button}>Reset password</Button>
 
         { error && <p>{error.message}</p> }
       </form>
@@ -71,7 +94,7 @@ const PasswordForgetLink = () =>
     <Link to={routes.PASSWORD_FORGET}>Forgot Password?</Link>
   </p>
 
-export default PasswordForgetPage;
+export default withStyles(styles)(PasswordForgetPage);
 
 export {
   PasswordForgetForm,
