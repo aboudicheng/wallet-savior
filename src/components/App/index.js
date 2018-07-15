@@ -16,7 +16,7 @@ import * as routes from '../../constants/routes';
 import './index.css';
 
 const App = () =>
-  <Router>
+  <Router basename={process.env.PUBLIC_URL}>
     <div className="app">
       <Navigation />
 
@@ -27,7 +27,7 @@ const App = () =>
         <Route exact path={routes.HOME} component={() => <HomePage />} />
         <Route exact path={routes.ACCOUNT} component={() => <AccountPage />} />
       </div>
-      
+
     </div>
   </Router>
 
