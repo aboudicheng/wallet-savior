@@ -1,10 +1,8 @@
 import React from 'react'
 import { withRouter } from 'react-router'
-import { Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
@@ -54,7 +52,7 @@ class NavigationNonAuth extends React.Component {
 
         const sideList = (
             <div className={classes.list}>
-                <List><ListItem button onClick={() => this.redirect(routes.SIGN_IN)}><ListItemText>Login</ListItemText></ListItem></List>
+                <List><ListItem button onClick={() => this.redirect(routes.LOGIN)}><ListItemText>Login</ListItemText></ListItem></List>
                 <List><ListItem button onClick={() => this.redirect(routes.SIGN_UP)}><ListItemText>Sign Up</ListItemText></ListItem></List>
             </div>
         );
@@ -81,7 +79,6 @@ class NavigationNonAuth extends React.Component {
                         <Typography variant="title" color="inherit" className={classes.flex}>
                             Wallet $avior
       </Typography>
-                        <Button color="inherit"><Link to={routes.SIGN_IN}>Sign In</Link></Button>
                     </Toolbar>
                 </AppBar>
             </div>

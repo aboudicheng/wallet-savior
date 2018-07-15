@@ -55,7 +55,7 @@ class NavigationAuth extends React.Component {
 
         const sideList = (
             <div className={classes.list}>
-                <List><ListItem button onClick={() => this.redirect(routes.SIGN_IN)}><ListItemText>Login</ListItemText></ListItem></List>
+                <List><ListItem button onClick={() => this.redirect(routes.LOGIN)}><ListItemText>Login</ListItemText></ListItem></List>
                 <List><ListItem button onClick={() => this.redirect(routes.SIGN_UP)}><ListItemText>Sign Up</ListItemText></ListItem></List>
             </div>
         );
