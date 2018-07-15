@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
-import { withRouter, Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import { withRouter, Link } from 'react-router-dom';
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import { auth } from '../../firebase';
@@ -85,7 +85,6 @@ class SignInForm extends Component {
       email === '';
 
     const { classes } = this.props
-    console.log(this.props)
 
     return (
       <form onSubmit={this.onSubmit} className={classes.container}>
@@ -108,7 +107,7 @@ class SignInForm extends Component {
         />
         <Button variant="contained" color="primary" disabled={isInvalid} type="submit" className={classes.button}>Login</Button>
 
-        {error && <p>{error.message}</p>}
+        {error && <p style={{ color: "#d32f2f" }}>{error.message}</p>}
       </form>
     );
   }
