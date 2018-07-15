@@ -9,7 +9,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import firebase from 'firebase'
-import { admin } from '../../firebase/firebase'
+//import { admin } from '../../firebase/firebase'
 
 //TODO: delete auth user both from firebase and redux store
 
@@ -42,14 +42,13 @@ class DeleteAccount extends Component {
         firebase.database().ref('users').child(this.props.authUser.uid).remove()
 
         //remove from authentication list
-        admin.auth().deleteUser(this.props.authUser.uid)
-        .catch(() => {
-            console.log("error")
-        })
+        // admin.auth().deleteUser(this.props.authUser.uid)
+        // .catch(() => {
+        //     console.log("error")
+        // })
     }
 
     render() {
-        console.log(admin)
         return (
             <div>
                 <Button variant="contained" color="secondary" onClick={this.handleClickOpen}>Delete My Account</Button>

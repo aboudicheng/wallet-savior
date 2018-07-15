@@ -4,6 +4,7 @@ import { compose } from 'recompose';
 import FirstUse from './firstUseDialog'
 import withAuthorization from '../Session/withAuthorization';
 import firebase from 'firebase';
+import formatNumber from "format-number";
 
 const usersRef = firebase.database().ref('users/')
 
@@ -13,6 +14,7 @@ class HomePage extends Component {
     this.state = {
       firstUse: false,
       open: true,
+      totalAmount: 0,
     };
   }
 
@@ -30,14 +32,16 @@ class HomePage extends Component {
       if (snapshot.val().firstUse) {
         this.setState({ firstUse: true })
       }
+      this.setState({ totalAmount: snapshot.val().money })
     })
   }
 
   render() {
-
+    const { totalAmount } = this.state
     return (
       <div>
         <h1>My Wallet</h1>
+        <span style={{ fontSize: "4rem" }}>{formatNumber({ prefix: "$" })(totalAmount.toFixed(2))}</span>
 
         {this.state.firstUse &&
           <FirstUse open={this.state.open} handleClose={this.handleClose} setFirstUse={this.setFirstUse} />
