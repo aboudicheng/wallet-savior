@@ -116,7 +116,7 @@ class SignInForm extends Component {
 const SignInLink = () =>
   <p>
     Already have an account?
-    <p></p>
+    <br />
     Click <Link to={routes.LOGIN}>here</Link> to login
   </p>
 
