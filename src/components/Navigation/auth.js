@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Home from '@material-ui/icons/Home'
 import Settings from '@material-ui/icons/Settings'
+import Group from '@material-ui/icons/Group'
 import Exit from '@material-ui/icons/ExitToApp'
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -63,6 +64,7 @@ class NavigationAuth extends React.Component {
         const sideList = (
             <div className={classes.list}>
                 <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Home /></ListItemIcon><ListItemText primary="Home" /></ListItem></List>
+                <List><ListItem button onClick={() => this.redirect(routes.GROUP)}><ListItemIcon><Group /></ListItemIcon><ListItemText primary="Group" /></ListItem></List>
                 <List><ListItem button onClick={() => this.redirect(routes.ACCOUNT)}><ListItemIcon><Settings /></ListItemIcon><ListItemText primary="Account" /></ListItem></List>
                 <List><ListItem button onClick={this.signOut}><ListItemIcon><Exit /></ListItemIcon><ListItemText primary="Sign Out" /></ListItem></List>
             </div>

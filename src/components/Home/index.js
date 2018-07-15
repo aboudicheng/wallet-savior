@@ -43,6 +43,8 @@ class HomePage extends Component {
         <h1>My Wallet</h1>
         <span style={{ fontSize: "4rem" }}>{formatNumber({ prefix: "$" })(totalAmount.toFixed(2))}</span>
 
+        
+
         {this.state.firstUse &&
           <FirstUse open={this.state.open} handleClose={this.handleClose} setFirstUse={this.setFirstUse} />
         }
