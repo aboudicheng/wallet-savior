@@ -5,6 +5,7 @@ const INITIAL_STATE = {
 
     //used for firstUSe Dialog
     open: true,
+    walletName: "",
     totalAmount: parseFloat(0).toFixed(2),
     anchorEl: null,
 
@@ -21,6 +22,8 @@ function homeReducer(state = INITIAL_STATE, action) {
     switch(action.type) {
         case actions.SET_FIRST_USE:
             return { ...state, firstUse: action.firstUse }
+        case actions.LOAD_WALLET_NAME:
+            return { ...state, walletName: action.walletName }
         case actions.LOAD_TOTAL_AMOUNT:
             return { ...state, totalAmount: parseFloat(action.totalAmount).toFixed(2) }
         case actions.SET_ANCHOR_EL:

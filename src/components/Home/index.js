@@ -20,6 +20,8 @@ import * as actions from '../../constants/action_types'
 import MySnackbarContentWrapper from './styles/MySnackbarContentWrapper'
 import Snackbar from '@material-ui/core/Snackbar';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
 
 const styles = theme => ({
   button: {
@@ -62,7 +64,8 @@ class HomePage extends Component {
         this.props.setFirstUse(true)
       }
       this.setState({ isLoading: false })
-      this.props.loadTotalAmount(snapshot.val().money)
+      this.props.loadWalletName(snapshot.val().wallets[0].name)
+      this.props.loadTotalAmount(snapshot.val().wallets[0].money)
     })
   }
 
@@ -96,21 +99,23 @@ class HomePage extends Component {
 
   render() {
     const { classes } = this.props
-    const { totalAmount, firstUse, anchorEl, open, modifyOpen, snackbarOpen } = this.props.state
+    const { walletName, totalAmount, firstUse, anchorEl, open, modifyOpen, snackbarOpen } = this.props.state
 
     return (
       <div>
 
-        <h1>My Wallet</h1>
+        <h1>{walletName}</h1>
         {this.state.isLoading
           ? <CircularProgress className={classes.progress} size={50} />
           : <span style={{ fontSize: "170%", color: "#00ff00" }}>{formatNumber({ prefix: "$" })(totalAmount)}</span>
         }
         <Divider />
 
-        <Button variant="fab" color="secondary" aria-label="Edit" className={classes.button}>
-          <Edit />
-        </Button>
+        <Tooltip TransitionComponent={Zoom} title="Edit wallet name">
+          <Button variant="fab" color="secondary" aria-label="Edit" className={classes.button}>
+            <Edit />
+          </Button>
+        </Tooltip>
 
         {/*Dialog popup for first-time users*/}
         {firstUse &&
@@ -176,6 +181,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setFirstUse: (firstUse) => dispatch({ type: actions.SET_FIRST_USE, firstUse }),
+  loadWalletName: (walletName) => dispatch({ type: actions.LOAD_WALLET_NAME, walletName }),
   loadTotalAmount: (totalAmount) => dispatch({ type: actions.LOAD_TOTAL_AMOUNT, totalAmount }),
   setAnchorEl: (anchorEl) => dispatch({ type: actions.SET_ANCHOR_EL, anchorEl }),
   setOpenDialog: (open) => dispatch({ type: actions.SET_OPEN_DIALOG, open }),

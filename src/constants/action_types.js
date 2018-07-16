@@ -1,5 +1,6 @@
 //HOME
 export const SET_FIRST_USE = "SET_FIRST_USE";
+export const LOAD_WALLET_NAME = "LOAD_WALLET_NAME";
 export const LOAD_TOTAL_AMOUNT = "LOAD_TOTAL_AMOUNT";
 export const SET_ANCHOR_EL = "SET_ANCHOR_EL";
 export const SET_OPEN_DIALOG = "SET_OPEN_DIALOG";

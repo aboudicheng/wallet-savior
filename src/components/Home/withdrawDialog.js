@@ -36,7 +36,7 @@ class WithdrawDialog extends React.Component {
 
             const money = parseFloat(previousTotalAmount - newValue).toFixed(2)
 
-            usersRef.child(this.props.authUser.uid).update({ money })
+            usersRef.child(this.props.authUser.uid).wallet[0].update({ money })
             this.props.setSnackbarOpen(true);
         }
     }
