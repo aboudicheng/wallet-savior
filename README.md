@@ -11,3 +11,11 @@
 * `npm start`
 * visit http://localhost:3000/
 * set up using your own Firebase Credentials
+
+## TODO List
+
+* User operation records
+* Multiple wallets
+* Group wallets
+* Delete account
+* OAuth 
