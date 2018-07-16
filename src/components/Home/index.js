@@ -104,7 +104,7 @@ class HomePage extends Component {
         <h1>My Wallet</h1>
         {this.state.isLoading
           ? <CircularProgress className={classes.progress} size={50} />
-          : <span style={{ fontSize: "4rem", color: "#00ff00" }}>{formatNumber({ prefix: "$" })(totalAmount)}</span>
+          : <span style={{ fontSize: "170%", color: "#00ff00" }}>{formatNumber({ prefix: "$" })(totalAmount)}</span>
         }
         <Divider />
 

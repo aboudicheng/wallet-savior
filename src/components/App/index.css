@@ -1,5 +1,22 @@
 .container {
-  margin: 0 auto 8rem auto;
+  margin: 0 auto;
   text-align: center;
-  padding: 2rem;
+  padding: 0.8rem;
+}
+
+.main {
+  width: 70%;
+  float: right;
+  padding: 0.4rem;
+}
+
+.sidebar {
+  width: 30%;
+  float: left;
+  padding: 0.4rem;
+  height: 100%,
+}
+
+.clearfix {
+  clear: both;
 }
