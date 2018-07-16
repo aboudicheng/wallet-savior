@@ -13,15 +13,17 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
+import Snackbar from '@material-ui/core/Snackbar';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
+
 import InsertDialog from './insertDialog'
 import WithdrawDialog from './withdrawDialog'
 import ResetDialog from './resetDialog'
 import * as actions from '../../constants/action_types'
 import MySnackbarContentWrapper from './styles/MySnackbarContentWrapper'
-import Snackbar from '@material-ui/core/Snackbar';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Tooltip from '@material-ui/core/Tooltip';
-import Zoom from '@material-ui/core/Zoom';
+import Rename from './rename'
 
 const styles = theme => ({
   button: {
@@ -97,9 +99,22 @@ class HomePage extends Component {
     this.props.setSnackbarOpen(false)
   };
 
+  handleRenameOpen = (renameOpen) => {
+    this.props.setRenameDialog(renameOpen)
+  }
+
   render() {
     const { classes } = this.props
-    const { walletName, totalAmount, firstUse, anchorEl, open, modifyOpen, snackbarOpen } = this.props.state
+    const {
+      walletName,
+      totalAmount,
+      firstUse,
+      anchorEl,
+      open,
+      modifyOpen,
+      snackbarOpen,
+      renameOpen
+    } = this.props.state
 
     return (
       <div>
@@ -112,10 +127,15 @@ class HomePage extends Component {
         <Divider />
 
         <Tooltip TransitionComponent={Zoom} title="Edit wallet name">
-          <Button variant="fab" color="secondary" aria-label="Edit" className={classes.button}>
+          <Button variant="fab" color="secondary" aria-label="Edit" className={classes.button} onClick={() => this.handleRenameOpen(true)}>
             <Edit />
           </Button>
         </Tooltip>
+
+        {/*Dialog popup for rename*/}
+        {renameOpen &&
+          <Rename open={renameOpen} handleClose={this.props.setRenameDialog} setNewName={this.props.setNewName} />
+        }
 
         {/*Dialog popup for first-time users*/}
         {firstUse &&
@@ -187,6 +207,8 @@ const mapDispatchToProps = (dispatch) => ({
   setOpenDialog: (open) => dispatch({ type: actions.SET_OPEN_DIALOG, open }),
   setModifyOpenDialog: (modifyOpen) => dispatch({ type: actions.SET_MODIFY_OPEN_DIALOG, modifyOpen }),
   setTotalAmount: (operation, amount) => dispatch({ type: actions.SET_TOTAL_AMOUNT, payload: { operation, amount } }),
+  setNewName: (name) => dispatch({ type: actions.SET_NEW_NAME, name }),
+  setRenameDialog: (open) => dispatch({ type: actions.SET_RENAME_DIALOG, open }),
   setSnackbarOpen: (snackbarOpen) => dispatch({ type: actions.SET_SNACKBAR_OPEN, snackbarOpen })
 })
 

@@ -10,7 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import * as firebase from 'firebase'
 import * as actions from '../../constants/action_types'
 
-class WithdrawDialog extends React.Component {
+class Rename extends React.Component {
     constructor(props) {
         super(props)
 
@@ -24,50 +24,42 @@ class WithdrawDialog extends React.Component {
     }
 
     submit = () => {
-        if (this.state.value !== "" || !isNaN(this.state.value)) {
-            this.props.handleClose(false);
-            this.props.handleMenuClose(null);
-            this.props.setTotalAmount("withdraw", this.state.value)
-
-            const previousTotalAmount = parseFloat(this.props.state.totalAmount)
-            const newValue = parseFloat(this.state.value)
-
-            const money = parseFloat(previousTotalAmount - newValue).toFixed(2)
-
-            firebase.database().ref(`users/${this.props.authUser.uid}/wallets/0`).update({ money })
+        if (this.state.value !== "") {
+            firebase.database().ref(`users/${this.props.authUser.uid}/wallets/0`).update({ name: this.state.value })
             this.props.setSnackbarOpen(true);
+            this.props.setRenameDialog(false);
         }
     }
 
     render() {
         return (
             <Dialog
-                open={this.props.modifyOpen}
-                onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null) }}
+                open={this.props.open}
+                onClose={() => this.props.handleClose(false)}
                 aria-labelledby="form-dialog-title"
             >
-                <DialogTitle id="form-dialog-title">Withdraw Money</DialogTitle>
+                <DialogTitle id="form-dialog-title">Reset Wallet</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Please enter the amount of money you are going to take out from your wallet:
+                        Please enter a new name for your wallet:
       </DialogContentText>
                     <TextField
                         autoFocus
                         margin="dense"
-                        id="withdraw"
-                        label="Money amount"
-                        type="number"
+                        id="rename"
+                        label="Rename wallet"
+                        type="text"
                         fullWidth
                         value={this.state.value}
                         onChange={this.handleChange}
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => { this.props.handleClose(false); this.props.handleMenuClose(null) }} color="primary">
+                    <Button onClick={() => this.props.handleClose(false)} color="primary">
                         Cancel
       </Button>
                     <Button onClick={this.submit} color="primary">
-                        Withdraw
+                        Rename
       </Button>
                 </DialogActions>
             </Dialog>
@@ -81,7 +73,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    setSnackbarOpen: (snackbarOpen) => dispatch({ type: actions.SET_SNACKBAR_OPEN, snackbarOpen })
+    setSnackbarOpen: (snackbarOpen) => dispatch({ type: actions.SET_SNACKBAR_OPEN, snackbarOpen }),
+    setRenameDialog: (open) => dispatch({ type: actions.SET_RENAME_DIALOG, open }),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(WithdrawDialog);
+export default connect(mapStateToProps, mapDispatchToProps)(Rename);

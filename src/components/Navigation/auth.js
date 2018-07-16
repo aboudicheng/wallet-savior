@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import { withRouter } from 'react-router'
 import { auth } from '../../firebase';
 import AppBar from '@material-ui/core/AppBar';
@@ -22,6 +24,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Money from '@material-ui/icons/MonetizationOn'
 import { withStyles } from '@material-ui/core/styles';
 import * as routes from '../../constants/routes';
+import * as firebase from 'firebase'
 
 const styles = theme => ({
     root: {
@@ -51,7 +54,14 @@ class NavigationAuth extends React.Component {
         this.state = {
             open: false,
             walletOpen: false,
+            mainWallet: "",
         }
+    }
+
+    componentDidMount() {
+        firebase.database().ref(`users/${this.props.authUser.uid}`).on('value', snapshot => {
+            this.setState({ mainWallet: snapshot.val().wallets[0].name })
+        })
     }
 
     toggleDrawer = (open) => () => {
@@ -80,7 +90,7 @@ class NavigationAuth extends React.Component {
             <div className={classes.list}>
                 <List><ListItem button onClick={this.toggleWallet}><ListItemIcon><Home /></ListItemIcon><ListItemText primary="Main" />{this.state.walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
                 <Collapse in={this.state.walletOpen} timeout="auto" unmountOnExit>
-                    <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Money /></ListItemIcon><ListItemText primary="My Wallet" /></ListItem></List>
+                    <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Money /></ListItemIcon><ListItemText primary={this.state.mainWallet} /></ListItem></List>
                 </Collapse>
                 <Collapse in={this.state.walletOpen} timeout="auto" unmountOnExit>
                     <List><ListItem button><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Add Wallet" /></ListItem></List>
@@ -122,4 +132,12 @@ class NavigationAuth extends React.Component {
     }
 }
 
-export default withRouter(withStyles(styles)(NavigationAuth));
+const mapStateToProps = (state) => ({
+    authUser: state.sessionState.authUser,
+})
+
+export default compose(
+    withRouter,
+    withStyles(styles),
+    connect(mapStateToProps)
+)(NavigationAuth);

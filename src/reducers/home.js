@@ -15,6 +15,8 @@ const INITIAL_STATE = {
     withdraw: false,
     reset: false,
 
+    renameOpen: false,
+
     snackbarOpen: false,
 }
 
@@ -42,6 +44,10 @@ function homeReducer(state = INITIAL_STATE, action) {
                     return { ...state, totalAmount: parseFloat(action.payload.amount).toFixed(2) }
                 default: return state
             }
+        case actions.SET_NEW_NAME:
+            return { ...state, walletName: action.name }
+        case actions.SET_RENAME_DIALOG:
+            return { ...state, renameOpen: action.open }
         case actions.SET_SNACKBAR_OPEN:
             return { ...state, snackbarOpen: action.snackbarOpen }
         default: return state

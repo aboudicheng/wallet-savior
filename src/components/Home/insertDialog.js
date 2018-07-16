@@ -10,8 +10,6 @@ import TextField from '@material-ui/core/TextField';
 import * as firebase from 'firebase'
 import * as actions from '../../constants/action_types'
 
-const usersRef = firebase.database().ref('users/')
-
 class InsertDialog extends React.Component {
     constructor(props) {
         super(props)
@@ -36,7 +34,7 @@ class InsertDialog extends React.Component {
 
             const money = parseFloat(previousTotalAmount + newValue).toFixed(2)
 
-            usersRef.child(this.props.authUser.uid).wallet[0].update({ money })
+            firebase.database().ref(`users/${this.props.authUser.uid}/wallets/0`).update({ money })
             this.props.setSnackbarOpen(true);
         }
     }
