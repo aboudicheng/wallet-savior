@@ -27,6 +27,16 @@ function homeReducer(state = INITIAL_STATE, action) {
             return { ...state, open: action.open }
         case actions.SET_MODIFY_OPEN_DIALOG:
             return { ...state, modifyOpen: action.modifyOpen }
+        case actions.SET_TOTAL_AMOUNT:
+            switch(action.operation) {
+                case "insert":
+                    return { ...state, totalAmount: state.totalAmount + action.amount }
+                case "withdraw":
+                    return { ...state, totalAmount: state.totalAmount - action.amount }
+                case "reset":
+                    return { ...state, totalAmount: action.amount }
+                default: return state
+            }
         default: return state
     }
 }

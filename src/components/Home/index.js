@@ -145,6 +145,7 @@ const mapDispatchToProps = (dispatch) => ({
   setAnchorEl: (anchorEl) => dispatch({ type: actions.SET_ANCHOR_EL, anchorEl }),
   setOpenDialog: (open) => dispatch({ type: actions.SET_OPEN_DIALOG, open }),
   setModifyOpenDialog: (modifyOpen) => dispatch({ type: actions.SET_MODIFY_OPEN_DIALOG, modifyOpen }),
+  setTotalAmount: (operation, amount) => dispatch({ type: actions.SET_TOTAL_AMOUNT, operation, amount })
 })
 
 const authCondition = (authUser) => !!authUser;
