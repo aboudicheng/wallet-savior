@@ -29,7 +29,7 @@ class ResetDialog extends React.Component {
         this.props.handleMenuClose(null);
         this.props.setTotalAmount("reset", this.state.value)
 
-        const money = parseFloat(this.props.state.totalAmount).toFixed(2)
+        const money = parseFloat(this.state.value).toFixed(2)
 
         usersRef.child(this.props.authUser.uid).update({ money })
     }

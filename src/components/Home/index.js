@@ -86,7 +86,7 @@ class HomePage extends Component {
       <div>
 
         <h1>My Wallet</h1>
-        <span style={{ fontSize: "4rem" }}>{formatNumber({ prefix: "$" })(totalAmount)}</span>
+        <span style={{ fontSize: "4rem", color: "#00ff00" }}>{formatNumber({ prefix: "$" })(totalAmount)}</span>
 
         <Divider />
 
