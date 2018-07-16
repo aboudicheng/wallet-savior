@@ -10,15 +10,20 @@ import Home from '@material-ui/icons/Home'
 import Settings from '@material-ui/icons/Settings'
 import Group from '@material-ui/icons/Group'
 import Exit from '@material-ui/icons/ExitToApp'
+import AddCircle from '@material-ui/icons/AddCircleOutline'
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Collapse from '@material-ui/core/Collapse';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import Money from '@material-ui/icons/MonetizationOn'
 import { withStyles } from '@material-ui/core/styles';
 import * as routes from '../../constants/routes';
 
-const styles = {
+const styles = theme => ({
     root: {
         flexGrow: 1,
     },
@@ -35,13 +40,17 @@ const styles = {
     fullList: {
         width: 'auto',
     },
-};
+    nested: {
+        paddingLeft: theme.spacing.unit * 4,
+    },
+})
 
 class NavigationAuth extends React.Component {
     constructor() {
         super();
         this.state = {
             open: false,
+            walletOpen: false,
         }
     }
 
@@ -49,12 +58,18 @@ class NavigationAuth extends React.Component {
         this.setState({ open });
     };
 
+    toggleWallet = () => {
+        this.setState(state => ({ walletOpen: !state.walletOpen }));
+    };
+
     redirect = (route) => {
+        this.setState({ open: false })
         this.props.history.push(route)
     }
 
     signOut = () => {
         auth.doSignOut();
+        this.setState({ open: false })
         this.redirect(routes.LOGIN)
     }
 
@@ -63,7 +78,14 @@ class NavigationAuth extends React.Component {
 
         const sideList = (
             <div className={classes.list}>
-                <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Home /></ListItemIcon><ListItemText primary="Home" /></ListItem></List>
+                <List><ListItem button onClick={this.toggleWallet}><ListItemIcon><Home /></ListItemIcon><ListItemText primary="Main" />{this.state.walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
+                <Collapse in={this.state.walletOpen} timeout="auto" unmountOnExit>
+                    <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Money /></ListItemIcon><ListItemText primary="My Wallet" /></ListItem></List>
+                </Collapse>
+                <Collapse in={this.state.walletOpen} timeout="auto" unmountOnExit>
+                    <List><ListItem button><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Add Wallet" /></ListItem></List>
+                </Collapse>
+
                 <List><ListItem button onClick={() => this.redirect(routes.GROUP)}><ListItemIcon><Group /></ListItemIcon><ListItemText primary="Group" /></ListItem></List>
                 <List><ListItem button onClick={() => this.redirect(routes.ACCOUNT)}><ListItemIcon><Settings /></ListItemIcon><ListItemText primary="Account" /></ListItem></List>
                 <List><ListItem button onClick={this.signOut}><ListItemIcon><Exit /></ListItemIcon><ListItemText primary="Sign Out" /></ListItem></List>
@@ -82,7 +104,6 @@ class NavigationAuth extends React.Component {
                             <div
                                 tabIndex={0}
                                 role="button"
-                                onClick={this.toggleDrawer(false)}
                                 onKeyDown={this.toggleDrawer(false)}
                             >
                                 {sideList}
@@ -90,8 +111,10 @@ class NavigationAuth extends React.Component {
                         </Drawer>
 
                         <Typography variant="title" color="inherit" className={classes.flex}>
-                            Wallet $avior
-            </Typography>
+                            <span style={{ cursor: "pointer" }} onClick={() => this.props.history.push(routes.HOME)}>
+                                Wallet $avior
+                            </span>
+                        </Typography>
                     </Toolbar>
                 </AppBar>
             </div>
