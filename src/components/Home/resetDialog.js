@@ -29,7 +29,7 @@ class ResetDialog extends React.Component {
         return (
             <Dialog
                 open={this.props.modifyOpen}
-                onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null)}}
+                onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null) }}
                 aria-labelledby="form-dialog-title"
             >
                 <DialogTitle id="form-dialog-title">Reset Wallet</DialogTitle>
@@ -49,7 +49,7 @@ class ResetDialog extends React.Component {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => { this.props.handleClose(false); this.props.handleMenuClose(null)}} color="primary">
+                    <Button onClick={() => { this.props.handleClose(false); this.props.handleMenuClose(null) }} color="primary">
                         Cancel
       </Button>
                     <Button onClick={this.submit} color="primary">

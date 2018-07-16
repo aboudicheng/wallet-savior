@@ -16,7 +16,6 @@ const INITIAL_STATE = {
 }
 
 function homeReducer(state = INITIAL_STATE, action) {
-    console.log(action)
     switch(action.type) {
         case actions.SET_FIRST_USE:
             return { ...state, firstUse: action.firstUse }
