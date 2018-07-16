@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -6,13 +7,16 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
+import * as firebase from 'firebase'
+
+const usersRef = firebase.database().ref('users/')
 
 class InsertDialog extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            value: 0,
+            value: "",
         }
     }
 
@@ -24,6 +28,12 @@ class InsertDialog extends React.Component {
         this.props.handleClose(false);
         this.props.handleMenuClose(null);
         this.props.setTotalAmount("insert", this.state.value)
+        const previousTotalAmount = parseFloat(this.props.state.totalAmount)
+        const newValue = parseFloat(this.state.value)
+
+        const money = parseFloat(previousTotalAmount + newValue).toFixed(2)
+
+        usersRef.child(this.props.authUser.uid).update({ money })
     }
 
     render() {
@@ -62,4 +72,9 @@ class InsertDialog extends React.Component {
     }
 }
 
-export default InsertDialog;
+const mapStateToProps = (state) => ({
+    state: state.homeState,
+    authUser: state.sessionState.authUser,
+})
+
+export default connect(mapStateToProps)(InsertDialog);
