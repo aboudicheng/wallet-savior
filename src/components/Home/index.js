@@ -12,6 +12,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withStyles } from '@material-ui/core/styles';
+import InsertDialog from './insertDialog'
+import WithdrawDialog from './withdrawDialog'
 
 const styles = theme => ({
   button: {
@@ -37,11 +39,15 @@ class HomePage extends Component {
       open: true,
       totalAmount: 0,
       anchorEl: null,
+      modifyOpen: false,
+      insert: false,
+      withdraw: false,
+      reset: false,
     };
   }
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({ open: false, modifyOpen: false });
   };
 
   setFirstUse = () => {
@@ -66,11 +72,26 @@ class HomePage extends Component {
     this.setState({ anchorEl: null });
   }
 
+  handleOptionClick = (e) => {
+    this.setState({ modifyOpen: true })
+    switch(e.target.dataset.option) {
+      case "insert":
+        this.setState({ insert: true, withdraw: false, reset: false })
+        break;
+      case "withdraw":
+        this.setState({ insert: false, withdraw: true, reset: false })
+        break;
+      case "reset":
+        this.setState({ insert: false, withdraw: false,reset: true })
+        break;
+      default: return;
+    }
+  }
+
   render() {
     const { totalAmount, anchorEl } = this.state
     const { classes } = this.props
 
-    //TODO: insert, deposit, reset
     return (
       <div>
 
@@ -99,10 +120,18 @@ class HomePage extends Component {
           open={Boolean(anchorEl)}
           onClose={this.handleMenuClose}
         >
-          <MenuItem onClick={this.handleMenuClose}>Insert</MenuItem>
-          <MenuItem onClick={this.handleMenuClose}>Withdraw</MenuItem>
-          <MenuItem onClick={this.handleMenuClose}>Reset</MenuItem>
+          <MenuItem data-option="insert" onClick={this.handleOptionClick}>Insert</MenuItem>
+          <MenuItem data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</MenuItem>
+          <MenuItem data-option="reset" onClick={this.handleOptionClick}>Reset</MenuItem>
         </Menu>
+
+        {this.state.modifyOpen &&
+          this.state.insert
+          ? <InsertDialog modifyOpen={this.state.modifyOpen} handleClose={this.handleClose} handleMenuClose={this.handleMenuClose} />
+          : this.state.withdraw
+            ? <WithdrawDialog modifyOpen={this.state.modifyOpen} handleClose={this.handleClose} handleMenuClose={this.handleMenuClose} />
+            : this.state.reset
+        }
 
       </div>
     );
