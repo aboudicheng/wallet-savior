@@ -17,6 +17,8 @@ import InsertDialog from './insertDialog'
 import WithdrawDialog from './withdrawDialog'
 import ResetDialog from './resetDialog'
 import * as actions from '../../constants/action_types'
+import MySnackbarContentWrapper from './styles/MySnackbarContentWrapper'
+import Snackbar from '@material-ui/core/Snackbar';
 
 const styles = theme => ({
   button: {
@@ -28,7 +30,7 @@ const styles = theme => ({
   label: {
     right: "2.5rem",
     top: "6.5rem",
-    position: "absolute"
+    position: "absolute",
   }
 });
 
@@ -78,9 +80,17 @@ class HomePage extends Component {
     }
   }
 
+  handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.props.setSnackbarOpen(false)
+  };
+
   render() {
     const { classes } = this.props
-    const { totalAmount, firstUse, anchorEl, open, modifyOpen } = this.props.state
+    const { totalAmount, firstUse, anchorEl, open, modifyOpen, snackbarOpen } = this.props.state
 
     return (
       <div>
@@ -96,10 +106,12 @@ class HomePage extends Component {
           <Edit />
         </Button>
 
+        {/*Dialog popup for first-time users*/}
         {firstUse &&
           <FirstUse open={open} handleClose={this.props.setOpenDialog} setFirstUse={this.setFirstUse} />
         }
 
+        {/*Menu Bar at top right corner*/}
         <IconButton
           aria-owns={anchorEl ? 'simple-menu' : null}
           aria-haspopup="true"
@@ -119,6 +131,7 @@ class HomePage extends Component {
           <MenuItem data-option="reset" onClick={this.handleOptionClick}>Reset</MenuItem>
         </Menu>
 
+        {/*Operation Dialogs*/}
         {modifyOpen &&
           this.state.insert
           ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} handleMenuClose={this.props.setAnchorEl} setTotalAmount={this.props.setTotalAmount} />
@@ -129,6 +142,22 @@ class HomePage extends Component {
               : null
         }
 
+        {/*Snackbar poppup*/}
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          open={snackbarOpen}
+          autoHideDuration={6000}
+          onClose={this.handleSnackbarClose}
+        >
+          <MySnackbarContentWrapper
+            onClose={this.handleSnackbarClose}
+            variant="success"
+            message="Operation successful!"
+          />
+        </Snackbar>
       </div>
     );
   }
@@ -145,7 +174,8 @@ const mapDispatchToProps = (dispatch) => ({
   setAnchorEl: (anchorEl) => dispatch({ type: actions.SET_ANCHOR_EL, anchorEl }),
   setOpenDialog: (open) => dispatch({ type: actions.SET_OPEN_DIALOG, open }),
   setModifyOpenDialog: (modifyOpen) => dispatch({ type: actions.SET_MODIFY_OPEN_DIALOG, modifyOpen }),
-  setTotalAmount: (operation, amount) => dispatch({ type: actions.SET_TOTAL_AMOUNT, payload: { operation, amount } })
+  setTotalAmount: (operation, amount) => dispatch({ type: actions.SET_TOTAL_AMOUNT, payload: { operation, amount } }),
+  setSnackbarOpen: (snackbarOpen) => dispatch({ type: actions.SET_SNACKBAR_OPEN, snackbarOpen })
 })
 
 const authCondition = (authUser) => !!authUser;

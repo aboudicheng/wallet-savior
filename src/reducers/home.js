@@ -13,6 +13,8 @@ const INITIAL_STATE = {
     insert: false,
     withdraw: false,
     reset: false,
+
+    snackbarOpen: false,
 }
 
 function homeReducer(state = INITIAL_STATE, action) {
@@ -37,6 +39,8 @@ function homeReducer(state = INITIAL_STATE, action) {
                     return { ...state, totalAmount: parseFloat(action.payload.amount).toFixed(2) }
                 default: return state
             }
+        case actions.SET_SNACKBAR_OPEN:
+            return { ...state, snackbarOpen: action.snackbarOpen }
         default: return state
     }
 }

@@ -8,6 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import * as firebase from 'firebase'
+import * as actions from '../../constants/action_types'
 
 const usersRef = firebase.database().ref('users/')
 
@@ -17,6 +18,7 @@ class InsertDialog extends React.Component {
 
         this.state = {
             value: "",
+            open: true,
         }
     }
 
@@ -25,49 +27,54 @@ class InsertDialog extends React.Component {
     }
 
     submit = () => {
-        this.props.handleClose(false);
-        this.props.handleMenuClose(null);
-        this.props.setTotalAmount("insert", this.state.value)
-        const previousTotalAmount = parseFloat(this.props.state.totalAmount)
-        const newValue = parseFloat(this.state.value)
+        if (this.state.value !== "") {
+            this.props.handleClose(false);
+            this.props.handleMenuClose(null);
+            this.props.setTotalAmount("insert", this.state.value)
+            const previousTotalAmount = parseFloat(this.props.state.totalAmount)
+            const newValue = parseFloat(this.state.value)
 
-        const money = parseFloat(previousTotalAmount + newValue).toFixed(2)
+            const money = parseFloat(previousTotalAmount + newValue).toFixed(2)
 
-        usersRef.child(this.props.authUser.uid).update({ money })
+            usersRef.child(this.props.authUser.uid).update({ money })
+            this.props.setSnackbarOpen(true);
+        }
     }
 
     render() {
         return (
-            <Dialog
-                open={this.props.modifyOpen}
-                onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null) }}
-                aria-labelledby="form-dialog-title"
-            >
-                <DialogTitle id="form-dialog-title">Add Money</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Please enter the amount of money you are going add to your wallet:
+            <div>
+                <Dialog
+                    open={this.props.modifyOpen}
+                    onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null) }}
+                    aria-labelledby="form-dialog-title"
+                >
+                    <DialogTitle id="form-dialog-title">Add Money</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Please enter the amount of money you are going add to your wallet:
       </DialogContentText>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="insert"
-                        label="Money amount"
-                        type="number"
-                        fullWidth
-                        value={this.state.value}
-                        onChange={this.handleChange}
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => { this.props.handleClose(false); this.props.handleMenuClose(null) }} color="primary">
-                        Cancel
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="insert"
+                            label="Money amount"
+                            type="number"
+                            fullWidth
+                            value={this.state.value}
+                            onChange={this.handleChange}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => { this.props.handleClose(false); this.props.handleMenuClose(null) }} color="primary">
+                            Cancel
       </Button>
-                    <Button onClick={this.submit} color="primary">
-                        Add
+                        <Button onClick={this.submit} color="primary">
+                            Add
       </Button>
-                </DialogActions>
-            </Dialog>
+                    </DialogActions>
+                </Dialog>
+            </div>
         )
     }
 }
@@ -77,4 +84,8 @@ const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
 })
 
-export default connect(mapStateToProps)(InsertDialog);
+const mapDispatchToProps = (dispatch) => ({
+    setSnackbarOpen: (snackbarOpen) => dispatch({ type: actions.SET_SNACKBAR_OPEN, snackbarOpen })
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(InsertDialog);
