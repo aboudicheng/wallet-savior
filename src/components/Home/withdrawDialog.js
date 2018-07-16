@@ -8,6 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import * as firebase from 'firebase'
+import * as actions from '../../constants/action_types'
 
 const usersRef = firebase.database().ref('users/')
 
@@ -35,6 +36,7 @@ class WithdrawDialog extends React.Component {
         const money = parseFloat(previousTotalAmount - newValue).toFixed(2)
 
         usersRef.child(this.props.authUser.uid).update({ money })
+        this.props.setSnackbarOpen(true);
     }
 
     render() {
@@ -78,4 +80,8 @@ const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
 })
 
-export default connect(mapStateToProps)(WithdrawDialog);
+const mapDispatchToProps = (dispatch) => ({
+    setSnackbarOpen: (snackbarOpen) => dispatch({ type: actions.SET_SNACKBAR_OPEN, snackbarOpen })
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(WithdrawDialog);
