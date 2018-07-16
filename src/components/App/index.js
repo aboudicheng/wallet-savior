@@ -23,12 +23,6 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 4,
     paddingBottom: theme.spacing.unit * 4,
   },
-  sidebar: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    padding: "auto",
-  }
 });
 
 const App = (props) =>
@@ -37,22 +31,14 @@ const App = (props) =>
       <Navigation />
 
       <div className="container">
-        <div className="main">
-          <Paper className={props.classes.root} elevation={5}>
-            <Route exact path={routes.SIGN_UP} component={() => <SignUpPage />} />
-            <Route exact path={routes.LOGIN} component={() => <SignInPage />} />
-            <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForgetPage />} />
-            <Route exact path={routes.HOME} component={() => <HomePage />} />
-            <Route exact path={routes.ACCOUNT} component={() => <AccountPage />} />
-            <Route exact path={routes.GROUP} component={() => <Group />} />
-          </Paper>
-        </div>
-        <div className="sidebar">
-          <Paper className={props.classes.sidebar} elevation={5}>
-            <h4>Sidebar</h4>
-          </Paper>
-        </div>
-        <div className="clearfix"></div>
+        <Paper className={props.classes.root} elevation={5}>
+          <Route exact path={routes.SIGN_UP} component={() => <SignUpPage />} />
+          <Route exact path={routes.LOGIN} component={() => <SignInPage />} />
+          <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForgetPage />} />
+          <Route exact path={routes.HOME} component={() => <HomePage />} />
+          <Route exact path={routes.ACCOUNT} component={() => <AccountPage />} />
+          <Route exact path={routes.GROUP} component={() => <Group />} />
+        </Paper>
       </div>
 
     </div>
