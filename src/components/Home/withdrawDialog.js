@@ -26,17 +26,19 @@ class WithdrawDialog extends React.Component {
     }
 
     submit = () => {
-        this.props.handleClose(false);
-        this.props.handleMenuClose(null);
-        this.props.setTotalAmount("withdraw", this.state.value)
+        if (this.state.value !== "" || !isNaN(this.state.value)) {
+            this.props.handleClose(false);
+            this.props.handleMenuClose(null);
+            this.props.setTotalAmount("withdraw", this.state.value)
 
-        const previousTotalAmount = parseFloat(this.props.state.totalAmount)
-        const newValue = parseFloat(this.state.value)
+            const previousTotalAmount = parseFloat(this.props.state.totalAmount)
+            const newValue = parseFloat(this.state.value)
 
-        const money = parseFloat(previousTotalAmount - newValue).toFixed(2)
+            const money = parseFloat(previousTotalAmount - newValue).toFixed(2)
 
-        usersRef.child(this.props.authUser.uid).update({ money })
-        this.props.setSnackbarOpen(true);
+            usersRef.child(this.props.authUser.uid).update({ money })
+            this.props.setSnackbarOpen(true);
+        }
     }
 
     render() {
