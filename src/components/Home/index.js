@@ -7,6 +7,10 @@ import firebase from 'firebase';
 import formatNumber from "format-number";
 import Button from '@material-ui/core/Button';
 import Edit from '@material-ui/icons/Edit'
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -16,9 +20,11 @@ const styles = theme => ({
     bottom: "1.8rem",
     position: "absolute",
   },
-  extendedIcon: {
-    marginRight: theme.spacing.unit,
-  },
+  label: {
+    right: "2.5rem",
+    top: "6.5rem",
+    position: "absolute"
+  }
 });
 
 const usersRef = firebase.database().ref('users/')
@@ -30,6 +36,7 @@ class HomePage extends Component {
       firstUse: false,
       open: true,
       totalAmount: 0,
+      anchorEl: null,
     };
   }
 
@@ -51,13 +58,22 @@ class HomePage extends Component {
     })
   }
 
+  handleMenuClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  }
+
+  handleMenuClose = () => {
+    this.setState({ anchorEl: null });
+  }
+
   render() {
-    const { totalAmount } = this.state
+    const { totalAmount, anchorEl } = this.state
     const { classes } = this.props
 
     //TODO: insert, deposit, reset
     return (
       <div>
+
         <h1>My Wallet</h1>
         <span style={{ fontSize: "4rem" }}>{formatNumber({ prefix: "$" })(totalAmount.toFixed(2))}</span>
 
@@ -68,6 +84,25 @@ class HomePage extends Component {
         {this.state.firstUse &&
           <FirstUse open={this.state.open} handleClose={this.handleClose} setFirstUse={this.setFirstUse} />
         }
+
+        <IconButton
+          aria-owns={anchorEl ? 'simple-menu' : null}
+          aria-haspopup="true"
+          onClick={this.handleMenuClick}
+          className={classes.label}
+        >
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={this.handleMenuClose}
+        >
+          <MenuItem onClick={this.handleMenuClose}>Insert</MenuItem>
+          <MenuItem onClick={this.handleMenuClose}>Withdraw</MenuItem>
+          <MenuItem onClick={this.handleMenuClose}>Reset</MenuItem>
+        </Menu>
 
       </div>
     );
