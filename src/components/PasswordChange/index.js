@@ -10,7 +10,7 @@ const styles = theme => ({
     justifyContent: 'center',
     margin: '0 auto',
     flexWrap: 'wrap',
-    width: 300,
+    width: "14rem",
   },
   textField: {
     marginLeft: theme.spacing.unit,
