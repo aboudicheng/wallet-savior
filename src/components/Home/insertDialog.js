@@ -7,34 +7,59 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 
-const InsertDialog = (props) =>
-    <Dialog
-        open={props.modifyOpen}
-        onClose={() => props.handleClose(false)}
-        aria-labelledby="form-dialog-title"
-    >
-        <DialogTitle id="form-dialog-title">Add Money</DialogTitle>
-        <DialogContent>
-            <DialogContentText>
-                Please enter the amount of money you are going add to your wallet:
-  </DialogContentText>
-            <TextField
-                autoFocus
-                margin="dense"
-                id="insert"
-                label="Money amount"
-                type="number"
-                fullWidth
-            />
-        </DialogContent>
-        <DialogActions>
-            <Button onClick={() => props.handleClose(false)} color="primary">
-                Cancel
-  </Button>
-            <Button onClick={() => props.handleClose(false)} color="primary">
-                Add
-  </Button>
-        </DialogActions>
-    </Dialog>
+class InsertDialog extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            value: 0,
+        }
+    }
+
+    handleChange = (e) => {
+        this.setState({ value: e.target.value })
+    }
+
+    submit = () => {
+        this.props.handleClose(false);
+        this.props.handleMenuClose(null);
+        this.props.setTotalAmount("insert", this.state.value)
+    }
+
+    render() {
+        return (
+            <Dialog
+                open={this.props.modifyOpen}
+                onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null)}}
+                aria-labelledby="form-dialog-title"
+            >
+                <DialogTitle id="form-dialog-title">Add Money</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Please enter the amount of money you are going add to your wallet:
+      </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="insert"
+                        label="Money amount"
+                        type="number"
+                        fullWidth
+                        value={this.state.value}
+                        onChange={this.handleChange}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => { this.props.handleClose(false); this.props.handleMenuClose(null)}} color="primary">
+                        Cancel
+      </Button>
+                    <Button onClick={this.submit} color="primary">
+                        Add
+      </Button>
+                </DialogActions>
+            </Dialog>
+        )
+    }
+}
 
 export default InsertDialog;

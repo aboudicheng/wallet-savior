@@ -5,7 +5,7 @@ const INITIAL_STATE = {
 
     //used for firstUSe Dialog
     open: true,
-    totalAmount: 0,
+    totalAmount: parseFloat(0).toFixed(2),
     anchorEl: null,
 
     //used for Menu Dialog
@@ -16,11 +16,12 @@ const INITIAL_STATE = {
 }
 
 function homeReducer(state = INITIAL_STATE, action) {
+    console.log(action)
     switch(action.type) {
         case actions.SET_FIRST_USE:
             return { ...state, firstUse: action.firstUse }
         case actions.LOAD_TOTAL_AMOUNT:
-            return { ...state, totalAmount: action.totalAmount }
+            return { ...state, totalAmount: parseFloat(action.totalAmount).toFixed(2) }
         case actions.SET_ANCHOR_EL:
             return { ...state, anchorEl: action.anchorEl }
         case actions.SET_OPEN_DIALOG:
@@ -28,13 +29,13 @@ function homeReducer(state = INITIAL_STATE, action) {
         case actions.SET_MODIFY_OPEN_DIALOG:
             return { ...state, modifyOpen: action.modifyOpen }
         case actions.SET_TOTAL_AMOUNT:
-            switch(action.operation) {
+            switch(action.payload.operation) {
                 case "insert":
-                    return { ...state, totalAmount: state.totalAmount + action.amount }
+                    return { ...state, totalAmount: parseFloat(parseFloat(state.totalAmount) + parseFloat(action.payload.amount)).toFixed(2) }
                 case "withdraw":
-                    return { ...state, totalAmount: state.totalAmount - action.amount }
+                    return { ...state, totalAmount: parseFloat(parseFloat(state.totalAmount) - parseFloat(action.payload.amount)).toFixed(2) }
                 case "reset":
-                    return { ...state, totalAmount: action.amount }
+                    return { ...state, totalAmount: parseFloat(action.payload.amount).toFixed(2) }
                 default: return state
             }
         default: return state

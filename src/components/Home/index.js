@@ -86,7 +86,7 @@ class HomePage extends Component {
       <div>
 
         <h1>My Wallet</h1>
-        <span style={{ fontSize: "4rem" }}>{formatNumber({ prefix: "$" })(totalAmount.toFixed(2))}</span>
+        <span style={{ fontSize: "4rem" }}>{formatNumber({ prefix: "$" })(totalAmount)}</span>
 
         <Divider />
 
@@ -121,11 +121,11 @@ class HomePage extends Component {
 
         {modifyOpen &&
           this.state.insert
-          ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} />
+          ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} handleMenuClose={this.props.setAnchorEl} setTotalAmount={this.props.setTotalAmount} />
           : this.state.withdraw
-            ? <WithdrawDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} />
+            ? <WithdrawDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} handleMenuClose={this.props.setAnchorEl} setTotalAmount={this.props.setTotalAmount} />
             : this.state.reset
-              ? <ResetDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} />
+              ? <ResetDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} handleMenuClose={this.props.setAnchorEl} setTotalAmount={this.props.setTotalAmount} />
               : null
         }
 
@@ -145,7 +145,7 @@ const mapDispatchToProps = (dispatch) => ({
   setAnchorEl: (anchorEl) => dispatch({ type: actions.SET_ANCHOR_EL, anchorEl }),
   setOpenDialog: (open) => dispatch({ type: actions.SET_OPEN_DIALOG, open }),
   setModifyOpenDialog: (modifyOpen) => dispatch({ type: actions.SET_MODIFY_OPEN_DIALOG, modifyOpen }),
-  setTotalAmount: (operation, amount) => dispatch({ type: actions.SET_TOTAL_AMOUNT, operation, amount })
+  setTotalAmount: (operation, amount) => dispatch({ type: actions.SET_TOTAL_AMOUNT, payload: { operation, amount } })
 })
 
 const authCondition = (authUser) => !!authUser;

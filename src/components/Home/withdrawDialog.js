@@ -7,34 +7,59 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 
-const WithdrawDialog = (props) =>
-    <Dialog
-        open={props.modifyOpen}
-        onClose={() => props.handleClose(false)}
-        aria-labelledby="form-dialog-title"
-    >
-        <DialogTitle id="form-dialog-title">Withdraw Money</DialogTitle>
-        <DialogContent>
-            <DialogContentText>
-                Please enter the amount of money you are going to take out from your wallet:
-  </DialogContentText>
-            <TextField
-                autoFocus
-                margin="dense"
-                id="withdraw"
-                label="Money amount"
-                type="number"
-                fullWidth
-            />
-        </DialogContent>
-        <DialogActions>
-            <Button onClick={() => props.handleClose(false)} color="primary">
-                Cancel
-  </Button>
-            <Button onClick={() => props.handleClose(false)} color="primary">
-                Withdraw
-  </Button>
-        </DialogActions>
-    </Dialog>
+class WithdrawDialog extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            value: 0,
+        }
+    }
+
+    handleChange = (e) => {
+        this.setState({ value: e.target.value })
+    }
+
+    submit = () => {
+        this.props.handleClose(false);
+        this.props.handleMenuClose(null);
+        this.props.setTotalAmount("withdraw", this.state.value)
+    }
+
+    render() {
+        return (
+            <Dialog
+                open={this.props.modifyOpen}
+                onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null)}}
+                aria-labelledby="form-dialog-title"
+            >
+                <DialogTitle id="form-dialog-title">Withdraw Money</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Please enter the amount of money you are going to take out from your wallet:
+      </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="withdraw"
+                        label="Money amount"
+                        type="number"
+                        fullWidth
+                        value={this.state.value}
+                        onChange={this.handleChange}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => { this.props.handleClose(false); this.props.handleMenuClose(null)}} color="primary">
+                        Cancel
+      </Button>
+                    <Button onClick={this.submit} color="primary">
+                        Withdraw
+      </Button>
+                </DialogActions>
+            </Dialog>
+        )
+    }
+}
 
 export default WithdrawDialog;
