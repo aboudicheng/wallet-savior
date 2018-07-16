@@ -9,7 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 const FirstUse = (props) =>
     <Dialog
         open={props.open}
-        onClose={props.handleClose}
+        onClose={() => props.handleClose(false)}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
     >
@@ -20,7 +20,7 @@ const FirstUse = (props) =>
       </DialogContentText>
         </DialogContent>
         <DialogActions>
-            <Button onClick={() => { props.handleClose(); props.setFirstUse() }} color="primary" autoFocus>
+            <Button onClick={() => { props.handleClose(false); props.setFirstUse() }} color="primary" autoFocus>
                 Alright!
       </Button>
         </DialogActions>

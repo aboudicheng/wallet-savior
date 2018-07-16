@@ -12,8 +12,11 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withStyles } from '@material-ui/core/styles';
+import Divider from '@material-ui/core/Divider';
 import InsertDialog from './insertDialog'
 import WithdrawDialog from './withdrawDialog'
+import ResetDialog from './resetDialog'
+import * as actions from '../../constants/action_types'
 
 const styles = theme => ({
   button: {
@@ -35,46 +38,33 @@ class HomePage extends Component {
   constructor() {
     super();
     this.state = {
-      firstUse: false,
-      open: true,
-      totalAmount: 0,
-      anchorEl: null,
-      modifyOpen: false,
       insert: false,
       withdraw: false,
       reset: false,
     };
   }
 
-  handleClose = () => {
-    this.setState({ open: false, modifyOpen: false });
-  };
-
   setFirstUse = () => {
     usersRef.child(this.props.authUser.uid).update({ firstUse: false })
-    this.setState({ firstUse: false })
+    this.props.setFirstUse(false)
   }
 
   componentDidMount() {
     usersRef.on('child_added', snapshot => {
       if (snapshot.val().firstUse) {
-        this.setState({ firstUse: true })
+        this.props.setFirstUse(true)
       }
-      this.setState({ totalAmount: snapshot.val().money })
+      this.props.loadTotalAmount(snapshot.val().money)
     })
   }
 
   handleMenuClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  }
-
-  handleMenuClose = () => {
-    this.setState({ anchorEl: null });
+    this.props.setAnchorEl(event.currentTarget)
   }
 
   handleOptionClick = (e) => {
-    this.setState({ modifyOpen: true })
-    switch(e.target.dataset.option) {
+    this.props.setModifyOpenDialog(true)
+    switch (e.target.dataset.option) {
       case "insert":
         this.setState({ insert: true, withdraw: false, reset: false })
         break;
@@ -82,15 +72,15 @@ class HomePage extends Component {
         this.setState({ insert: false, withdraw: true, reset: false })
         break;
       case "reset":
-        this.setState({ insert: false, withdraw: false,reset: true })
+        this.setState({ insert: false, withdraw: false, reset: true })
         break;
       default: return;
     }
   }
 
   render() {
-    const { totalAmount, anchorEl } = this.state
     const { classes } = this.props
+    const { totalAmount, firstUse, anchorEl, open, modifyOpen } = this.props.state
 
     return (
       <div>
@@ -98,18 +88,22 @@ class HomePage extends Component {
         <h1>My Wallet</h1>
         <span style={{ fontSize: "4rem" }}>{formatNumber({ prefix: "$" })(totalAmount.toFixed(2))}</span>
 
+        <Divider />
+
+        <h1>Records</h1>
+
         <Button variant="fab" color="secondary" aria-label="Edit" className={classes.button}>
           <Edit />
         </Button>
 
-        {this.state.firstUse &&
-          <FirstUse open={this.state.open} handleClose={this.handleClose} setFirstUse={this.setFirstUse} />
+        {firstUse &&
+          <FirstUse open={open} handleClose={this.props.setOpenDialog} setFirstUse={this.setFirstUse} />
         }
 
         <IconButton
           aria-owns={anchorEl ? 'simple-menu' : null}
           aria-haspopup="true"
-          onClick={this.handleMenuClick}
+          onClick={e => this.props.setAnchorEl(e.currentTarget)}
           className={classes.label}
         >
           <MoreVertIcon />
@@ -118,19 +112,21 @@ class HomePage extends Component {
           id="simple-menu"
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
-          onClose={this.handleMenuClose}
+          onClose={() => this.props.setAnchorEl(null)}
         >
           <MenuItem data-option="insert" onClick={this.handleOptionClick}>Insert</MenuItem>
           <MenuItem data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</MenuItem>
           <MenuItem data-option="reset" onClick={this.handleOptionClick}>Reset</MenuItem>
         </Menu>
 
-        {this.state.modifyOpen &&
+        {modifyOpen &&
           this.state.insert
-          ? <InsertDialog modifyOpen={this.state.modifyOpen} handleClose={this.handleClose} handleMenuClose={this.handleMenuClose} />
+          ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} />
           : this.state.withdraw
-            ? <WithdrawDialog modifyOpen={this.state.modifyOpen} handleClose={this.handleClose} handleMenuClose={this.handleMenuClose} />
+            ? <WithdrawDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} />
             : this.state.reset
+              ? <ResetDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} />
+              : null
         }
 
       </div>
@@ -140,12 +136,21 @@ class HomePage extends Component {
 
 const mapStateToProps = (state) => ({
   authUser: state.sessionState.authUser,
+  state: state.homeState,
 });
+
+const mapDispatchToProps = (dispatch) => ({
+  setFirstUse: (firstUse) => dispatch({ type: actions.SET_FIRST_USE, firstUse }),
+  loadTotalAmount: (totalAmount) => dispatch({ type: actions.LOAD_TOTAL_AMOUNT, totalAmount }),
+  setAnchorEl: (anchorEl) => dispatch({ type: actions.SET_ANCHOR_EL, anchorEl }),
+  setOpenDialog: (open) => dispatch({ type: actions.SET_OPEN_DIALOG, open }),
+  setModifyOpenDialog: (modifyOpen) => dispatch({ type: actions.SET_MODIFY_OPEN_DIALOG, modifyOpen }),
+})
 
 const authCondition = (authUser) => !!authUser;
 
 export default compose(
   withAuthorization(authCondition),
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles)
 )(HomePage);

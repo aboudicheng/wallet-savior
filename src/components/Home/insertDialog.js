@@ -10,7 +10,7 @@ import TextField from '@material-ui/core/TextField';
 const InsertDialog = (props) =>
     <Dialog
         open={props.modifyOpen}
-        onClose={() => { props.handleClose(); props.handleMenuClose() }}
+        onClose={() => props.handleClose(false)}
         aria-labelledby="form-dialog-title"
     >
         <DialogTitle id="form-dialog-title">Add Money</DialogTitle>
@@ -28,10 +28,10 @@ const InsertDialog = (props) =>
             />
         </DialogContent>
         <DialogActions>
-            <Button onClick={() => { props.handleClose(); props.handleMenuClose() }} color="primary">
+            <Button onClick={() => props.handleClose(false)} color="primary">
                 Cancel
   </Button>
-            <Button onClick={() => { props.handleClose(); props.handleMenuClose() }} color="primary">
+            <Button onClick={() => props.handleClose(false)} color="primary">
                 Add
   </Button>
         </DialogActions>
