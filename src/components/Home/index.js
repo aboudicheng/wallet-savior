@@ -19,6 +19,7 @@ import ResetDialog from './resetDialog'
 import * as actions from '../../constants/action_types'
 import MySnackbarContentWrapper from './styles/MySnackbarContentWrapper'
 import Snackbar from '@material-ui/core/Snackbar';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({
   button: {
@@ -31,7 +32,10 @@ const styles = theme => ({
     right: "2.5rem",
     top: "6.5rem",
     position: "absolute",
-  }
+  },
+  progress: {
+    margin: theme.spacing.unit * 2,
+  },
 });
 
 const usersRef = firebase.database().ref('users/')
@@ -43,6 +47,7 @@ class HomePage extends Component {
       insert: false,
       withdraw: false,
       reset: false,
+      isLoading: true,
     };
   }
 
@@ -56,6 +61,7 @@ class HomePage extends Component {
       if (snapshot.val().firstUse) {
         this.props.setFirstUse(true)
       }
+      this.setState({ isLoading: false })
       this.props.loadTotalAmount(snapshot.val().money)
     })
   }
@@ -96,11 +102,11 @@ class HomePage extends Component {
       <div>
 
         <h1>My Wallet</h1>
-        <span style={{ fontSize: "4rem", color: "#00ff00" }}>{formatNumber({ prefix: "$" })(totalAmount)}</span>
-
+        {this.state.isLoading
+          ? <CircularProgress className={classes.progress} size={50} />
+          : <span style={{ fontSize: "4rem", color: "#00ff00" }}>{formatNumber({ prefix: "$" })(totalAmount)}</span>
+        }
         <Divider />
-
-        <h1>Records</h1>
 
         <Button variant="fab" color="secondary" aria-label="Edit" className={classes.button}>
           <Edit />
