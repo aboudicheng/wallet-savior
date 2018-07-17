@@ -78,6 +78,10 @@ class HomePage extends Component {
     })
   }
 
+  componentWillUnmount() {
+    this.props.setSnackbarOpen(false)
+  }
+
   handleMenuClick = event => {
     this.props.setAnchorEl(event.currentTarget)
   }

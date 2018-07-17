@@ -64,6 +64,10 @@ class History extends Component {
         })
     }
 
+    componentWillUnmount() {
+        this.setSnackbar(false)
+    }
+
     handleDeleteAllDialog = (open) => {
         this.setState({ deleteAllDialog: open })
     }
