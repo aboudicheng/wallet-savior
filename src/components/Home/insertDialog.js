@@ -9,6 +9,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import * as firebase from 'firebase'
 import * as actions from '../../constants/action_types'
+import { months } from '../../constants/months'
+
+const usersRef = firebase.database().ref('users/')
 
 class InsertDialog extends React.Component {
     constructor(props) {
@@ -26,6 +29,8 @@ class InsertDialog extends React.Component {
 
     submit = () => {
         if (this.state.value !== "" && !isNaN(this.state.value)) {
+            const date = new Date();
+
             this.props.handleClose(false);
             this.props.handleMenuClose(null);
             this.props.setTotalAmount("insert", this.state.value)
@@ -34,7 +39,24 @@ class InsertDialog extends React.Component {
 
             const money = parseFloat(previousTotalAmount + newValue).toFixed(2)
 
-            firebase.database().ref(`users/${this.props.authUser.uid}/wallets/0`).update({ money })
+            usersRef.child(this.props.authUser.uid).child("wallets").child(0).update({ money })
+
+            const record = {
+                type: "Insert",
+                amount: this.state.value,
+                wallet: "Personal",
+                date: {
+                    year: date.getFullYear(),
+                    month: months[date.getMonth()],
+                    day: date.getDate(),
+                    hour: date.getHours(),
+                    min: date.getMinutes(),
+                    sec: date.getSeconds()
+                }
+            }
+
+            usersRef.child(this.props.authUser.uid).child("history").push(record)
+
             this.props.setSnackbarOpen(true);
         }
     }
