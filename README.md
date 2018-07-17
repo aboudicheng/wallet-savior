@@ -14,7 +14,6 @@
 
 ## TODO List
 
-* User operation records
 * Multiple wallets
 * Group wallets
 * Delete account
