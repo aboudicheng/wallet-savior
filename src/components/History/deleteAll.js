@@ -23,7 +23,7 @@ const DeleteAll = (props) =>
             <Button onClick={() => props.handleClose(false)} color="primary">
                 No
       </Button>
-            <Button onClick={() => { props.deleteHistory(); props.handleClose(false) }} color="primary">
+            <Button onClick={() => { props.deleteHistory(); props.handleClose(false); props.setSnackbar(true) }} color="primary">
                 Yes
       </Button>
         </DialogActions>

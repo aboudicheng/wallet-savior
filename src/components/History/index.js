@@ -15,6 +15,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import Zoom from '@material-ui/core/Zoom';
 import Delete from '@material-ui/icons/Delete';
+import Snackbar from '@material-ui/core/Snackbar';
+import MySnackbarContentWrapper from '../Home/styles/MySnackbarContentWrapper'
 import DeleteAll from './deleteAll'
 
 const styles = theme => ({
@@ -43,6 +45,7 @@ class History extends Component {
             isLoading: true,
             history: [],
             deleteAllDialog: false,
+            snackbarOpen: false,
         }
     }
 
@@ -70,8 +73,20 @@ class History extends Component {
         usersRef.child(this.props.authUser.uid).update({ history: false })
     }
 
+    setSnackbar = (open) => {
+        this.setState({ snackbarOpen: open })
+    }
+
+    handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        this.setSnackbar(false)
+    };
+
     render() {
-        const { history, deleteAllDialog, isLoading } = this.state
+        const { history, deleteAllDialog, isLoading, snackbarOpen } = this.state
         const { classes } = this.props
         return (
             <div>
@@ -117,8 +132,25 @@ class History extends Component {
                     </Button>
                 </Tooltip>
 
-                {deleteAllDialog 
-                && <DeleteAll open={deleteAllDialog} handleClose={this.handleDeleteAllDialog} deleteHistory={this.deleteAllHistory} />}
+                {deleteAllDialog
+                    && <DeleteAll open={deleteAllDialog} handleClose={this.handleDeleteAllDialog} deleteHistory={this.deleteAllHistory} setSnackbar={this.setSnackbar} />}
+
+                {/*Snackbar poppup*/}
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}
+                    open={snackbarOpen}
+                    autoHideDuration={3000}
+                    onClose={this.handleSnackbarClose}
+                >
+                    <MySnackbarContentWrapper
+                        onClose={this.handleSnackbarClose}
+                        variant="success"
+                        message="Operation successful!"
+                    />
+                </Snackbar>
             </div>
         )
     }
