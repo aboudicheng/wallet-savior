@@ -38,7 +38,7 @@ class History extends Component {
             this.setState(prevState => ({
                 history: [...prevState.history, snapshot.val()],
                 isLoading: false
-              }))
+            }))
         })
     }
 
@@ -69,6 +69,13 @@ class History extends Component {
                                             <Typography key={"amount" + i}>
                                                 {`Amount: ${formatNumber({ prefix: "$" })(record.amount)} `}
                                             </Typography>
+                                            {record.description !== ""
+                                                ? <Typography key={"description" + i}>
+                                                    {`Description:  ${record.description} `}
+                                                </Typography>
+                                                : <div></div>
+                                            }
+
                                         </ExpansionPanelDetails>
                                     </ExpansionPanel>
                                 )

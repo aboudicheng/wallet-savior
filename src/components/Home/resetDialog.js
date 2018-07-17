@@ -22,8 +22,8 @@ class ResetDialog extends React.Component {
         }
     }
 
-    handleChange = (e) => {
-        this.setState({ value: e.target.value })
+    handleChange = (e, prop) => {
+        this.setState({ [prop]: e.target.value })
     }
 
     submit = () => {
@@ -49,7 +49,8 @@ class ResetDialog extends React.Component {
                     hour: date.getHours(),
                     min: date.getMinutes(),
                     sec: date.getSeconds()
-                }
+                },
+                description: this.state.text
             }
 
             usersRef.child(this.props.authUser.uid).child("history").push(record)
@@ -78,7 +79,16 @@ class ResetDialog extends React.Component {
                         type="number"
                         fullWidth
                         value={this.state.value}
-                        onChange={this.handleChange}
+                        onChange={(e) => this.handleChange(e, "value")}
+                    />
+                    <TextField
+                        margin="dense"
+                        id="description"
+                        label="Description (optional)"
+                        type="text"
+                        fullWidth
+                        value={this.state.text}
+                        onChange={(e) => this.handleChange(e, "text")}
                     />
                 </DialogContent>
                 <DialogActions>
