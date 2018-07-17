@@ -19,6 +19,7 @@ class WithdrawDialog extends React.Component {
 
         this.state = {
             value: "",
+            text: "",
         }
     }
 
@@ -55,6 +56,8 @@ class WithdrawDialog extends React.Component {
                 },
                 description: this.state.text
             }
+
+            console.log(record)
 
             usersRef.child(this.props.authUser.uid).child("history").push(record)
 

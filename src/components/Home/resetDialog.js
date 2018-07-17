@@ -19,6 +19,7 @@ class ResetDialog extends React.Component {
 
         this.state = {
             value: "",
+            text: "",
         }
     }
 

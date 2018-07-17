@@ -16,7 +16,7 @@ import Button from '@material-ui/core/Button';
 import Zoom from '@material-ui/core/Zoom';
 import Delete from '@material-ui/icons/Delete';
 import Snackbar from '@material-ui/core/Snackbar';
-import MySnackbarContentWrapper from '../Home/styles/MySnackbarContentWrapper'
+import MySnackbarContentWrapper from '../MySnackbarContentWrapper'
 import DeleteAll from './deleteAll'
 
 const styles = theme => ({

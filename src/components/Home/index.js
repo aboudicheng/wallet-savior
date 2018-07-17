@@ -26,7 +26,7 @@ import InsertDialog from './insertDialog'
 import WithdrawDialog from './withdrawDialog'
 import ResetDialog from './resetDialog'
 import * as actions from '../../constants/action_types'
-import MySnackbarContentWrapper from './styles/MySnackbarContentWrapper'
+import MySnackbarContentWrapper from '../MySnackbarContentWrapper'
 import Rename from './rename'
 
 const styles = theme => ({
