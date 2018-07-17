@@ -80,8 +80,10 @@ class NavigationNonAuth extends React.Component {
                         </Drawer>
 
                         <Typography variant="title" color="inherit" className={classes.flex}>
-                            Wallet $avior
-      </Typography>
+                            <span style={{ color: "#3fb5a3" }}>
+                                Wallet $avior
+                            </span>
+                        </Typography>
                     </Toolbar>
                 </AppBar>
             </div>

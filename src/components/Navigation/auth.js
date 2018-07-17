@@ -121,7 +121,7 @@ class NavigationAuth extends React.Component {
                         </Drawer>
 
                         <Typography variant="title" color="inherit" className={classes.flex}>
-                            <span style={{ cursor: "pointer" }} onClick={() => this.props.history.push(routes.HOME)}>
+                            <span style={{ cursor: "pointer", color: "#3fb5a3" }} onClick={() => this.props.history.push(routes.HOME)}>
                                 Wallet $avior
                             </span>
                         </Typography>

@@ -27,7 +27,7 @@ import MySnackbarContentWrapper from './styles/MySnackbarContentWrapper'
 import Rename from './rename'
 
 const styles = theme => ({
-  button: {
+  editButton: {
     margin: theme.spacing.unit,
     right: "1.8rem",
     bottom: "1.8rem",
@@ -41,6 +41,9 @@ const styles = theme => ({
   progress: {
     margin: theme.spacing.unit * 2,
   },
+  menuButton: {
+    color: "#3fb5a3",
+  }
 });
 
 const usersRef = firebase.database().ref('users/')
@@ -124,12 +127,12 @@ class HomePage extends Component {
         <h1>{walletName}</h1>
         {this.state.isLoading
           ? <CircularProgress className={classes.progress} size={50} />
-          : <span style={{ fontSize: "170%", color: totalAmount > 0 ? "#00ff00" : "#ff0000" }}>{formatNumber({ prefix: "$" })(totalAmount)}</span>
+          : <span style={{ fontSize: "170%", color: totalAmount > 0 ? "#3fb5a3" : "#ff0000" }}>{formatNumber({ prefix: "$" })(totalAmount)}</span>
         }
         <Divider />
 
         <Tooltip TransitionComponent={Zoom} title="Edit wallet name">
-          <Button variant="fab" color="secondary" aria-label="Edit" className={classes.button} onClick={() => this.handleRenameOpen(true)}>
+          <Button variant="fab" color="secondary" aria-label="Edit" className={classes.editButton} onClick={() => this.handleRenameOpen(true)}>
             <Edit />
           </Button>
         </Tooltip>
@@ -165,9 +168,9 @@ class HomePage extends Component {
         </Menu>
 
         <div className="menubar">
-          <Button color="default" data-option="insert" onClick={this.handleOptionClick}><span data-option="insert" onClick={this.handleOptionClick}>Insert</span></Button>
-          <Button color="default" data-option="withdraw" onClick={this.handleOptionClick}><span data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</span></Button>
-          <Button color="default" data-option="reset" onClick={this.handleOptionClick}><span data-option="reset" onClick={this.handleOptionClick}>Reset</span></Button>
+          <Button className={classes.menuButton} color="default" data-option="insert" onClick={this.handleOptionClick}><span data-option="insert" onClick={this.handleOptionClick}>Insert</span></Button>
+          <Button className={classes.menuButton} color="default" data-option="withdraw" onClick={this.handleOptionClick}><span data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</span></Button>
+          <Button className={classes.menuButton} color="default" data-option="reset" onClick={this.handleOptionClick}><span data-option="reset" onClick={this.handleOptionClick}>Reset</span></Button>
         </div>
 
         {/*Operation Dialogs*/}
@@ -188,7 +191,7 @@ class HomePage extends Component {
             horizontal: 'left',
           }}
           open={snackbarOpen}
-          autoHideDuration={6000}
+          autoHideDuration={3000}
           onClose={this.handleSnackbarClose}
         >
           <MySnackbarContentWrapper
