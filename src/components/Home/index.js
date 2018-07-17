@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
+import classNames from 'classnames';
 import FirstUse from './firstUseDialog'
 import withAuthorization from '../Session/withAuthorization';
 import firebase from 'firebase';
@@ -33,8 +34,8 @@ const styles = theme => ({
     position: "absolute",
   },
   label: {
-    right: "2.5rem",
-    top: "6.5rem",
+    right: "0.5rem",
+    top: "0.2rem",
     position: "absolute",
   },
   progress: {
@@ -77,6 +78,7 @@ class HomePage extends Component {
 
   handleOptionClick = (e) => {
     this.props.setModifyOpenDialog(true)
+    console.log(e.target)
     switch (e.target.dataset.option) {
       case "insert":
         this.setState({ insert: true, withdraw: false, reset: false })
@@ -147,7 +149,7 @@ class HomePage extends Component {
           aria-owns={anchorEl ? 'simple-menu' : null}
           aria-haspopup="true"
           onClick={e => this.props.setAnchorEl(e.currentTarget)}
-          className={classes.label}
+          className={classNames("menuicon", classes.label)}
         >
           <MoreVertIcon />
         </IconButton>
@@ -161,6 +163,12 @@ class HomePage extends Component {
           <MenuItem data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</MenuItem>
           <MenuItem data-option="reset" onClick={this.handleOptionClick}>Reset</MenuItem>
         </Menu>
+
+        <div className="menubar">
+          <Button color="secondary" data-option="insert" onClick={this.handleOptionClick}><span data-option="insert" onClick={this.handleOptionClick}>Insert</span></Button>
+          <Button color="secondary" data-option="withdraw" onClick={this.handleOptionClick}><span data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</span></Button>
+          <Button color="secondary" data-option="reset" onClick={this.handleOptionClick}><span data-option="reset" onClick={this.handleOptionClick}>Reset</span></Button>
+        </div>
 
         {/*Operation Dialogs*/}
         {modifyOpen &&
