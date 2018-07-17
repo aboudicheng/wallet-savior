@@ -11,10 +11,21 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import formatNumber from "format-number";
+import Tooltip from '@material-ui/core/Tooltip';
+import Button from '@material-ui/core/Button';
+import Zoom from '@material-ui/core/Zoom';
+import Delete from '@material-ui/icons/Delete';
+import DeleteAll from './deleteAll'
 
 const styles = theme => ({
     root: {
         width: '100%',
+    },
+    deleteButton: {
+        margin: theme.spacing.unit,
+        right: "1.8rem",
+        bottom: "1.8rem",
+        position: "absolute",
     },
     heading: {
         fontSize: theme.typography.pxToRem(15),
@@ -30,9 +41,11 @@ class History extends Component {
 
         this.state = {
             isLoading: true,
-            history: []
+            history: [],
+            deleteAllDialog: false,
         }
     }
+
     componentDidMount() {
         usersRef.child(this.props.authUser.uid).child("history").on('child_added', snapshot => {
             this.setState(prevState => ({
@@ -40,15 +53,30 @@ class History extends Component {
                 isLoading: false
             }))
         })
+
+        usersRef.child(this.props.authUser.uid).on('value', snapshot => {
+            if (!snapshot.val().history) {
+                this.setState({ isLoading: false })
+            }
+        })
+    }
+
+    handleDeleteAllDialog = (open) => {
+        this.setState({ deleteAllDialog: open })
+    }
+
+    deleteAllHistory = () => {
+        this.setState({ history: [] })
+        usersRef.child(this.props.authUser.uid).update({ history: false })
     }
 
     render() {
-        const { history } = this.state
+        const { history, deleteAllDialog, isLoading } = this.state
         const { classes } = this.props
         return (
             <div>
                 <h1>History</h1>
-                {this.state.isLoading
+                {isLoading
                     ? <CircularProgress className={classes.progress} size={50} />
                     : history.length === 0
                         ? <p>You have no records yet.</p>
@@ -83,6 +111,14 @@ class History extends Component {
                             }
                         </div>
                 }
+                <Tooltip TransitionComponent={Zoom} title="Delete all history">
+                    <Button variant="fab" color="secondary" aria-label="Edit" className={classes.deleteButton} onClick={() => this.handleDeleteAllDialog(true)}>
+                        <Delete />
+                    </Button>
+                </Tooltip>
+
+                {deleteAllDialog 
+                && <DeleteAll open={deleteAllDialog} handleClose={this.handleDeleteAllDialog} deleteHistory={this.deleteAllHistory} />}
             </div>
         )
     }
