@@ -21,6 +21,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import History from '@material-ui/icons/History'
 import Money from '@material-ui/icons/MonetizationOn'
 import { withStyles } from '@material-ui/core/styles';
 import * as routes from '../../constants/routes';
@@ -97,6 +98,7 @@ class NavigationAuth extends React.Component {
                 </Collapse>
 
                 <List><ListItem button onClick={() => this.redirect(routes.GROUP)}><ListItemIcon><Group /></ListItemIcon><ListItemText primary="Group" /></ListItem></List>
+                <List><ListItem button onClick={() => this.redirect(routes.HISTORY)}><ListItemIcon><History /></ListItemIcon><ListItemText primary="History" /></ListItem></List>
                 <List><ListItem button onClick={() => this.redirect(routes.ACCOUNT)}><ListItemIcon><Settings /></ListItemIcon><ListItemText primary="Account" /></ListItem></List>
                 <List><ListItem button onClick={this.signOut}><ListItemIcon><Exit /></ListItemIcon><ListItemText primary="Sign Out" /></ListItem></List>
             </div>
