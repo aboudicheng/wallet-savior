@@ -46,7 +46,7 @@ class Rename extends React.Component {
                 onClose={() => this.props.handleClose(false)}
                 aria-labelledby="form-dialog-title"
             >
-                <DialogTitle id="form-dialog-title">Reset Wallet</DialogTitle>
+                <DialogTitle id="form-dialog-title">Rename Wallet</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         Please enter a new name for your wallet:
@@ -55,13 +55,13 @@ class Rename extends React.Component {
                         autoFocus
                         margin="dense"
                         id="rename"
-                        label="Rename wallet"
+                        label="Name"
                         type="text"
                         fullWidth
                         value={this.state.value}
                         onChange={this.handleChange}
                     />
-                    
+
                     {error && <span style={{ color: "red" }}>{error}</span>}
 
                 </DialogContent>
