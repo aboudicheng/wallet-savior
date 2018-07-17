@@ -124,7 +124,7 @@ class HomePage extends Component {
         <h1>{walletName}</h1>
         {this.state.isLoading
           ? <CircularProgress className={classes.progress} size={50} />
-          : <span style={{ fontSize: "170%", color: "#00ff00" }}>{formatNumber({ prefix: "$" })(totalAmount)}</span>
+          : <span style={{ fontSize: "170%", color: totalAmount > 0 ? "#00ff00" : "#ff0000" }}>{formatNumber({ prefix: "$" })(totalAmount)}</span>
         }
         <Divider />
 
@@ -165,9 +165,9 @@ class HomePage extends Component {
         </Menu>
 
         <div className="menubar">
-          <Button color="secondary" data-option="insert" onClick={this.handleOptionClick}><span data-option="insert" onClick={this.handleOptionClick}>Insert</span></Button>
-          <Button color="secondary" data-option="withdraw" onClick={this.handleOptionClick}><span data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</span></Button>
-          <Button color="secondary" data-option="reset" onClick={this.handleOptionClick}><span data-option="reset" onClick={this.handleOptionClick}>Reset</span></Button>
+          <Button color="default" data-option="insert" onClick={this.handleOptionClick}><span data-option="insert" onClick={this.handleOptionClick}>Insert</span></Button>
+          <Button color="default" data-option="withdraw" onClick={this.handleOptionClick}><span data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</span></Button>
+          <Button color="default" data-option="reset" onClick={this.handleOptionClick}><span data-option="reset" onClick={this.handleOptionClick}>Reset</span></Button>
         </div>
 
         {/*Operation Dialogs*/}
