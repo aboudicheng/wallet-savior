@@ -24,7 +24,7 @@ class WithdrawDialog extends React.Component {
     }
 
     submit = () => {
-        if (this.state.value !== "" || !isNaN(this.state.value)) {
+        if (this.state.value !== "" && !isNaN(this.state.value)) {
             this.props.handleClose(false);
             this.props.handleMenuClose(null);
             this.props.setTotalAmount("withdraw", this.state.value)

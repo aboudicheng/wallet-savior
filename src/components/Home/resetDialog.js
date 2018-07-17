@@ -24,7 +24,7 @@ class ResetDialog extends React.Component {
     }
 
     submit = () => {
-        if (this.state.value !== "" || !isNaN(this.state.value)) {
+        if (this.state.value.length !== 0 && !isNaN(this.state.value)) {
             this.props.handleClose(false);
             this.props.handleMenuClose(null);
             this.props.setTotalAmount("reset", this.state.value)
