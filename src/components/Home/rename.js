@@ -16,6 +16,7 @@ class Rename extends React.Component {
 
         this.state = {
             value: "",
+            error: null,
         }
     }
 
@@ -25,13 +26,20 @@ class Rename extends React.Component {
 
     submit = () => {
         if (this.state.value !== "") {
-            firebase.database().ref(`users/${this.props.authUser.uid}/wallets/0`).update({ name: this.state.value })
-            this.props.setSnackbarOpen(true);
-            this.props.setRenameDialog(false);
+            if (this.state.value.length <= 14) {
+                this.setState({ error: null })
+                firebase.database().ref(`users/${this.props.authUser.uid}/wallets/0`).update({ name: this.state.value })
+                this.props.setSnackbarOpen(true);
+                this.props.setRenameDialog(false);
+            }
+            else {
+                this.setState({ error: "Please choose a name within 14 characters!" })
+            }
         }
     }
 
     render() {
+        const { error } = this.state
         return (
             <Dialog
                 open={this.props.open}
@@ -53,6 +61,9 @@ class Rename extends React.Component {
                         value={this.state.value}
                         onChange={this.handleChange}
                     />
+                    
+                    {error && <span style={{ color: "red" }}>{error}</span>}
+
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => this.props.handleClose(false)} color="primary">
