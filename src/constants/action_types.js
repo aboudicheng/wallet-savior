@@ -9,3 +9,6 @@ export const SET_TOTAL_AMOUNT = "SET_TOTAL_AMOUNT";
 export const SET_NEW_NAME = "SET_NEW_NAME";
 export const SET_RENAME_DIALOG = "SET_RENAME_DIALOG";
 export const SET_SNACKBAR_OPEN = "SET_SNACKBAR_OPEN";
+
+//HISTORY
+export const PUSH_RECORD = "PUSH_RECORD";
