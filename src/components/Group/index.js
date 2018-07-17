@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import withAuthorization from '../Session/withAuthorization';
 
 class Group extends Component {
     render() {
@@ -8,4 +9,6 @@ class Group extends Component {
     }
 }
 
-export default Group;
+const authCondition = (authUser) => !!authUser;
+
+export default withAuthorization(authCondition)(Group);

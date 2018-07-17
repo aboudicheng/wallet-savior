@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
+import withAuthorization from '../Session/withAuthorization';
 
-class History extends React.Component {
+class History extends Component {
     render() {
         return (
             <h1>History</h1>
@@ -8,4 +9,6 @@ class History extends React.Component {
     }
 }
 
-export default History;
+const authCondition = (authUser) => !!authUser;
+
+export default withAuthorization(authCondition)(History);

@@ -18,6 +18,9 @@ import Snackbar from '@material-ui/core/Snackbar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
+import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router'
+import * as routes from '../../constants/routes';
 
 import InsertDialog from './insertDialog'
 import WithdrawDialog from './withdrawDialog'
@@ -81,7 +84,6 @@ class HomePage extends Component {
 
   handleOptionClick = (e) => {
     this.props.setModifyOpenDialog(true)
-    console.log(e.target)
     switch (e.target.dataset.option) {
       case "insert":
         this.setState({ insert: true, withdraw: false, reset: false })
@@ -129,6 +131,7 @@ class HomePage extends Component {
           ? <CircularProgress className={classes.progress} size={50} />
           : <span style={{ fontSize: "170%", color: totalAmount > 0 ? "#3fb5a3" : "#ff0000" }}>{formatNumber({ prefix: "$" })(totalAmount)}</span>
         }
+        <p>Check <Link to={routes.HISTORY}>History</Link></p>
         <Divider />
 
         <Tooltip TransitionComponent={Zoom} title="Edit wallet name">
@@ -228,5 +231,6 @@ const authCondition = (authUser) => !!authUser;
 export default compose(
   withAuthorization(authCondition),
   connect(mapStateToProps, mapDispatchToProps),
-  withStyles(styles)
+  withStyles(styles),
+  withRouter,
 )(HomePage);
