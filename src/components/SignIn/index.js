@@ -58,39 +58,39 @@ class SignInForm extends Component {
     this.state = { ...INITIAL_STATE };
   }
 
-  signInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithRedirect(provider)
-      .then(res => {
-        const user = res.user
+  // signInWithGoogle = () => {
+  //   const provider = new firebase.auth.GoogleAuthProvider();
+  //   firebase.auth().signInWithRedirect(provider)
+  //     .then(res => {
+  //       const user = res.user
 
-        firebase.auth().signInWithEmailLink(user.email)
-          .then(() => {
-            this.setState(() => ({ ...INITIAL_STATE }));
-          })
+  //       firebase.auth().signInWithEmailLink(user.email)
+  //         .then(() => {
+  //           this.setState(() => ({ ...INITIAL_STATE }));
+  //         })
 
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  }
+  //     })
+  //     .catch(error => {
+  //       console.log(error)
+  //     })
+  // }
 
-  signInWithFacebook = () => {
-    const provider = new firebase.auth.FacebookAuthProvider()
-    firebase.auth().signInWithRedirect(provider)
-      .then(res => {
-        const user = res.user
+  // signInWithFacebook = () => {
+  //   const provider = new firebase.auth.FacebookAuthProvider()
+  //   firebase.auth().signInWithRedirect(provider)
+  //     .then(res => {
+  //       const user = res.user
 
-        firebase.auth().signInWithEmailLink(user.email)
-          .then(() => {
-            this.setState(() => ({ ...INITIAL_STATE }));
-          })
+  //       firebase.auth().signInWithEmailLink(user.email)
+  //         .then(() => {
+  //           this.setState(() => ({ ...INITIAL_STATE }));
+  //         })
 
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  }
+  //     })
+  //     .catch(error => {
+  //       console.log(error)
+  //     })
+  // }
 
   onSubmit = (event) => {
     const {
@@ -154,13 +154,13 @@ class SignInForm extends Component {
         />
         <Button variant="contained" color="primary" disabled={isInvalid} type="submit" className={classes.button}>Login</Button>
 
-        <div style={{ margin: '0 auto', width: '100%' }}>
+        {/* <div style={{ margin: '0 auto', width: '100%' }}>
           <Button variant="contained" color="primary" className={classes.facebook} onClick={this.signInWithFacebook}>Sign in with Facebook</Button>
         </div>
 
         <div style={{ margin: '0 auto', width: '100%' }}>
           <Button variant="contained" color="secondary" className={classes.google} onClick={this.signInWithGoogle}>Sign in with Google</Button>
-        </div>
+        </div> */}
 
         {error && <p style={{ color: "#d32f2f" }}>{error.message}</p>}
       </form>
