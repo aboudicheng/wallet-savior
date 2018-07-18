@@ -33,6 +33,14 @@ const styles = theme => ({
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightRegular,
     },
+    details: {
+        flexFlow: "column wrap",
+        textAlign: "left"
+    },
+    typography: {
+        width: "100%",
+        fontSize: "1.2rem"
+    }
 });
 
 const usersRef = firebase.database().ref('users/')
@@ -92,6 +100,10 @@ class History extends Component {
     render() {
         const { history, deleteAllDialog, isLoading, snackbarOpen } = this.state
         const { classes } = this.props
+
+        const fieldStyle = {
+            fontWeight: "bold"
+        }
         return (
             <div>
                 <h1>History</h1>
@@ -106,19 +118,19 @@ class History extends Component {
                                         <ExpansionPanelSummary key={"summary" + i} expandIcon={<ExpandMoreIcon />}>
                                             <Typography key={"typo1" + i} className={classes.heading}>{`${record.date.day} ${record.date.month} ${record.date.year} ${record.date.hour}:${record.date.min}`}</Typography>
                                         </ExpansionPanelSummary>
-                                        <ExpansionPanelDetails key={"details" + i}>
-                                            <Typography key={"wallet" + i}>
-                                                {`Wallet: ${record.wallet} `}
+                                        <ExpansionPanelDetails key={"details" + i} className={classes.details}>
+                                            <Typography key={"wallet" + i} className={classes.typography}>
+                                                <span style={fieldStyle}>Wallet: </span>{record.wallet}
                                             </Typography>
-                                            <Typography key={"type" + i}>
-                                                {`Type: ${record.type} `}
+                                            <Typography key={"type" + i} className={classes.typography}>
+                                                <span style={fieldStyle}>Type: </span>{record.type}
                                             </Typography>
-                                            <Typography key={"amount" + i}>
-                                                {`Amount: ${formatNumber({ prefix: "$" })(record.amount)} `}
+                                            <Typography key={"amount" + i} className={classes.typography}>
+                                                <span style={fieldStyle}>Amount: </span>{formatNumber({ prefix: "$" })(record.amount)}
                                             </Typography>
                                             {record.description !== ""
-                                                ? <Typography key={"description" + i}>
-                                                    {`Description:  ${record.description} `}
+                                                ? <Typography key={"description" + i} className={classes.typography}>
+                                                    <span style={fieldStyle}>Description: </span>{record.description}
                                                 </Typography>
                                                 : <div></div>
                                             }
