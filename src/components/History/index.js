@@ -104,7 +104,7 @@ class History extends Component {
                                 return (
                                     <ExpansionPanel key={"panel" + i}>
                                         <ExpansionPanelSummary key={"summary" + i} expandIcon={<ExpandMoreIcon />}>
-                                            <Typography key={"typo1" + i} className={classes.heading}>{`${record.date.day} ${record.date.month} ${record.date.year} ${record.date.hour}:${record.date.min}:${record.date.sec}`}</Typography>
+                                            <Typography key={"typo1" + i} className={classes.heading}>{`${record.date.day} ${record.date.month} ${record.date.year} ${record.date.hour}:${record.date.min}`}</Typography>
                                         </ExpansionPanelSummary>
                                         <ExpansionPanelDetails key={"details" + i}>
                                             <Typography key={"wallet" + i}>

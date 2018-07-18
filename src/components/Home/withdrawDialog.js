@@ -49,10 +49,9 @@ class WithdrawDialog extends React.Component {
                 date: {
                     year: date.getFullYear(),
                     month: months[date.getMonth()],
-                    day: date.getDate(),
-                    hour: date.getHours(),
-                    min: date.getMinutes(),
-                    sec: date.getSeconds()
+                    day: ("0" + date.getDate()).slice(-2),
+                    hour: ("0" + date.getHours()).slice(-2),
+                    min: ("0" + date.getMinutes()).slice(-2),
                 },
                 description: this.state.text
             }
