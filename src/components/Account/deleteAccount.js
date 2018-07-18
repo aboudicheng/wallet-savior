@@ -8,7 +8,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import firebase from 'firebase'
+import firebase from 'firebase/app'
 //import { admin } from '../../firebase/firebase'
 
 //TODO: delete auth user both from firebase and redux store

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -7,6 +9,7 @@ import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import { auth } from '../../firebase';
 import * as routes from '../../constants/routes';
+import firebase from 'firebase/app';
 
 const styles = theme => ({
   container: {
@@ -29,7 +32,7 @@ const styles = theme => ({
 const SignInPage = (props) =>
   <div>
     <h1>Login</h1>
-    <SignInForm history={props.history} classes={props.classes} />
+    <SignInForm history={props.history} classes={props.classes} authUser={props.authUser} />
     <PasswordForgetLink />
     <SignUpLink />
   </div>
@@ -49,6 +52,23 @@ class SignInForm extends Component {
     super(props);
 
     this.state = { ...INITIAL_STATE };
+  }
+
+  signInWithGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithRedirect(provider)
+      .then(res => {
+        const user = res.user
+
+        firebase.auth().signInWithEmailLink(user.email)
+          .then(() => {
+            this.setState(() => ({ ...INITIAL_STATE }));
+          })
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 
   onSubmit = (event) => {
@@ -71,6 +91,12 @@ class SignInForm extends Component {
       });
 
     event.preventDefault();
+  }
+
+  componentDidUpdate() {
+    if (this.props.authUser) {
+      this.props.history.push(routes.HOME);
+    }
   }
 
   render() {
@@ -107,6 +133,10 @@ class SignInForm extends Component {
         />
         <Button variant="contained" color="primary" disabled={isInvalid} type="submit" className={classes.button}>Login</Button>
 
+        <div style={{ margin: '0 auto', width: '100%' }}>
+          <Button variant="contained" color="secondary" className={classes.button} onClick={this.signInWithGoogle}>Sign in with Google</Button>
+        </div>
+
         {error && <p style={{ color: "#d32f2f" }}>{error.message}</p>}
       </form>
     );
@@ -120,7 +150,15 @@ const SignInLink = () =>
     Click <Link to={routes.LOGIN}>here</Link> to login
   </p>
 
-export default withRouter(withStyles(styles)(SignInPage));
+const mapStateToProps = (state) => ({
+  authUser: state.sessionState.authUser
+})
+
+export default compose(
+  withRouter,
+  withStyles(styles),
+  connect(mapStateToProps)
+)(SignInPage);
 
 export {
   SignInForm,

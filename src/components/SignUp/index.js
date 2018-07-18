@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom';
 import { SignInLink } from '../SignIn'
 import { auth, db } from '../../firebase';
-import firebase from 'firebase'
+import firebase from 'firebase/app'
 import * as routes from '../../constants/routes';
 
 const styles = theme => ({
@@ -34,6 +34,7 @@ const SignUpPage = (props) =>
   <div>
     <h1>SignUp</h1>
     <SignUpForm history={props.history} classes={props.classes} />
+    <SignInLink />
   </div>
 
 const updateByPropertyName = (propertyName, value) => () => ({
@@ -56,8 +57,8 @@ class SignUpForm extends Component {
   }
 
   signInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider)
+    const provider = new firebase.auth.GoogleAuthProvider()
+    auth.doSignInWithPopup(provider)
       .then(res => {
         const user = res.user
 
@@ -168,10 +169,8 @@ class SignUpForm extends Component {
 
         {error && <p style={{ color: "#d32f2f" }}>{error.message}</p>}
 
-        <SignInLink />
-
         <div style={{ margin: '0 auto', width: '100%' }}>
-          <Button variant="contained" color="primary" className={classes.button} onClick={this.signInWithGoogle}>Sign in with Google</Button>
+          <Button variant="contained" color="secondary" className={classes.button} onClick={this.signInWithGoogle}>Sign in with Google</Button>
         </div>
 
       </form>

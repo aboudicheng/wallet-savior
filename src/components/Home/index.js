@@ -4,7 +4,7 @@ import { compose } from 'recompose';
 import classNames from 'classnames';
 import FirstUse from './firstUseDialog'
 import withAuthorization from '../Session/withAuthorization';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import formatNumber from "format-number";
 import Button from '@material-ui/core/Button';
 import Edit from '@material-ui/icons/Edit'
