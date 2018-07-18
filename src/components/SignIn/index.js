@@ -27,6 +27,10 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
   },
+  google: {
+    margin: theme.spacing.unit,
+    backgroundColor: "#CF4332"
+  }
 });
 
 const SignInPage = (props) =>
@@ -56,6 +60,23 @@ class SignInForm extends Component {
 
   signInWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithRedirect(provider)
+      .then(res => {
+        const user = res.user
+
+        firebase.auth().signInWithEmailLink(user.email)
+          .then(() => {
+            this.setState(() => ({ ...INITIAL_STATE }));
+          })
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
+  signInWithFacebook = () => {
+    const provider = new firebase.auth.FacebookAuthProvider()
     firebase.auth().signInWithRedirect(provider)
       .then(res => {
         const user = res.user
@@ -134,7 +155,11 @@ class SignInForm extends Component {
         <Button variant="contained" color="primary" disabled={isInvalid} type="submit" className={classes.button}>Login</Button>
 
         <div style={{ margin: '0 auto', width: '100%' }}>
-          <Button variant="contained" color="secondary" className={classes.button} onClick={this.signInWithGoogle}>Sign in with Google</Button>
+          <Button variant="contained" color="primary" className={classes.facebook} onClick={this.signInWithFacebook}>Sign in with Facebook</Button>
+        </div>
+
+        <div style={{ margin: '0 auto', width: '100%' }}>
+          <Button variant="contained" color="secondary" className={classes.google} onClick={this.signInWithGoogle}>Sign in with Google</Button>
         </div>
 
         {error && <p style={{ color: "#d32f2f" }}>{error.message}</p>}

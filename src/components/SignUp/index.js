@@ -28,6 +28,14 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
   },
+  google: {
+    margin: theme.spacing.unit,
+    backgroundColor: "#CF4332"
+  },
+  facebook: {
+    margin: theme.spacing.unit,
+    backgroundColor: "#3C66C4"
+  }
 });
 
 const SignUpPage = (props) =>
@@ -60,6 +68,28 @@ class SignUpForm extends Component {
     const provider = new firebase.auth.GoogleAuthProvider()
     auth.doSignInWithPopup(provider)
       .then(res => {
+        const user = res.user
+
+        db.doCreateUser(user.uid, user.displayName, user.email)
+          .then(() => {
+            this.setState(() => ({ ...INITIAL_STATE }));
+            this.props.history.push(routes.HOME);
+          })
+          .catch(error => {
+            this.setState(updateByPropertyName('error', error));
+          });
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
+  signInWithFacebook = () => {
+    const provider = new firebase.auth.FacebookAuthProvider()
+    auth.doSignInWithPopup(provider)
+      .then(res => {
+        console.log(res)
         const user = res.user
 
         db.doCreateUser(user.uid, user.displayName, user.email)
@@ -167,11 +197,15 @@ class SignUpForm extends Component {
           <Button variant="contained" color="primary" disabled={isInvalid} type="submit" className={classes.button}>Sign Up</Button>
         </div>
 
-        {error && <p style={{ color: "#d32f2f" }}>{error.message}</p>}
+        <div style={{ margin: '0 auto', width: '100%' }}>
+          <Button variant="contained" color="primary" className={classes.facebook} onClick={this.signInWithFacebook}>Sign in with Facebook</Button>
+        </div>
 
         <div style={{ margin: '0 auto', width: '100%' }}>
-          <Button variant="contained" color="secondary" className={classes.button} onClick={this.signInWithGoogle}>Sign in with Google</Button>
+          <Button variant="contained" color="primary" className={classes.google} onClick={this.signInWithGoogle}>Sign in with Google</Button>
         </div>
+
+        {error && <p style={{ color: "#d32f2f" }}>{error.message}</p>}
 
       </form>
     );
