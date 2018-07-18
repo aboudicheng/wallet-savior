@@ -19,7 +19,6 @@ class InsertDialog extends React.Component {
 
         this.state = {
             value: "",
-            open: true,
             text: "",
         }
     }
@@ -60,6 +59,7 @@ class InsertDialog extends React.Component {
             usersRef.child(this.props.authUser.uid).child("history").push(record)
 
             this.props.setSnackbarOpen(true);
+            this.setState({ value: "", text: "" })
         }
     }
 

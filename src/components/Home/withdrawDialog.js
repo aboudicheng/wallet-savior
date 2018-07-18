@@ -57,11 +57,10 @@ class WithdrawDialog extends React.Component {
                 description: this.state.text
             }
 
-            console.log(record)
-
             usersRef.child(this.props.authUser.uid).child("history").push(record)
 
             this.props.setSnackbarOpen(true);
+            this.setState({ value: "", text: "" })
         }
     }
 
