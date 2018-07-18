@@ -34,7 +34,7 @@ const styles = theme => ({
     margin: theme.spacing.unit,
     right: "1.8rem",
     bottom: "1.8rem",
-    position: "absolute",
+    position: "fixed",
   },
   label: {
     right: "0.5rem",
