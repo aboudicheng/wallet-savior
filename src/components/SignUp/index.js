@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+
 import {
   Link,
   withRouter,
 } from 'react-router-dom';
 import { SignInLink } from '../SignIn'
 import { auth, db } from '../../firebase';
+import firebase from 'firebase'
 import * as routes from '../../constants/routes';
 
 const styles = theme => ({
@@ -51,6 +53,27 @@ class SignUpForm extends Component {
     super(props);
 
     this.state = { ...INITIAL_STATE };
+  }
+
+  signInWithGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider)
+      .then(res => {
+        const user = res.user
+
+        db.doCreateUser(user.uid, user.displayName, user.email)
+          .then(() => {
+            this.setState(() => ({ ...INITIAL_STATE }));
+            this.props.history.push(routes.HOME);
+          })
+          .catch(error => {
+            this.setState(updateByPropertyName('error', error));
+          });
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 
   onSubmit = (event) => {
@@ -146,6 +169,11 @@ class SignUpForm extends Component {
         {error && <p style={{ color: "#d32f2f" }}>{error.message}</p>}
 
         <SignInLink />
+
+        <div style={{ margin: '0 auto', width: '100%' }}>
+          <Button variant="contained" color="primary" className={classes.button} onClick={this.signInWithGoogle}>Sign in with Google</Button>
+        </div>
+
       </form>
     );
   }
