@@ -89,7 +89,7 @@ class NavigationAuth extends React.Component {
 
         const sideList = (
             <div className={classes.list}>
-                <List><ListItem button onClick={this.toggleWallet}><ListItemIcon><Home /></ListItemIcon><ListItemText primary="Main" />{this.state.walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
+                <List><ListItem button onClick={this.toggleWallet}><ListItemIcon><Home /></ListItemIcon><ListItemText primary="Personal" />{this.state.walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
                 <Collapse in={this.state.walletOpen} timeout="auto" unmountOnExit>
                     <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Money /></ListItemIcon><ListItemText primary={this.state.mainWallet} /></ListItem></List>
                 </Collapse>
