@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router'
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -18,6 +19,11 @@ class Create extends Component {
 
     handleChange = (e) => {
         this.setState({ name: e.target.value })
+    }
+
+    submit = () => {
+        this.props.handleClose(false)
+        this.props.history.push(`group/${this.state.name}`)
     }
 
     render() {
@@ -58,7 +64,7 @@ class Create extends Component {
                     <Button onClick={() => this.props.handleClose(false)} color="primary">
                         Cancel
   </Button>
-                    <Button onClick={() => console.log("sth")} color="primary">
+                    <Button onClick={this.submit} color="primary">
                         Create
   </Button>
                 </DialogActions>
@@ -67,4 +73,4 @@ class Create extends Component {
     }
 }
 
-export default Create;
+export default withRouter(Create);

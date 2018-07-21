@@ -14,6 +14,7 @@ import HomePage from '../Home';
 import AccountPage from '../Account';
 import Group from '../Group'
 import History from '../History'
+import GroupWallet from '../GroupWallet'
 import NotFound from '../NotFound'
 import withAuthentication from '../Session/withAuthentication';
 import * as routes from '../../constants/routes';
@@ -42,6 +43,7 @@ const App = (props) =>
             <Route exact path={routes.HOME} component={() => <HomePage />} />
             <Route exact path={routes.ACCOUNT} component={() => <AccountPage />} />
             <Route exact path={routes.GROUP} component={() => <Group />} />
+            <Route exact path={routes.GROUP_WALLET} component={props => <GroupWallet {...props} />} />
             <Route exact path={routes.HISTORY} component={() => <History />} />
             <Route component={NotFound} />
           </Switch>

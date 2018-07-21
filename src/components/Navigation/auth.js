@@ -69,7 +69,7 @@ class NavigationAuth extends React.Component {
         })
     }
 
-    toggleDrawer = (open) => () => {
+    toggleDrawer = (open) => {
         this.setState({ open });
     };
 
@@ -113,12 +113,12 @@ class NavigationAuth extends React.Component {
                     <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Money /></ListItemIcon><ListItemText primary={this.state.mainWallet} /></ListItem></List>
                 </Collapse>
                 <Collapse in={walletOpen} timeout="auto" unmountOnExit>
-                    <List><ListItem button onClick={() => { this.toggleDrawer(false); this.setDialog(true, "wallet") }}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Add Wallet" /></ListItem></List>
+                    <List><ListItem button onClick={() => this.setDialog(true, "wallet")}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Add Wallet" /></ListItem></List>
                 </Collapse>
 
                 <List><ListItem button onClick={e => this.toggleOption(e, "group")}><ListItemIcon><Group /></ListItemIcon><ListItemText primary="Group" />{groupOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
                 <Collapse in={groupOpen} timeout="auto" unmountOnExit>
-                    <List><ListItem button onClick={() => { this.toggleDrawer(false); this.setDialog(true, "group") }}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Create Group" /></ListItem></List>
+                    <List><ListItem button onClick={() => this.setDialog(true, "group")}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Create Group" /></ListItem></List>
                 </Collapse>
 
                 <List><ListItem button onClick={() => this.redirect(routes.HISTORY)}><ListItemIcon><History /></ListItemIcon><ListItemText primary="History" /></ListItem></List>
@@ -131,15 +131,15 @@ class NavigationAuth extends React.Component {
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
-                        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer(true)}>
+                        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={() => this.toggleDrawer(true)}>
                             <MenuIcon />
                         </IconButton>
 
-                        <Drawer open={open} onClose={this.toggleDrawer(false)}>
+                        <Drawer open={open} onClose={() => this.toggleDrawer(false)}>
                             <div
                                 tabIndex={0}
                                 role="button"
-                                onKeyDown={this.toggleDrawer(false)}
+                                onKeyDown={() => this.toggleDrawer(false)}
                             >
                                 {sideList}
                             </div>
@@ -155,7 +155,7 @@ class NavigationAuth extends React.Component {
 
                 {
                     dialog &&
-                    <Create open={dialog} handleClose={this.setDialog} option={option} />
+                    <Create open={dialog} handleClose={this.setDialog} toggleDrawer={this.toggleDrawer} option={option} />
                 }
             </div>
         )
