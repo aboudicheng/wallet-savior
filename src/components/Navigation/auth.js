@@ -55,6 +55,7 @@ class NavigationAuth extends React.Component {
         this.state = {
             open: false,
             walletOpen: false,
+            groupOpen: false,
             mainWallet: "",
         }
     }
@@ -69,8 +70,13 @@ class NavigationAuth extends React.Component {
         this.setState({ open });
     };
 
-    toggleWallet = () => {
-        this.setState(state => ({ walletOpen: !state.walletOpen }));
+    toggleOption = (e, option) => {
+        if (option === "wallet") {
+            this.setState(state => ({ walletOpen: !state.walletOpen }));
+        }
+        else {
+            this.setState(state => ({ groupOpen: !state.groupOpen }));
+        }
     };
 
     redirect = (route) => {
@@ -89,7 +95,7 @@ class NavigationAuth extends React.Component {
 
         const sideList = (
             <div className={classes.list}>
-                <List><ListItem button onClick={this.toggleWallet}><ListItemIcon><Home /></ListItemIcon><ListItemText primary="Personal" />{this.state.walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
+                <List><ListItem button onClick={e => this.toggleOption(e, "wallet")}><ListItemIcon><Home /></ListItemIcon><ListItemText primary="Personal" />{this.state.walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
                 <Collapse in={this.state.walletOpen} timeout="auto" unmountOnExit>
                     <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Money /></ListItemIcon><ListItemText primary={this.state.mainWallet} /></ListItem></List>
                 </Collapse>
@@ -97,7 +103,11 @@ class NavigationAuth extends React.Component {
                     <List><ListItem button><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Add Wallet" /></ListItem></List>
                 </Collapse>
 
-                <List><ListItem button onClick={() => this.redirect(routes.GROUP)}><ListItemIcon><Group /></ListItemIcon><ListItemText primary="Group" /></ListItem></List>
+                <List><ListItem button onClick={e => this.toggleOption(e, "group")}><ListItemIcon><Group /></ListItemIcon><ListItemText primary="Group" />{this.state.walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
+                <Collapse in={this.state.groupOpen} timeout="auto" unmountOnExit>
+                    <List><ListItem button><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Create Group" /></ListItem></List>
+                </Collapse>
+
                 <List><ListItem button onClick={() => this.redirect(routes.HISTORY)}><ListItemIcon><History /></ListItemIcon><ListItemText primary="History" /></ListItem></List>
                 <List><ListItem button onClick={() => this.redirect(routes.ACCOUNT)}><ListItemIcon><Settings /></ListItemIcon><ListItemText primary="Account" /></ListItem></List>
                 <List><ListItem button onClick={this.signOut}><ListItemIcon><Exit /></ListItemIcon><ListItemText primary="Sign Out" /></ListItem></List>
