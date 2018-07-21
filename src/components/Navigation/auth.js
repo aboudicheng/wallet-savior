@@ -34,6 +34,9 @@ const styles = theme => ({
     root: {
         flexGrow: 1,
     },
+    drawer: {
+        overflowY: "auto"
+    },
     flex: {
         flex: 1,
     },
@@ -160,7 +163,7 @@ class NavigationAuth extends React.Component {
                             <MenuIcon />
                         </IconButton>
 
-                        <Drawer open={open} onClose={() => this.toggleDrawer(false)}>
+                        <Drawer className={classes.drawer} open={open} onClose={() => this.toggleDrawer(false)}>
                             <div
                                 tabIndex={0}
                                 role="button"
