@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { compose } from 'recompose';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router'
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -8,6 +9,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
+import * as firebase from 'firebase/app';
 
 class Create extends Component {
     constructor() {
@@ -26,10 +28,25 @@ class Create extends Component {
         this.props.handleClose(false)
         this.props.toggleDrawer(false)
 
+        const groupsRef = firebase.database().ref('groups/')
+
         if (this.props.option === 'wallet') {
             this.props.history.push(`wallets/${this.state.name}`)
         }
         else {
+            const group = {
+                name: this.state.name,
+                member: [this.props.authUser.uid],
+                money: 0,
+            }
+
+            //push group info into group field of database
+            const newGroupRef = groupsRef.push(group)
+
+            //push group info into personal field of database
+            firebase.database().ref(`users/${this.props.authUser.uid}/groups/`).push({ name: this.state.name, id: newGroupRef.key })
+
+            //direct to its URL
             this.props.history.push(`group/${this.state.name}`)
         }
     }
@@ -81,6 +98,11 @@ class Create extends Component {
     }
 }
 
+const mapStateToProps = (state) => ({
+    authUser: state.sessionState.authUser,
+})
+
 export default compose(
     withRouter,
+    connect(mapStateToProps)
 )(Create);

@@ -25,7 +25,7 @@ import History from '@material-ui/icons/History'
 import Money from '@material-ui/icons/MonetizationOn'
 import { withStyles } from '@material-ui/core/styles';
 import * as routes from '../../constants/routes';
-import * as firebase from 'firebase'
+import * as firebase from 'firebase/app'
 import Create from './create'
 
 const styles = theme => ({
