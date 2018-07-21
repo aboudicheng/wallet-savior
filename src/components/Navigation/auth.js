@@ -26,6 +26,7 @@ import Money from '@material-ui/icons/MonetizationOn'
 import { withStyles } from '@material-ui/core/styles';
 import * as routes from '../../constants/routes';
 import * as firebase from 'firebase'
+import Create from './create'
 
 const styles = theme => ({
     root: {
@@ -57,6 +58,8 @@ class NavigationAuth extends React.Component {
             walletOpen: false,
             groupOpen: false,
             mainWallet: "",
+            dialog: false,
+            option: "",
         }
     }
 
@@ -90,22 +93,32 @@ class NavigationAuth extends React.Component {
         this.redirect(routes.LOGIN)
     }
 
+    setDialog = (open, option) => {
+        if (!open) {
+            this.setState({ dialog: open, option: "" })
+        }
+        else {
+            this.setState({ dialog: open, option })
+        }
+    }
+
     render() {
         const { classes } = this.props;
+        const { open, walletOpen, groupOpen, dialog, option } = this.state
 
         const sideList = (
             <div className={classes.list}>
                 <List><ListItem button onClick={e => this.toggleOption(e, "wallet")}><ListItemIcon><Home /></ListItemIcon><ListItemText primary="Personal" />{this.state.walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
-                <Collapse in={this.state.walletOpen} timeout="auto" unmountOnExit>
+                <Collapse in={walletOpen} timeout="auto" unmountOnExit>
                     <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Money /></ListItemIcon><ListItemText primary={this.state.mainWallet} /></ListItem></List>
                 </Collapse>
-                <Collapse in={this.state.walletOpen} timeout="auto" unmountOnExit>
-                    <List><ListItem button onClick={this.toggleDrawer(false)}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Add Wallet" /></ListItem></List>
+                <Collapse in={walletOpen} timeout="auto" unmountOnExit>
+                    <List><ListItem button onClick={() => { this.toggleDrawer(false); this.setDialog(true, "wallet") }}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Add Wallet" /></ListItem></List>
                 </Collapse>
 
                 <List><ListItem button onClick={e => this.toggleOption(e, "group")}><ListItemIcon><Group /></ListItemIcon><ListItemText primary="Group" />{this.state.walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
-                <Collapse in={this.state.groupOpen} timeout="auto" unmountOnExit>
-                    <List><ListItem button onClick={this.toggleDrawer(false)}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Create Group" /></ListItem></List>
+                <Collapse in={groupOpen} timeout="auto" unmountOnExit>
+                    <List><ListItem button onClick={() => { this.toggleDrawer(false); this.setDialog(true, "group") }}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Create Group" /></ListItem></List>
                 </Collapse>
 
                 <List><ListItem button onClick={() => this.redirect(routes.HISTORY)}><ListItemIcon><History /></ListItemIcon><ListItemText primary="History" /></ListItem></List>
@@ -122,7 +135,7 @@ class NavigationAuth extends React.Component {
                             <MenuIcon />
                         </IconButton>
 
-                        <Drawer open={this.state.open} onClose={this.toggleDrawer(false)}>
+                        <Drawer open={open} onClose={this.toggleDrawer(false)}>
                             <div
                                 tabIndex={0}
                                 role="button"
@@ -139,6 +152,11 @@ class NavigationAuth extends React.Component {
                         </Typography>
                     </Toolbar>
                 </AppBar>
+
+                {
+                    dialog &&
+                    <Create open={dialog} handleClose={this.setDialog} option={option} />
+                }
             </div>
         )
     }

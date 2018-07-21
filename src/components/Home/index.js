@@ -146,7 +146,7 @@ class HomePage extends Component {
 
         {/*Dialog popup for rename*/}
         {renameOpen &&
-          <Rename open={renameOpen} handleClose={this.props.setRenameDialog} setNewName={this.props.setNewName} />
+          <Rename open={renameOpen} handleClose={this.props.setRenameDialog} />
         }
 
         {/*Dialog popup for first-time users*/}
