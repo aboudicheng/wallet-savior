@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { compose } from 'recompose';
 import { withRouter } from 'react-router'
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -23,7 +24,14 @@ class Create extends Component {
 
     submit = () => {
         this.props.handleClose(false)
-        this.props.history.push(`group/${this.state.name}`)
+        this.props.toggleDrawer(false)
+
+        if (this.props.option === 'wallet') {
+            this.props.history.push(`wallets/${this.state.name}`)
+        }
+        else {
+            this.props.history.push(`group/${this.state.name}`)
+        }
     }
 
     render() {
@@ -73,4 +81,6 @@ class Create extends Component {
     }
 }
 
-export default withRouter(Create);
+export default compose(
+    withRouter,
+)(Create);
