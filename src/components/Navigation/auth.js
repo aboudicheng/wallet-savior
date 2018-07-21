@@ -130,7 +130,7 @@ class NavigationAuth extends React.Component {
                 }
                 {wallets.slice(1).map((wallet, i) =>
                     <Collapse in={walletOpen} timeout="auto" unmountOnExit key={"wallets" + { i }}>
-                        <List><ListItem button onClick={() => this.redirect(`/wallets/${wallet.name}`)}><ListItemIcon><Money style={{ color: "#f39c12" }} /></ListItemIcon><ListItemText primary={wallet.name} /></ListItem></List>
+                        <List><ListItem button onClick={() => this.redirect(`/wallets/${wallet.id}`)}><ListItemIcon><Money style={{ color: "#f39c12" }} /></ListItemIcon><ListItemText primary={wallet.name} /></ListItem></List>
                     </Collapse>
                 )}
                 <Collapse in={walletOpen} timeout="auto" unmountOnExit>

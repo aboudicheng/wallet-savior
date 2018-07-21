@@ -29,15 +29,19 @@ class Create extends Component {
         this.props.toggleDrawer(false)
 
         if (this.props.option === 'wallet') {
+            const walletRef = firebase.database().ref(`users/${this.props.authUser.uid}/wallets/`)
+
             const wallet = {
                 name: this.state.name,
                 money: 0,
             }
 
             //push wallet into user's wallet field
-            firebase.database().ref(`users/${this.props.authUser.uid}/wallets/`).push(wallet)
+            const newWallet = walletRef.push(wallet)
 
-            this.props.history.push(`wallets/${this.state.name}`)
+            walletRef.child(newWallet.key).set({ ...wallet, id: newWallet.key })
+
+            this.props.history.push(`wallets/${newWallet.key}`)
         }
         else {
             const groupsRef = firebase.database().ref('groups/')

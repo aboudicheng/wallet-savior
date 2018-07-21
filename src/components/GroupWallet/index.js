@@ -23,7 +23,7 @@ class GroupWallet extends Component {
     }
 
     componentDidMount() {
-        firebase.database().ref(`groups/${this.props.match.params.id}`).on('value', snapshot => {
+        firebase.database().ref(`groups/${this.props.match.params.id}`).once('value', snapshot => {
             this.setState({ group: snapshot.val(), isLoading: false })
         })
     }
@@ -33,9 +33,11 @@ class GroupWallet extends Component {
         const { classes } = this.props
         return (
             <div>
-                {isLoading
+                {
+                    isLoading
                     ? <CircularProgress className={classes.progress} size={50} />
-                    : <div>
+                    :
+                    <div>
                         <h1>{group.name}</h1>
                         <span style={{ fontSize: "170%", color: group.money >= 0 ? "#3fb5a3" : "#ff0000" }}>{formatNumber({ prefix: "$" })(parseFloat(group.money).toFixed(2))}</span>
                     </div>
