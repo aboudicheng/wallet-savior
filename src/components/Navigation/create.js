@@ -28,22 +28,30 @@ class Create extends Component {
         this.props.handleClose(false)
         this.props.toggleDrawer(false)
 
-        const groupsRef = firebase.database().ref('groups/')
-
         if (this.props.option === 'wallet') {
+            const wallet = {
+                name: this.state.name,
+                money: 0,
+            }
+
+            //push wallet into user's wallet field
+            firebase.database().ref(`users/${this.props.authUser.uid}/wallets/`).push(wallet)
+
             this.props.history.push(`wallets/${this.state.name}`)
         }
         else {
+            const groupsRef = firebase.database().ref('groups/')
+
             const group = {
                 name: this.state.name,
                 member: [this.props.authUser.uid],
                 money: 0,
             }
 
-            //push group info into group field of database
+            //push group info into group field
             const newGroupRef = groupsRef.push(group)
 
-            //push group info into personal field of database
+            //push group info into personal field
             firebase.database().ref(`users/${this.props.authUser.uid}/groups/`).push({ name: this.state.name, id: newGroupRef.key })
 
             //direct to its URL

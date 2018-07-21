@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash'
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router'
@@ -61,23 +62,21 @@ class NavigationAuth extends React.Component {
             mainWallet: "",
             dialog: false,
             option: "",
+            wallets: [],
             groupWallets: [],
         }
     }
 
     componentWillMount() {
         firebase.database().ref(`users/${this.props.authUser.uid}`).on('value', snapshot => {
-            const { groups } = snapshot.val()
-            const groupWallets = []
+            const { groups, wallets } = snapshot.val()
+            const groupWallets = _.values(groups)
+            const newWallets = _.values(wallets)
 
-            for (let key in groups) {
-                groupWallets.push(groups[key])
-            }
-
-            this.setState(prevState => ({
-                groupWallets: [...prevState.groupWallets].concat(groupWallets),
-                mainWallet: snapshot.val().wallets[0].name
-            }))
+            this.setState({
+                wallets: newWallets,
+                groupWallets,
+            })
         })
     }
 
@@ -116,23 +115,32 @@ class NavigationAuth extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { open, walletOpen, groupOpen, dialog, option, mainWallet, groupWallets } = this.state
+        const { open, walletOpen, groupOpen, dialog, option, wallets, groupWallets } = this.state
+
+        console.log(wallets)
 
         const sideList = (
             <div className={classes.list}>
                 <List><ListItem button onClick={e => this.toggleOption(e, "wallet")}><ListItemIcon><Home /></ListItemIcon><ListItemText primary="Personal" />{walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
-                <Collapse in={walletOpen} timeout="auto" unmountOnExit>
-                    <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Money /></ListItemIcon><ListItemText primary={mainWallet} /></ListItem></List>
-                </Collapse>
+                {wallets.length > 0 &&
+                    <Collapse in={walletOpen} timeout="auto" unmountOnExit>
+                        <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Money /></ListItemIcon><ListItemText primary={wallets[0].name} /></ListItem></List>
+                    </Collapse>
+                }
+                {wallets.slice(1).map((wallet, i) =>
+                    <Collapse in={walletOpen} timeout="auto" unmountOnExit key={"wallets" + { i }}>
+                        <List><ListItem button onClick={() => this.redirect(`/wallets/${wallet.name}`)}><ListItemIcon><Money /></ListItemIcon><ListItemText primary={wallet.name} /></ListItem></List>
+                    </Collapse>
+                )}
                 <Collapse in={walletOpen} timeout="auto" unmountOnExit>
                     <List><ListItem button onClick={() => this.setDialog(true, "wallet")}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Add Wallet" /></ListItem></List>
                 </Collapse>
 
                 <List><ListItem button onClick={e => this.toggleOption(e, "group")}><ListItemIcon><Group /></ListItemIcon><ListItemText primary="Group" />{groupOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
                 {groupWallets.length > 0 &&
-                    groupWallets.map((group, i) => 
-                        <Collapse in={groupOpen} timeout="auto" unmountOnExit key={"collapse" + {i}}>
-                            <List><ListItem button onClick={() => {this.props.history.push(`group/${group.name}`); this.toggleDrawer(false)}}><ListItemIcon><GroupWork /></ListItemIcon><ListItemText primary={group.name} /></ListItem></List>
+                    groupWallets.map((group, i) =>
+                        <Collapse in={groupOpen} timeout="auto" unmountOnExit key={"collapse" + { i }}>
+                            <List><ListItem button onClick={() => this.redirect(`/group/${group.name}`)}><ListItemIcon><GroupWork /></ListItemIcon><ListItemText primary={group.name} /></ListItem></List>
                         </Collapse>
                     )
                 }
