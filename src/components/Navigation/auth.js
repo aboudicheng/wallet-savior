@@ -100,12 +100,12 @@ class NavigationAuth extends React.Component {
                     <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Money /></ListItemIcon><ListItemText primary={this.state.mainWallet} /></ListItem></List>
                 </Collapse>
                 <Collapse in={this.state.walletOpen} timeout="auto" unmountOnExit>
-                    <List><ListItem button><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Add Wallet" /></ListItem></List>
+                    <List><ListItem button onClick={this.toggleDrawer(false)}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Add Wallet" /></ListItem></List>
                 </Collapse>
 
                 <List><ListItem button onClick={e => this.toggleOption(e, "group")}><ListItemIcon><Group /></ListItemIcon><ListItemText primary="Group" />{this.state.walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
                 <Collapse in={this.state.groupOpen} timeout="auto" unmountOnExit>
-                    <List><ListItem button><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Create Group" /></ListItem></List>
+                    <List><ListItem button onClick={this.toggleDrawer(false)}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Create Group" /></ListItem></List>
                 </Collapse>
 
                 <List><ListItem button onClick={() => this.redirect(routes.HISTORY)}><ListItemIcon><History /></ListItemIcon><ListItemText primary="History" /></ListItem></List>
