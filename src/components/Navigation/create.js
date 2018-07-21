@@ -55,7 +55,7 @@ class Create extends Component {
             firebase.database().ref(`users/${this.props.authUser.uid}/groups/`).push({ name: this.state.name, id: newGroupRef.key })
 
             //direct to its URL
-            this.props.history.push(`group/${this.state.name}`)
+            this.props.history.push(`groups/${newGroupRef.key}`)
         }
     }
 

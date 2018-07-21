@@ -141,7 +141,7 @@ class NavigationAuth extends React.Component {
                 {groupWallets.length > 0 &&
                     groupWallets.map((group, i) =>
                         <Collapse in={groupOpen} timeout="auto" unmountOnExit key={"collapse" + { i }}>
-                            <List><ListItem button onClick={() => this.redirect(`/groups/${group.name}`)}><ListItemIcon><GroupWork style={{ color: "#f39c12" }} /></ListItemIcon><ListItemText primary={group.name} /></ListItem></List>
+                            <List><ListItem button onClick={() => this.redirect(`/groups/${group.id}`)}><ListItemIcon><GroupWork style={{ color: "#f39c12" }} /></ListItemIcon><ListItemText primary={group.name} /></ListItem></List>
                         </Collapse>
                     )
                 }
