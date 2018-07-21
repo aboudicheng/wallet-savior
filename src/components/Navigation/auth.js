@@ -22,6 +22,7 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import History from '@material-ui/icons/History'
+import GroupWork from '@material-ui/icons/GroupWork'
 import Money from '@material-ui/icons/MonetizationOn'
 import { withStyles } from '@material-ui/core/styles';
 import * as routes from '../../constants/routes';
@@ -60,12 +61,23 @@ class NavigationAuth extends React.Component {
             mainWallet: "",
             dialog: false,
             option: "",
+            groupWallets: [],
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         firebase.database().ref(`users/${this.props.authUser.uid}`).on('value', snapshot => {
-            this.setState({ mainWallet: snapshot.val().wallets[0].name })
+            const { groups } = snapshot.val()
+            const groupWallets = []
+
+            for (let key in groups) {
+                groupWallets.push(groups[key])
+            }
+
+            this.setState(prevState => ({
+                groupWallets: [...prevState.groupWallets].concat(groupWallets),
+                mainWallet: snapshot.val().wallets[0].name
+            }))
         })
     }
 
@@ -104,19 +116,26 @@ class NavigationAuth extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { open, walletOpen, groupOpen, dialog, option } = this.state
+        const { open, walletOpen, groupOpen, dialog, option, mainWallet, groupWallets } = this.state
 
         const sideList = (
             <div className={classes.list}>
                 <List><ListItem button onClick={e => this.toggleOption(e, "wallet")}><ListItemIcon><Home /></ListItemIcon><ListItemText primary="Personal" />{walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
                 <Collapse in={walletOpen} timeout="auto" unmountOnExit>
-                    <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Money /></ListItemIcon><ListItemText primary={this.state.mainWallet} /></ListItem></List>
+                    <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Money /></ListItemIcon><ListItemText primary={mainWallet} /></ListItem></List>
                 </Collapse>
                 <Collapse in={walletOpen} timeout="auto" unmountOnExit>
                     <List><ListItem button onClick={() => this.setDialog(true, "wallet")}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Add Wallet" /></ListItem></List>
                 </Collapse>
 
                 <List><ListItem button onClick={e => this.toggleOption(e, "group")}><ListItemIcon><Group /></ListItemIcon><ListItemText primary="Group" />{groupOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
+                {groupWallets.length > 0 &&
+                    groupWallets.map((group, i) => 
+                        <Collapse in={groupOpen} timeout="auto" unmountOnExit key={"collapse" + {i}}>
+                            <List><ListItem button onClick={() => {this.props.history.push(`group/${group.name}`); this.toggleDrawer(false)}}><ListItemIcon><GroupWork /></ListItemIcon><ListItemText primary={group.name} /></ListItem></List>
+                        </Collapse>
+                    )
+                }
                 <Collapse in={groupOpen} timeout="auto" unmountOnExit>
                     <List><ListItem button onClick={() => this.setDialog(true, "group")}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Create Group" /></ListItem></List>
                 </Collapse>
