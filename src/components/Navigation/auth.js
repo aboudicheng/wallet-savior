@@ -122,15 +122,15 @@ class NavigationAuth extends React.Component {
 
         const sideList = (
             <div className={classes.list}>
-                <List><ListItem button onClick={e => this.toggleOption(e, "wallet")}><ListItemIcon><Home style={{ color: "#f39c12" }} /></ListItemIcon><ListItemText primary="Personal" />{walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
+                <List><ListItem button onClick={e => this.toggleOption(e, "wallet")}><ListItemIcon><Home style={{ color: "#2ecc71" }} /></ListItemIcon><ListItemText primary="Personal" />{walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
                 {wallets.length > 0 &&
                     <Collapse in={walletOpen} timeout="auto" unmountOnExit>
-                        <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Money style={{ color: "#2ecc71" }} /></ListItemIcon><ListItemText primary={wallets[0].name} /></ListItem></List>
+                        <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Money style={{ color: "#f39c12" }} /></ListItemIcon><ListItemText primary={wallets[0].name} /></ListItem></List>
                     </Collapse>
                 }
                 {wallets.slice(1).map((wallet, i) =>
                     <Collapse in={walletOpen} timeout="auto" unmountOnExit key={"wallets" + { i }}>
-                        <List><ListItem button onClick={() => this.redirect(`/wallets/${wallet.name}`)}><ListItemIcon><Money style={{ color: "#2ecc71" }} /></ListItemIcon><ListItemText primary={wallet.name} /></ListItem></List>
+                        <List><ListItem button onClick={() => this.redirect(`/wallets/${wallet.name}`)}><ListItemIcon><Money style={{ color: "#f39c12" }} /></ListItemIcon><ListItemText primary={wallet.name} /></ListItem></List>
                     </Collapse>
                 )}
                 <Collapse in={walletOpen} timeout="auto" unmountOnExit>
@@ -141,7 +141,7 @@ class NavigationAuth extends React.Component {
                 {groupWallets.length > 0 &&
                     groupWallets.map((group, i) =>
                         <Collapse in={groupOpen} timeout="auto" unmountOnExit key={"collapse" + { i }}>
-                            <List><ListItem button onClick={() => this.redirect(`/group/${group.name}`)}><ListItemIcon><GroupWork style={{ color: "#2ecc71" }} /></ListItemIcon><ListItemText primary={group.name} /></ListItem></List>
+                            <List><ListItem button onClick={() => this.redirect(`/group/${group.name}`)}><ListItemIcon><GroupWork style={{ color: "#f39c12" }} /></ListItemIcon><ListItemText primary={group.name} /></ListItem></List>
                         </Collapse>
                     )
                 }
