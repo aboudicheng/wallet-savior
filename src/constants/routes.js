@@ -6,4 +6,4 @@ export const ACCOUNT = '/account';
 export const GROUP = '/group';
 export const HISTORY = '/history';
 export const NEW_WALLET = '/wallets/:name';
-export const GROUP_WALLET = '/group/:name';
+export const GROUP_WALLET = '/groups/:name';
