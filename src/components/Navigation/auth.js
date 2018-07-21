@@ -117,30 +117,28 @@ class NavigationAuth extends React.Component {
         const { classes } = this.props;
         const { open, walletOpen, groupOpen, dialog, option, wallets, groupWallets } = this.state
 
-        console.log(wallets)
-
         const sideList = (
             <div className={classes.list}>
-                <List><ListItem button onClick={e => this.toggleOption(e, "wallet")}><ListItemIcon><Home /></ListItemIcon><ListItemText primary="Personal" />{walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
+                <List><ListItem button onClick={e => this.toggleOption(e, "wallet")}><ListItemIcon><Home style={{ color: "#f39c12" }} /></ListItemIcon><ListItemText primary="Personal" />{walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
                 {wallets.length > 0 &&
                     <Collapse in={walletOpen} timeout="auto" unmountOnExit>
-                        <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Money /></ListItemIcon><ListItemText primary={wallets[0].name} /></ListItem></List>
+                        <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Money style={{ color: "#2ecc71" }} /></ListItemIcon><ListItemText primary={wallets[0].name} /></ListItem></List>
                     </Collapse>
                 }
                 {wallets.slice(1).map((wallet, i) =>
                     <Collapse in={walletOpen} timeout="auto" unmountOnExit key={"wallets" + { i }}>
-                        <List><ListItem button onClick={() => this.redirect(`/wallets/${wallet.name}`)}><ListItemIcon><Money /></ListItemIcon><ListItemText primary={wallet.name} /></ListItem></List>
+                        <List><ListItem button onClick={() => this.redirect(`/wallets/${wallet.name}`)}><ListItemIcon><Money style={{ color: "#2ecc71" }} /></ListItemIcon><ListItemText primary={wallet.name} /></ListItem></List>
                     </Collapse>
                 )}
                 <Collapse in={walletOpen} timeout="auto" unmountOnExit>
                     <List><ListItem button onClick={() => this.setDialog(true, "wallet")}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Add Wallet" /></ListItem></List>
                 </Collapse>
 
-                <List><ListItem button onClick={e => this.toggleOption(e, "group")}><ListItemIcon><Group /></ListItemIcon><ListItemText primary="Group" />{groupOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
+                <List><ListItem button onClick={e => this.toggleOption(e, "group")}><ListItemIcon><Group style={{ color: "#2980b9" }} /></ListItemIcon><ListItemText primary="Group" />{groupOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
                 {groupWallets.length > 0 &&
                     groupWallets.map((group, i) =>
                         <Collapse in={groupOpen} timeout="auto" unmountOnExit key={"collapse" + { i }}>
-                            <List><ListItem button onClick={() => this.redirect(`/group/${group.name}`)}><ListItemIcon><GroupWork /></ListItemIcon><ListItemText primary={group.name} /></ListItem></List>
+                            <List><ListItem button onClick={() => this.redirect(`/group/${group.name}`)}><ListItemIcon><GroupWork style={{ color: "#2ecc71" }} /></ListItemIcon><ListItemText primary={group.name} /></ListItem></List>
                         </Collapse>
                     )
                 }
@@ -148,9 +146,9 @@ class NavigationAuth extends React.Component {
                     <List><ListItem button onClick={() => this.setDialog(true, "group")}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Create Group" /></ListItem></List>
                 </Collapse>
 
-                <List><ListItem button onClick={() => this.redirect(routes.HISTORY)}><ListItemIcon><History /></ListItemIcon><ListItemText primary="History" /></ListItem></List>
-                <List><ListItem button onClick={() => this.redirect(routes.ACCOUNT)}><ListItemIcon><Settings /></ListItemIcon><ListItemText primary="Account" /></ListItem></List>
-                <List><ListItem button onClick={this.signOut}><ListItemIcon><Exit /></ListItemIcon><ListItemText primary="Sign Out" /></ListItem></List>
+                <List><ListItem button onClick={() => this.redirect(routes.HISTORY)}><ListItemIcon><History style={{ color: "#d35400" }} /></ListItemIcon><ListItemText primary="History" /></ListItem></List>
+                <List><ListItem button onClick={() => this.redirect(routes.ACCOUNT)}><ListItemIcon><Settings style={{ color: "#7f8c8d" }} /></ListItemIcon><ListItemText primary="Account" /></ListItem></List>
+                <List><ListItem button onClick={this.signOut}><ListItemIcon><Exit style={{ color: "#2c3e50" }} /></ListItemIcon><ListItemText primary="Sign Out" /></ListItem></List>
             </div>
         );
 
