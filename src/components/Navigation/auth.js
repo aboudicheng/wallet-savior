@@ -108,7 +108,7 @@ class NavigationAuth extends React.Component {
 
         const sideList = (
             <div className={classes.list}>
-                <List><ListItem button onClick={e => this.toggleOption(e, "wallet")}><ListItemIcon><Home /></ListItemIcon><ListItemText primary="Personal" />{this.state.walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
+                <List><ListItem button onClick={e => this.toggleOption(e, "wallet")}><ListItemIcon><Home /></ListItemIcon><ListItemText primary="Personal" />{walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
                 <Collapse in={walletOpen} timeout="auto" unmountOnExit>
                     <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Money /></ListItemIcon><ListItemText primary={this.state.mainWallet} /></ListItem></List>
                 </Collapse>
@@ -116,7 +116,7 @@ class NavigationAuth extends React.Component {
                     <List><ListItem button onClick={() => { this.toggleDrawer(false); this.setDialog(true, "wallet") }}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Add Wallet" /></ListItem></List>
                 </Collapse>
 
-                <List><ListItem button onClick={e => this.toggleOption(e, "group")}><ListItemIcon><Group /></ListItemIcon><ListItemText primary="Group" />{this.state.walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
+                <List><ListItem button onClick={e => this.toggleOption(e, "group")}><ListItemIcon><Group /></ListItemIcon><ListItemText primary="Group" />{groupOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
                 <Collapse in={groupOpen} timeout="auto" unmountOnExit>
                     <List><ListItem button onClick={() => { this.toggleDrawer(false); this.setDialog(true, "group") }}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Create Group" /></ListItem></List>
                 </Collapse>
