@@ -14,7 +14,7 @@
 
 ## TODO List
 
-* Multiple wallets
-* Group wallets
+* Add people to groups
+* Delete single history
 * Delete account
 * OAuth 
