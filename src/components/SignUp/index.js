@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { compose } from 'recompose';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -61,7 +62,15 @@ class SignUpForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { ...INITIAL_STATE };
+    this.state = { ...INITIAL_STATE, users: [] };
+  }
+
+  componentDidMount() {
+    firebase.database().ref('users').on('child_added', snapshot =>
+      this.setState(prevState => ({
+        users: [...prevState.users, snapshot.val()]
+      }))
+    );
   }
 
   // signInWithGoogle = () => {
@@ -70,18 +79,9 @@ class SignUpForm extends Component {
   //     .then(res => {
   //       const user = res.user
 
-  //       db.doCreateUser(user.uid, user.displayName, user.email)
-  //         .then(() => {
-  //           this.setState(() => ({ ...INITIAL_STATE }));
-  //           this.props.history.push(routes.HOME);
-  //         })
-  //         .catch(error => {
-  //           this.setState(updateByPropertyName('error', error));
-  //         });
+  //       const result = this.state.users.find(u => user.email === u.email)
 
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
+  //       this.props.history.push(routes.HOME);
   //     })
   // }
 
@@ -199,9 +199,9 @@ class SignUpForm extends Component {
 
         {/* <div style={{ margin: '0 auto', width: '100%' }}>
           <Button variant="contained" color="primary" className={classes.facebook} onClick={this.signInWithFacebook}>Sign in with Facebook</Button>
-        </div>
+        </div> */}
 
-        <div style={{ margin: '0 auto', width: '100%' }}>
+        {/* <div style={{ margin: '0 auto', width: '100%' }}>
           <Button variant="contained" color="primary" className={classes.google} onClick={this.signInWithGoogle}>Sign in with Google</Button>
         </div> */}
 
@@ -219,7 +219,10 @@ const SignUpLink = () =>
     <Link to={routes.SIGN_UP}>Sign Up</Link>
   </p>
 
-export default withRouter(withStyles(styles)(SignUpPage));
+export default compose(
+  withRouter,
+  withStyles(styles),
+)(SignUpPage)
 
 export {
   SignUpForm,

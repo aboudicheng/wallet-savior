@@ -55,23 +55,42 @@ class SignInForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { ...INITIAL_STATE };
+    this.state = { ...INITIAL_STATE, users: [] };
+  }
+
+  componentDidMount() {
+    firebase.database().ref('users').on('child_added', snapshot =>
+      this.setState(prevState => ({
+        users: [...prevState.users, snapshot.val()]
+      }))
+    );
   }
 
   // signInWithGoogle = () => {
-  //   const provider = new firebase.auth.GoogleAuthProvider();
-  //   firebase.auth().signInWithRedirect(provider)
+  //   const provider = new firebase.auth.GoogleAuthProvider()
+  //   auth.doSignInWithPopup(provider)
   //     .then(res => {
   //       const user = res.user
 
-  //       firebase.auth().signInWithEmailLink(user.email)
-  //         .then(() => {
-  //           this.setState(() => ({ ...INITIAL_STATE }));
-  //         })
+  //       const result = this.state.users.find(u => user.email === u.email)
 
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
+  //       if (!result) {
+  //         db.doCreateUser(user.uid, user.displayName, user.email)
+  //           .then(() => {
+  //             this.setState(() => ({ ...INITIAL_STATE }));
+  //             this.props.history.push(routes.HOME);
+  //           })
+  //           .catch(error => {
+  //             this.setState(updateByPropertyName('error', error));
+  //           });
+  //       }
+  //       else {
+  //         firebase.auth().signInWithEmailLink(user.email)
+  //           .then(() => {
+  //             this.setState(() => ({ ...INITIAL_STATE }));
+  //           })
+  //           .catch(error => console.log(error))
+  //       }
   //     })
   // }
 
@@ -156,9 +175,9 @@ class SignInForm extends Component {
 
         {/* <div style={{ margin: '0 auto', width: '100%' }}>
           <Button variant="contained" color="primary" className={classes.facebook} onClick={this.signInWithFacebook}>Sign in with Facebook</Button>
-        </div>
+        </div> */}
 
-        <div style={{ margin: '0 auto', width: '100%' }}>
+        {/* <div style={{ margin: '0 auto', width: '100%' }}>
           <Button variant="contained" color="secondary" className={classes.google} onClick={this.signInWithGoogle}>Sign in with Google</Button>
         </div> */}
 

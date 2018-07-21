@@ -9,7 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import * as firebase from 'firebase'
 import * as actions from '../../constants/action_types'
-import { months } from '../../constants/months'
+//import { months } from '../../constants/months'
 
 const usersRef = firebase.database().ref('users/')
 
@@ -19,7 +19,6 @@ class ResetDialog extends React.Component {
 
         this.state = {
             value: "",
-            text: "",
         }
     }
 
@@ -29,7 +28,7 @@ class ResetDialog extends React.Component {
 
     submit = () => {
         if (this.state.value.length !== 0 && !isNaN(this.state.value)) {
-            const date = new Date();
+            //const date = new Date();
 
             this.props.handleClose(false);
             this.props.handleMenuClose(null);
@@ -39,21 +38,21 @@ class ResetDialog extends React.Component {
 
             usersRef.child(this.props.authUser.uid).child("wallets").child(0).update({ money })
 
-            const record = {
-                type: "Reset",
-                amount: this.state.value,
-                wallet: "Personal",
-                date: {
-                    year: date.getFullYear(),
-                    month: months[date.getMonth()],
-                    day: ("0" + date.getDate()).slice(-2),
-                    hour: ("0" + date.getHours()).slice(-2),
-                    min: ("0" + date.getMinutes()).slice(-2),
-                },
-                description: this.state.text
-            }
+            // const record = {
+            //     type: "Reset",
+            //     amount: this.state.value,
+            //     wallet: "Personal",
+            //     date: {
+            //         year: date.getFullYear(),
+            //         month: months[date.getMonth()],
+            //         day: ("0" + date.getDate()).slice(-2),
+            //         hour: ("0" + date.getHours()).slice(-2),
+            //         min: ("0" + date.getMinutes()).slice(-2),
+            //     },
+            //     description: this.state.text
+            // }
 
-            usersRef.child(this.props.authUser.uid).child("history").push(record)
+            // usersRef.child(this.props.authUser.uid).child("history").push(record)
 
             this.props.setSnackbarOpen(true);
             this.setState({ value: "", text: "" })
@@ -81,15 +80,6 @@ class ResetDialog extends React.Component {
                         fullWidth
                         value={this.state.value}
                         onChange={(e) => this.handleChange(e, "value")}
-                    />
-                    <TextField
-                        margin="dense"
-                        id="description"
-                        label="Description (optional)"
-                        type="text"
-                        fullWidth
-                        value={this.state.text}
-                        onChange={(e) => this.handleChange(e, "text")}
                     />
                 </DialogContent>
                 <DialogActions>
