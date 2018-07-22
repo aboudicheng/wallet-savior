@@ -28,7 +28,7 @@ class Rename extends React.Component {
         if (this.state.value !== "") {
             if (this.state.value.length <= 14) {
                 this.setState({ error: null })
-                firebase.database().ref(`users/${this.props.authUser.uid}/wallets/0`).update({ name: this.state.value })
+                firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.child}`).update({ name: this.state.value })
                 this.props.setSnackbarOpen(true);
                 this.props.setRenameDialog(false);
             }

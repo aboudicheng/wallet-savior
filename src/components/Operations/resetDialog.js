@@ -8,10 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import * as firebase from 'firebase/app'
-import * as actions from '../../constants/action_types'
 //import { months } from '../../constants/months'
-
-const usersRef = firebase.database().ref('users/')
 
 class ResetDialog extends React.Component {
     constructor(props) {
@@ -36,7 +33,7 @@ class ResetDialog extends React.Component {
 
             const money = parseFloat(this.state.value).toFixed(2)
 
-            usersRef.child(this.props.authUser.uid).child("wallets").child(0).update({ money })
+            firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.child}`).update({ money })
 
             // const record = {
             //     type: "Reset",
@@ -100,8 +97,4 @@ const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
 })
 
-const mapDispatchToProps = (dispatch) => ({
-    setSnackbarOpen: (snackbarOpen) => dispatch({ type: actions.SET_SNACKBAR_OPEN, snackbarOpen })
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(ResetDialog);
+export default connect(mapStateToProps)(ResetDialog);

@@ -146,7 +146,7 @@ class HomePage extends Component {
 
         {/*Dialog popup for rename*/}
         {renameOpen &&
-          <Rename open={renameOpen} handleClose={this.props.setRenameDialog} />
+          <Rename open={renameOpen} handleClose={this.props.setRenameDialog} child={0} setSnackbarOpen={this.props.setSnackbarOpen} setRenameDialog={this.props.setRenameDialog} />
         }
 
         {/*Dialog popup for first-time users*/}
@@ -183,11 +183,11 @@ class HomePage extends Component {
         {/*Operation Dialogs*/}
         {modifyOpen &&
           this.state.insert
-          ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} handleMenuClose={this.props.setAnchorEl} setTotalAmount={this.props.setTotalAmount} walletName={walletName} totalAmount={totalAmount} />
+          ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} handleMenuClose={this.props.setAnchorEl} setTotalAmount={this.props.setTotalAmount} walletName={walletName} totalAmount={totalAmount} child={0} setSnackbarOpen={this.props.setSnackbarOpen} />
           : this.state.withdraw
-            ? <WithdrawDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} handleMenuClose={this.props.setAnchorEl} setTotalAmount={this.props.setTotalAmount} walletName={walletName} totalAmount={totalAmount} />
+            ? <WithdrawDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} handleMenuClose={this.props.setAnchorEl} setTotalAmount={this.props.setTotalAmount} walletName={walletName} totalAmount={totalAmount} child={0} setSnackbarOpen={this.props.setSnackbarOpen} />
             : this.state.reset
-              ? <ResetDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} handleMenuClose={this.props.setAnchorEl} setTotalAmount={this.props.setTotalAmount} walletName={walletName} />
+              ? <ResetDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} handleMenuClose={this.props.setAnchorEl} setTotalAmount={this.props.setTotalAmount} walletName={walletName} child={0} setSnackbarOpen={this.props.setSnackbarOpen} />
               : null
         }
 
