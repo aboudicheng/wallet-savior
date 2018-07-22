@@ -23,6 +23,7 @@ import * as routes from '../../constants/routes';
 import InsertDialog from '../Operations/insertDialog'
 import WithdrawDialog from '../Operations/withdrawDialog'
 import ResetDialog from '../Operations/resetDialog'
+import DeleteDialog from '../Operations/deleteDialog'
 import MySnackbarContentWrapper from '../MySnackbarContentWrapper'
 import Rename from '../Operations/rename'
 
@@ -63,6 +64,7 @@ class NewWallet extends Component {
             insert: false,
             withdraw: false,
             reset: false,
+            delete: false,
 
             renameOpen: false,
 
@@ -74,8 +76,15 @@ class NewWallet extends Component {
     componentDidMount() {
         //if user access via history.push or pressing back button
         if (this.props.history.action === "PUSH" || this.props.authUser) {
-            firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.match.params.id}`).once('value', snapshot => {
-                this.setState({ wallet: snapshot.val(), walletName: snapshot.val().name, totalAmount: snapshot.val().money, isLoading: false })
+            firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.match.params.id}`).on('value', snapshot => {
+                if (snapshot.val()) {
+                    this.setState({
+                        wallet: snapshot.val(),
+                        walletName: snapshot.val().name,
+                        totalAmount: snapshot.val().money,
+                        isLoading: false
+                    })
+                }
             })
         }
     }
@@ -83,8 +92,13 @@ class NewWallet extends Component {
     componentDidUpdate() {
         //Wait until it gets authUser info
         if (this.props.authUser && this.state.isLoading) {
-            firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.match.params.id}`).once('value', snapshot => {
-                this.setState({ wallet: snapshot.val(), walletName: snapshot.val().name, totalAmount: snapshot.val().money, isLoading: false })
+            firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.match.params.id}`).on('value', snapshot => {
+                this.setState({
+                    wallet: snapshot.val(),
+                    walletName: snapshot.val().name,
+                    totalAmount: snapshot.val().money,
+                    isLoading: false
+                })
             })
         }
     }
@@ -96,13 +110,40 @@ class NewWallet extends Component {
     handleOptionClick = (e) => {
         switch (e.target.dataset.option) {
             case "insert":
-                this.setState({ insert: true, withdraw: false, reset: false, modifyOpen: true })
+                this.setState({
+                    insert: true,
+                    withdraw: false,
+                    reset: false,
+                    delete: false,
+                    modifyOpen: true
+                })
                 break;
             case "withdraw":
-                this.setState({ insert: false, withdraw: true, reset: false, modifyOpen: true })
+                this.setState({
+                    insert: false,
+                    withdraw: true,
+                    reset: false,
+                    delete: false,
+                    modifyOpen: true
+                })
                 break;
             case "reset":
-                this.setState({ insert: false, withdraw: false, reset: true, modifyOpen: true })
+                this.setState({
+                    insert: false,
+                    withdraw: false,
+                    reset: true,
+                    delete: false,
+                    modifyOpen: true
+                })
+                break;
+            case "delete":
+                this.setState({
+                    insert: false,
+                    withdraw: false,
+                    reset: false,
+                    delete: true,
+                    modifyOpen: true
+                })
                 break;
             default: return;
         }
@@ -210,12 +251,14 @@ class NewWallet extends Component {
                                 <MenuItem data-option="insert" onClick={this.handleOptionClick}>Insert</MenuItem>
                                 <MenuItem data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</MenuItem>
                                 <MenuItem data-option="reset" onClick={this.handleOptionClick}>Reset</MenuItem>
+                                <MenuItem data-option="delete" onClick={this.handleOptionClick}>Delete</MenuItem>
                             </Menu>
 
                             <div className="menubar">
                                 <Button className={classes.menuButton} color="default" data-option="insert" onClick={this.handleOptionClick}><span data-option="insert" onClick={this.handleOptionClick}>Insert</span></Button>
                                 <Button className={classes.menuButton} color="default" data-option="withdraw" onClick={this.handleOptionClick}><span data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</span></Button>
                                 <Button className={classes.menuButton} color="default" data-option="reset" onClick={this.handleOptionClick}><span data-option="reset" onClick={this.handleOptionClick}>Reset</span></Button>
+                                <Button className={classes.menuButton} color="default" data-option="delete" onClick={this.handleOptionClick}><span data-option="delete" onClick={this.handleOptionClick}>Delete</span></Button>
                             </div>
 
                             {/*Operation Dialogs*/}
@@ -226,7 +269,7 @@ class NewWallet extends Component {
                                     ? <WithdrawDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} setTotalAmount={this.setTotalAmount} walletName={walletName} totalAmount={totalAmount} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} />
                                     : reset
                                         ? <ResetDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} setTotalAmount={this.setTotalAmount} walletName={walletName} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} />
-                                        : null
+                                        : <DeleteDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} />
                             }
 
                             {/*Snackbar poppup*/}
