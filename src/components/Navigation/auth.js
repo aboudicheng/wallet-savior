@@ -91,10 +91,6 @@ class NavigationAuth extends React.Component {
         })
     }
 
-    componentDidUpdate() {
-        console.log(this.state.groupWallets)
-    }
-
     toggleDrawer = (open) => {
         this.setState({ open });
     };

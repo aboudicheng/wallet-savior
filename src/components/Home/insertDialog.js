@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
-import * as firebase from 'firebase/app'
+import firebase from 'firebase/app'
 import * as actions from '../../constants/action_types'
 import { months } from '../../constants/months'
 
@@ -44,7 +44,7 @@ class InsertDialog extends React.Component {
             const record = {
                 type: "Insert",
                 amount: this.state.value,
-                wallet: "Personal",
+                wallet: this.props.name,
                 date: {
                     year: date.getFullYear(),
                     month: months[date.getMonth()],

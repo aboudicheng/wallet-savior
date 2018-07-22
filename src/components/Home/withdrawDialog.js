@@ -45,7 +45,7 @@ class WithdrawDialog extends React.Component {
             const record = {
                 type: "Withdraw",
                 amount: this.state.value,
-                wallet: "Personal",
+                wallet: this.props.name,
                 date: {
                     year: date.getFullYear(),
                     month: months[date.getMonth()],
