@@ -92,7 +92,7 @@ class HomePage extends Component {
 
   setAnchorEl = (anchorEl) => {
     this.setState({ anchorEl })
-}
+  }
 
   handleMenuClick = event => {
     this.setState({ anchorEl: event.currentTarget })
@@ -168,6 +168,9 @@ class HomePage extends Component {
       totalAmount,
       isLoading,
       firstUse,
+      insert,
+      withdraw,
+      reset,
       anchorEl,
       open,
       modifyOpen,
@@ -230,11 +233,11 @@ class HomePage extends Component {
 
         {/*Operation Dialogs*/}
         {modifyOpen &&
-          this.state.insert
+          insert
           ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} setTotalAmount={this.setTotalAmount} walletName={walletName} totalAmount={totalAmount} child={0} setSnackbarOpen={this.setSnackbarOpen} />
-          : this.state.withdraw
+          : withdraw
             ? <WithdrawDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} setTotalAmount={this.setTotalAmount} walletName={walletName} totalAmount={totalAmount} child={0} setSnackbarOpen={this.setSnackbarOpen} />
-            : this.state.reset
+            : reset
               ? <ResetDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} setTotalAmount={this.setTotalAmount} walletName={walletName} child={0} setSnackbarOpen={this.setSnackbarOpen} />
               : null
         }

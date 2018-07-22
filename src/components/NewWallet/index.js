@@ -52,6 +52,7 @@ class NewWallet extends Component {
 
         this.state = {
             wallet: null,
+            walletName: "",
             totalAmount: parseFloat(0).toFixed(2),
             isLoading: true,
 
@@ -74,7 +75,7 @@ class NewWallet extends Component {
         //if user access via history.push or pressing back button
         if (this.props.history.action === "PUSH" || this.props.authUser) {
             firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.match.params.id}`).once('value', snapshot => {
-                this.setState({ wallet: snapshot.val(), totalAmount: snapshot.val().money, isLoading: false })
+                this.setState({ wallet: snapshot.val(), walletName: snapshot.val().name, totalAmount: snapshot.val().money, isLoading: false })
             })
         }
     }
@@ -83,7 +84,7 @@ class NewWallet extends Component {
         //Wait until it gets authUser info
         if (this.props.authUser && this.state.isLoading) {
             firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.match.params.id}`).once('value', snapshot => {
-                this.setState({ wallet: snapshot.val(), totalAmount: snapshot.val().money, isLoading: false })
+                this.setState({ wallet: snapshot.val(), walletName: snapshot.val().name, totalAmount: snapshot.val().money, isLoading: false })
             })
         }
     }
@@ -140,7 +141,7 @@ class NewWallet extends Component {
             return;
         }
 
-        this.setState({ snackBar: false })
+        this.setState({ snackbarOpen: false })
     };
 
     setSnackbarOpen = (snackbarOpen) => {
@@ -154,8 +155,12 @@ class NewWallet extends Component {
     render() {
         const {
             wallet,
+            walletName,
             totalAmount,
             isLoading,
+            insert,
+            withdraw,
+            reset,
             renameOpen,
             anchorEl,
             modifyOpen,
@@ -170,7 +175,7 @@ class NewWallet extends Component {
                         ? <CircularProgress className={classes.progress} size={50} />
                         :
                         <div>
-                            <h1>{wallet.name}</h1>
+                            <h1>{walletName}</h1>
                             <span style={{ fontSize: "170%", color: totalAmount >= 0 ? "#3fb5a3" : "#ff0000" }}>{formatNumber({ prefix: "$" })(parseFloat(totalAmount).toFixed(2))}</span>
 
                             <p>Check <Link to={routes.HISTORY}>History</Link></p>
@@ -215,12 +220,12 @@ class NewWallet extends Component {
 
                             {/*Operation Dialogs*/}
                             {modifyOpen &&
-                                this.state.insert
-                                ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} setTotalAmount={this.setTotalAmount} walletName={wallet.name} totalAmount={totalAmount} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} />
-                                : this.state.withdraw
-                                    ? <WithdrawDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} setTotalAmount={this.setTotalAmount} walletName={wallet.name} totalAmount={totalAmount} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} />
-                                    : this.state.reset
-                                        ? <ResetDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} setTotalAmount={this.setTotalAmount} walletName={wallet.name} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} />
+                                insert
+                                ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} setTotalAmount={this.setTotalAmount} walletName={walletName} totalAmount={totalAmount} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} />
+                                : withdraw
+                                    ? <WithdrawDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} setTotalAmount={this.setTotalAmount} walletName={walletName} totalAmount={totalAmount} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} />
+                                    : reset
+                                        ? <ResetDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} setTotalAmount={this.setTotalAmount} walletName={walletName} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} />
                                         : null
                             }
 
