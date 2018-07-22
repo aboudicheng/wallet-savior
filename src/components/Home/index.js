@@ -25,7 +25,6 @@ import * as routes from '../../constants/routes';
 import InsertDialog from '../Operations/insertDialog'
 import WithdrawDialog from '../Operations/withdrawDialog'
 import ResetDialog from '../Operations/resetDialog'
-import * as actions from '../../constants/action_types'
 import MySnackbarContentWrapper from '../MySnackbarContentWrapper'
 import Rename from '../Operations/rename'
 
@@ -55,6 +54,21 @@ class HomePage extends Component {
   constructor() {
     super();
     this.state = {
+      firstUse: false,
+
+      //used for firstUSe Dialog
+      open: true,
+      walletName: "",
+      totalAmount: parseFloat(0).toFixed(2),
+      anchorEl: null,
+
+      //used for Menu Dialog
+      modifyOpen: false,
+
+      renameOpen: false,
+
+      snackbarOpen: false,
+
       insert: false,
       withdraw: false,
       reset: false,
@@ -64,40 +78,65 @@ class HomePage extends Component {
 
   setFirstUse = () => {
     usersRef.child(this.props.authUser.uid).update({ firstUse: false })
-    this.props.setFirstUse(false)
+    this.setState({ firstUse: false })
   }
 
   componentDidMount() {
     usersRef.child(this.props.authUser.uid).on('value', snapshot => {
       if (snapshot.val().firstUse) {
-        this.props.setFirstUse(true)
+        this.setState({ firstUse: true })
       }
-      this.setState({ isLoading: false })
-      this.props.loadWalletName(snapshot.val().wallets[0].name)
-      this.props.loadTotalAmount(snapshot.val().wallets[0].money)
+      this.setState({ isLoading: false, walletName: snapshot.val().wallets[0].name, totalAmount: snapshot.val().wallets[0].money })
     })
   }
 
-  componentWillUnmount() {
-    this.props.setSnackbarOpen(false)
-  }
+  setAnchorEl = (anchorEl) => {
+    this.setState({ anchorEl })
+}
 
   handleMenuClick = event => {
-    this.props.setAnchorEl(event.currentTarget)
+    this.setState({ anchorEl: event.currentTarget })
   }
 
   handleOptionClick = (e) => {
-    this.props.setModifyOpenDialog(true)
     switch (e.target.dataset.option) {
       case "insert":
-        this.setState({ insert: true, withdraw: false, reset: false })
+        this.setState({ insert: true, withdraw: false, reset: false, modifyOpen: true })
         break;
       case "withdraw":
-        this.setState({ insert: false, withdraw: true, reset: false })
+        this.setState({ insert: false, withdraw: true, reset: false, modifyOpen: true })
         break;
       case "reset":
-        this.setState({ insert: false, withdraw: false, reset: true })
+        this.setState({ insert: false, withdraw: false, reset: true, modifyOpen: true })
         break;
+      default: return;
+    }
+  }
+
+  setModifyOpenDialog = (modifyOpen) => {
+    this.setState({ modifyOpen })
+  }
+
+  setTotalAmount = (operation, amount) => {
+    switch (operation) {
+      case "insert":
+        this.setState(prevState => ({
+          totalAmount: parseFloat(parseFloat(prevState.totalAmount) + parseFloat(amount)).toFixed(2)
+        }))
+        break;
+
+      case "withdraw":
+        this.setState(prevState => ({
+          totalAmount: parseFloat(parseFloat(prevState.totalAmount) - parseFloat(amount)).toFixed(2)
+        }))
+        break;
+
+      case "reset":
+        this.setState(prevState => ({
+          totalAmount: parseFloat(amount).toFixed(2)
+        }))
+        break;
+
       default: return;
     }
   }
@@ -107,11 +146,19 @@ class HomePage extends Component {
       return;
     }
 
-    this.props.setSnackbarOpen(false)
+    this.setState({ snackbarOpen: false })
   };
 
-  handleRenameOpen = (renameOpen) => {
-    this.props.setRenameDialog(renameOpen)
+  setOpenDialog = (open) => {
+    this.setState({ open })
+  }
+
+  setSnackbarOpen = (snackbarOpen) => {
+    this.setState({ snackbarOpen })
+  }
+
+  setRenameDialog = (renameOpen) => {
+    this.setState({ renameOpen })
   }
 
   render() {
@@ -119,19 +166,20 @@ class HomePage extends Component {
     const {
       walletName,
       totalAmount,
+      isLoading,
       firstUse,
       anchorEl,
       open,
       modifyOpen,
       snackbarOpen,
       renameOpen
-    } = this.props.state
+    } = this.state
 
     return (
       <div>
 
         <h1>{walletName}</h1>
-        {this.state.isLoading
+        {isLoading
           ? <CircularProgress className={classes.progress} size={50} />
           : <span style={{ fontSize: "170%", color: totalAmount >= 0 ? "#3fb5a3" : "#ff0000" }}>{formatNumber({ prefix: "$" })(totalAmount)}</span>
         }
@@ -139,26 +187,26 @@ class HomePage extends Component {
         <Divider />
 
         <Tooltip TransitionComponent={Zoom} title="Edit wallet name">
-          <Button variant="fab" color="secondary" aria-label="Edit" className={classes.editButton} onClick={() => this.handleRenameOpen(true)}>
+          <Button variant="fab" color="secondary" aria-label="Edit" className={classes.editButton} onClick={() => this.setRenameDialog(true)}>
             <Edit />
           </Button>
         </Tooltip>
 
         {/*Dialog popup for rename*/}
         {renameOpen &&
-          <Rename open={renameOpen} handleClose={this.props.setRenameDialog} child={0} setSnackbarOpen={this.props.setSnackbarOpen} setRenameDialog={this.props.setRenameDialog} />
+          <Rename open={renameOpen} child={0} setSnackbarOpen={this.setSnackbarOpen} setRenameDialog={this.setRenameDialog} />
         }
 
         {/*Dialog popup for first-time users*/}
         {firstUse &&
-          <FirstUse open={open} handleClose={this.props.setOpenDialog} setFirstUse={this.setFirstUse} />
+          <FirstUse open={open} handleClose={this.setOpenDialog} setFirstUse={this.setFirstUse} />
         }
 
         {/*Menu Bar at top right corner*/}
         <IconButton
           aria-owns={anchorEl ? 'simple-menu' : null}
           aria-haspopup="true"
-          onClick={e => this.props.setAnchorEl(e.currentTarget)}
+          onClick={e => this.setAnchorEl(e.currentTarget)}
           className={classNames("menuicon", classes.label)}
         >
           <MoreVertIcon />
@@ -167,7 +215,7 @@ class HomePage extends Component {
           id="simple-menu"
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
-          onClose={() => this.props.setAnchorEl(null)}
+          onClose={() => this.setAnchorEl(null)}
         >
           <MenuItem data-option="insert" onClick={this.handleOptionClick}>Insert</MenuItem>
           <MenuItem data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</MenuItem>
@@ -183,11 +231,11 @@ class HomePage extends Component {
         {/*Operation Dialogs*/}
         {modifyOpen &&
           this.state.insert
-          ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} handleMenuClose={this.props.setAnchorEl} setTotalAmount={this.props.setTotalAmount} walletName={walletName} totalAmount={totalAmount} child={0} setSnackbarOpen={this.props.setSnackbarOpen} />
+          ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} setTotalAmount={this.setTotalAmount} walletName={walletName} totalAmount={totalAmount} child={0} setSnackbarOpen={this.setSnackbarOpen} />
           : this.state.withdraw
-            ? <WithdrawDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} handleMenuClose={this.props.setAnchorEl} setTotalAmount={this.props.setTotalAmount} walletName={walletName} totalAmount={totalAmount} child={0} setSnackbarOpen={this.props.setSnackbarOpen} />
+            ? <WithdrawDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} setTotalAmount={this.setTotalAmount} walletName={walletName} totalAmount={totalAmount} child={0} setSnackbarOpen={this.setSnackbarOpen} />
             : this.state.reset
-              ? <ResetDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} handleMenuClose={this.props.setAnchorEl} setTotalAmount={this.props.setTotalAmount} walletName={walletName} child={0} setSnackbarOpen={this.props.setSnackbarOpen} />
+              ? <ResetDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} setTotalAmount={this.setTotalAmount} walletName={walletName} child={0} setSnackbarOpen={this.setSnackbarOpen} />
               : null
         }
 
@@ -214,27 +262,13 @@ class HomePage extends Component {
 
 const mapStateToProps = (state) => ({
   authUser: state.sessionState.authUser,
-  state: state.homeState,
 });
-
-const mapDispatchToProps = (dispatch) => ({
-  setFirstUse: (firstUse) => dispatch({ type: actions.SET_FIRST_USE, firstUse }),
-  loadWalletName: (walletName) => dispatch({ type: actions.LOAD_WALLET_NAME, walletName }),
-  loadTotalAmount: (totalAmount) => dispatch({ type: actions.LOAD_TOTAL_AMOUNT, totalAmount }),
-  setAnchorEl: (anchorEl) => dispatch({ type: actions.SET_ANCHOR_EL, anchorEl }),
-  setOpenDialog: (open) => dispatch({ type: actions.SET_OPEN_DIALOG, open }),
-  setModifyOpenDialog: (modifyOpen) => dispatch({ type: actions.SET_MODIFY_OPEN_DIALOG, modifyOpen }),
-  setTotalAmount: (operation, amount) => dispatch({ type: actions.SET_TOTAL_AMOUNT, payload: { operation, amount } }),
-  setNewName: (name) => dispatch({ type: actions.SET_NEW_NAME, name }),
-  setRenameDialog: (open) => dispatch({ type: actions.SET_RENAME_DIALOG, open }),
-  setSnackbarOpen: (snackbarOpen) => dispatch({ type: actions.SET_SNACKBAR_OPEN, snackbarOpen })
-})
 
 const authCondition = (authUser) => !!authUser;
 
 export default compose(
   withAuthorization(authCondition),
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(mapStateToProps),
   withStyles(styles),
   withRouter,
 )(HomePage);

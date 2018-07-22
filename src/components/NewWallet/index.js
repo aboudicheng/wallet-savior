@@ -88,10 +88,6 @@ class NewWallet extends Component {
         }
     }
 
-    handleRenameOpen = (renameOpen) => {
-        this.setState({ renameOpen })
-    }
-
     setAnchorEl = (anchorEl) => {
         this.setState({ anchorEl })
     }
@@ -181,14 +177,14 @@ class NewWallet extends Component {
                             <Divider />
 
                             <Tooltip TransitionComponent={Zoom} title="Edit wallet name">
-                                <Button variant="fab" color="secondary" aria-label="Edit" className={classes.editButton} onClick={() => this.handleRenameOpen(true)}>
+                                <Button variant="fab" color="secondary" aria-label="Edit" className={classes.editButton} onClick={() => this.setRenameDialog(true)}>
                                     <Edit />
                                 </Button>
                             </Tooltip>
 
                             {/*Dialog popup for rename*/}
                             {renameOpen &&
-                                <Rename open={renameOpen} handleClose={this.handleRenameOpen} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} setRenameDialog={this.setRenameDialog} />
+                                <Rename open={renameOpen} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} setRenameDialog={this.setRenameDialog} />
                             }
 
                             {/*Menu Bar at top right corner*/}

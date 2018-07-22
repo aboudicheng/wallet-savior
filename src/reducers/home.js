@@ -11,9 +11,6 @@ const INITIAL_STATE = {
 
     //used for Menu Dialog
     modifyOpen: false,
-    insert: false,
-    withdraw: false,
-    reset: false,
 
     renameOpen: false,
 

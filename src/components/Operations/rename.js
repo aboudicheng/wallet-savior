@@ -8,7 +8,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import * as firebase from 'firebase/app'
-import * as actions from '../../constants/action_types'
 
 class Rename extends React.Component {
     constructor(props) {
@@ -43,7 +42,7 @@ class Rename extends React.Component {
         return (
             <Dialog
                 open={this.props.open}
-                onClose={() => this.props.handleClose(false)}
+                onClose={() => this.props.setRenameDialog(false)}
                 aria-labelledby="form-dialog-title"
             >
                 <DialogTitle id="form-dialog-title">Rename Wallet</DialogTitle>
@@ -66,7 +65,7 @@ class Rename extends React.Component {
 
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => this.props.handleClose(false)} color="primary">
+                    <Button onClick={() => this.props.setRenameDialog(false)} color="primary">
                         Cancel
       </Button>
                     <Button onClick={this.submit} color="primary">
@@ -82,9 +81,4 @@ const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
 })
 
-const mapDispatchToProps = (dispatch) => ({
-    setSnackbarOpen: (snackbarOpen) => dispatch({ type: actions.SET_SNACKBAR_OPEN, snackbarOpen }),
-    setRenameDialog: (open) => dispatch({ type: actions.SET_RENAME_DIALOG, open }),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Rename);
+export default connect(mapStateToProps)(Rename);
