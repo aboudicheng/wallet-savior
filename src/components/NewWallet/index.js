@@ -25,7 +25,7 @@ class NewWallet extends Component {
 
     componentDidMount() {
         //if user access via history.push
-        if (this.props.history.action === "PUSH") {
+        if (this.props.history.action === "PUSH" || this.props.authUser) {
             firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.match.params.id}`).once('value', snapshot => {
                 this.setState({ wallet: snapshot.val(), isLoading: false })
             })
