@@ -12,7 +12,6 @@ import SignInPage from '../SignIn';
 import PasswordForgetPage from '../PasswordForget';
 import HomePage from '../Home';
 import AccountPage from '../Account';
-import Group from '../Group'
 import History from '../History'
 import NewWallet from '../NewWallet'
 import GroupWallet from '../GroupWallet'
@@ -43,7 +42,6 @@ const App = (props) =>
             <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForgetPage />} />
             <Route exact path={routes.HOME} component={() => <HomePage />} />
             <Route exact path={routes.ACCOUNT} component={() => <AccountPage />} />
-            <Route exact path={routes.GROUP} component={() => <Group />} />
             <Route exact path={routes.NEW_WALLET} component={props => <NewWallet {...props} />} />
             <Route exact path={routes.GROUP_WALLET} component={props => <GroupWallet {...props} />} />
             <Route exact path={routes.HISTORY} component={() => <History />} />
