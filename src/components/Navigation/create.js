@@ -54,6 +54,7 @@ class Create extends Component {
 
             //push group info into group field
             const newGroupRef = groupsRef.push(group)
+            groupsRef.child(newGroupRef.key).set({ ...group, id: newGroupRef.key })
 
             //push group info into personal field
             firebase.database().ref(`users/${this.props.authUser.uid}/groups/`).push({ name: this.state.name, id: newGroupRef.key })

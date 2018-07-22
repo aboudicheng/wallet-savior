@@ -3,6 +3,7 @@ import _ from 'lodash'
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router'
+import formatNumber from 'format-number';
 import { auth } from '../../firebase';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -73,7 +74,14 @@ class NavigationAuth extends React.Component {
     componentWillMount() {
         firebase.database().ref(`users/${this.props.authUser.uid}`).on('value', snapshot => {
             const { groups, wallets } = snapshot.val()
-            const groupWallets = _.values(groups)
+            let groupWallets = []
+
+            for (let key in groups) {
+                firebase.database().ref(`groups/`).on('value', s => {
+                    groupWallets.push(s.val()[groups[key].id])
+                })
+            }
+
             const newWallets = _.values(wallets)
 
             this.setState({
@@ -81,6 +89,10 @@ class NavigationAuth extends React.Component {
                 groupWallets,
             })
         })
+    }
+
+    componentDidUpdate() {
+        console.log(this.state.groupWallets)
     }
 
     toggleDrawer = (open) => {
@@ -125,14 +137,32 @@ class NavigationAuth extends React.Component {
                 <List><ListItem button onClick={e => this.toggleOption(e, "wallet")}><ListItemIcon><Home style={{ color: "#2ecc71" }} /></ListItemIcon><ListItemText primary="Personal" />{walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
                 {wallets.length > 0 &&
                     <Collapse in={walletOpen} timeout="auto" unmountOnExit>
-                        <List><ListItem button onClick={() => this.redirect(routes.HOME)}><ListItemIcon><Money style={{ color: "#f39c12" }} /></ListItemIcon><ListItemText primary={wallets[0].name} /></ListItem></List>
+                        <List>
+                            <ListItem button onClick={() => this.redirect(routes.HOME)}>
+                                <ListItemIcon>
+                                    <Money style={{ color: "#f39c12" }} />
+                                </ListItemIcon>
+                                <ListItemText primary={wallets[0].name} />
+                                <span style={{ color: wallets[0].money >= 0 ? "#3fb5a3" : "#ff0000" }}>{formatNumber({ prefix: "$" })(wallets[0].money)}</span>
+                            </ListItem>
+                        </List>
                     </Collapse>
                 }
                 {wallets.slice(1).map((wallet, i) =>
-                    <Collapse in={walletOpen} timeout="auto" unmountOnExit key={"wallets" + { i }}>
-                        <List><ListItem button onClick={() => this.redirect(`/wallets/${wallet.id}`)}><ListItemIcon><Money style={{ color: "#f39c12" }} /></ListItemIcon><ListItemText primary={wallet.name} /></ListItem></List>
+                    <Collapse in={walletOpen} timeout="auto" unmountOnExit key={`wallets${i}`}>
+                        <List>
+                            <ListItem button onClick={() => this.redirect(`/wallets/${wallet.id}`)}>
+                                <ListItemIcon>
+                                    <Money style={{ color: "#f39c12" }} />
+                                </ListItemIcon>
+                                <ListItemText primary={wallet.name} />
+                                <span style={{ color: wallet.money >= 0 ? "#3fb5a3" : "#ff0000" }}>{formatNumber({ prefix: "$" })(parseFloat(wallet.money).toFixed(2))}</span>
+                            </ListItem>
+                        </List>
                     </Collapse>
                 )}
+
+                {/*Add wallet*/}
                 <Collapse in={walletOpen} timeout="auto" unmountOnExit>
                     <List><ListItem button onClick={() => this.setDialog(true, "wallet")}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Add Wallet" /></ListItem></List>
                 </Collapse>
@@ -140,8 +170,16 @@ class NavigationAuth extends React.Component {
                 <List><ListItem button onClick={e => this.toggleOption(e, "group")}><ListItemIcon><Group style={{ color: "#2980b9" }} /></ListItemIcon><ListItemText primary="Group" />{groupOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
                 {groupWallets.length > 0 &&
                     groupWallets.map((group, i) =>
-                        <Collapse in={groupOpen} timeout="auto" unmountOnExit key={"collapse" + { i }}>
-                            <List><ListItem button onClick={() => this.redirect(`/groups/${group.id}`)}><ListItemIcon><GroupWork style={{ color: "#f39c12" }} /></ListItemIcon><ListItemText primary={group.name} /></ListItem></List>
+                        <Collapse in={groupOpen} timeout="auto" unmountOnExit key={`collapse${i}`}>
+                            <List>
+                                <ListItem button onClick={() => this.redirect(`/groups/${group.id}`)}>
+                                    <ListItemIcon>
+                                        <GroupWork style={{ color: "#f39c12" }} />
+                                    </ListItemIcon>
+                                    <ListItemText primary={group.name} />
+                                    <span style={{ color: group.money >= 0 ? "#3fb5a3" : "#ff0000" }}>{formatNumber({ prefix: "$" })(parseFloat(group.money).toFixed(2))}</span>
+                                </ListItem>
+                            </List>
                         </Collapse>
                     )
                 }
