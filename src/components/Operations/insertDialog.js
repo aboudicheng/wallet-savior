@@ -34,7 +34,7 @@ class InsertDialog extends React.Component {
             this.props.handleClose(false);
             this.props.handleMenuClose(null);
             this.props.setTotalAmount("insert", this.state.value)
-            const previousTotalAmount = parseFloat(this.props.state.totalAmount)
+            const previousTotalAmount = parseFloat(this.props.totalAmount)
             const newValue = parseFloat(this.state.value)
 
             const money = parseFloat(previousTotalAmount + newValue).toFixed(2)
@@ -44,7 +44,7 @@ class InsertDialog extends React.Component {
             const record = {
                 type: "Insert",
                 amount: this.state.value,
-                wallet: this.props.name,
+                wallet: this.props.walletName,
                 date: {
                     year: date.getFullYear(),
                     month: months[date.getMonth()],
@@ -110,7 +110,6 @@ class InsertDialog extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    state: state.homeState,
     authUser: state.sessionState.authUser,
 })
 

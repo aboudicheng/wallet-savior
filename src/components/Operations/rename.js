@@ -79,7 +79,6 @@ class Rename extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    state: state.homeState,
     authUser: state.sessionState.authUser,
 })
 

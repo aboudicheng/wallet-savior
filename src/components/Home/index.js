@@ -22,12 +22,12 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router'
 import * as routes from '../../constants/routes';
 
-import InsertDialog from './insertDialog'
-import WithdrawDialog from './withdrawDialog'
-import ResetDialog from './resetDialog'
+import InsertDialog from '../Operations/insertDialog'
+import WithdrawDialog from '../Operations/withdrawDialog'
+import ResetDialog from '../Operations/resetDialog'
 import * as actions from '../../constants/action_types'
 import MySnackbarContentWrapper from '../MySnackbarContentWrapper'
-import Rename from './rename'
+import Rename from '../Operations/rename'
 
 const styles = theme => ({
   editButton: {
@@ -183,11 +183,11 @@ class HomePage extends Component {
         {/*Operation Dialogs*/}
         {modifyOpen &&
           this.state.insert
-          ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} handleMenuClose={this.props.setAnchorEl} setTotalAmount={this.props.setTotalAmount} name={walletName} />
+          ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} handleMenuClose={this.props.setAnchorEl} setTotalAmount={this.props.setTotalAmount} walletName={walletName} totalAmount={totalAmount} />
           : this.state.withdraw
-            ? <WithdrawDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} handleMenuClose={this.props.setAnchorEl} setTotalAmount={this.props.setTotalAmount} name={walletName} />
+            ? <WithdrawDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} handleMenuClose={this.props.setAnchorEl} setTotalAmount={this.props.setTotalAmount} walletName={walletName} totalAmount={totalAmount} />
             : this.state.reset
-              ? <ResetDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} handleMenuClose={this.props.setAnchorEl} setTotalAmount={this.props.setTotalAmount} name={walletName} />
+              ? <ResetDialog modifyOpen={modifyOpen} handleClose={this.props.setModifyOpenDialog} handleMenuClose={this.props.setAnchorEl} setTotalAmount={this.props.setTotalAmount} walletName={walletName} />
               : null
         }
 

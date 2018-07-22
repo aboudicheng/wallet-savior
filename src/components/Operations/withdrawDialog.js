@@ -35,7 +35,7 @@ class WithdrawDialog extends React.Component {
             this.props.handleMenuClose(null);
             this.props.setTotalAmount("withdraw", this.state.value)
 
-            const previousTotalAmount = parseFloat(this.props.state.totalAmount)
+            const previousTotalAmount = parseFloat(this.props.totalAmount)
             const newValue = parseFloat(this.state.value)
 
             const money = parseFloat(previousTotalAmount - newValue).toFixed(2)
@@ -45,7 +45,7 @@ class WithdrawDialog extends React.Component {
             const record = {
                 type: "Withdraw",
                 amount: this.state.value,
-                wallet: this.props.name,
+                wallet: this.props.walletName,
                 date: {
                     year: date.getFullYear(),
                     month: months[date.getMonth()],
@@ -109,7 +109,6 @@ class WithdrawDialog extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    state: state.homeState,
     authUser: state.sessionState.authUser,
 })
 
