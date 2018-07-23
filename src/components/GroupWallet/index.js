@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import withAuthorization from '../Session/withAuthorization';
 import { compose } from 'recompose';
 import firebase from 'firebase/app'
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -47,6 +48,9 @@ class GroupWallet extends Component {
     }
 }
 
+const authCondition = (authUser) => !!authUser;
+
 export default compose(
+    withAuthorization(authCondition),
     withStyles(styles)
 )(GroupWallet);

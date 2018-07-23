@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import withAuthorization from '../Session/withAuthorization';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import classNames from 'classnames';
@@ -301,7 +302,10 @@ const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
 });
 
+const authCondition = (authUser) => !!authUser;
+
 export default compose(
+    withAuthorization(authCondition),
     withStyles(styles),
     connect(mapStateToProps),
     withRouter,
