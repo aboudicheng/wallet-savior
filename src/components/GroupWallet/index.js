@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-//import withAuthorization from '../Session/withAuthorization';
+import withAuthorization from '../Session/withAuthorization';
+import { withRouter } from 'react-router'
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import classNames from 'classnames';
@@ -70,6 +71,7 @@ class GroupWallet extends Component {
     }
 
     componentDidMount() {
+        console.log(this.props)
         firebase.database().ref(`groups/${this.props.match.params.id}`).on('value', snapshot => {
             if (snapshot.val()) {
                 this.setState({ group: snapshot.val(), isLoading: false })
@@ -255,10 +257,11 @@ const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
 });
 
-//const authCondition = (authUser) => !!authUser;
+const authCondition = (authUser) => !!authUser;
 
 export default compose(
-    //withAuthorization(authCondition),
+    withAuthorization(authCondition),
     withStyles(styles),
     connect(mapStateToProps),
+    withRouter
 )(GroupWallet);
