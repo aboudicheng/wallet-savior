@@ -89,9 +89,10 @@ class NewWallet extends Component {
         }
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(props) {
+        /*if user transtitions between extra wallets then componentDidMount won't get called*/
         //Wait until it gets authUser info
-        if (this.props.authUser && this.state.isLoading) {
+        if (this.props.authUser && ((this.props.location.key !== props.location.key) || this.state.isLoading)) {
             firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.match.params.id}`).on('value', snapshot => {
                 this.setState({
                     wallet: snapshot.val(),

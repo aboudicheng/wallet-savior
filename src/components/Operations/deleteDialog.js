@@ -16,9 +16,6 @@ class DeleteDialog extends Component {
     delete = () => {
         this.props.history.push(routes.HOME)
         firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.child}`).remove()
-
-        // this.props.handleClose(false)
-        // this.props.setSnackbarOpen(true);
     }
 
     render() {
