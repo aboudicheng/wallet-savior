@@ -45,6 +45,7 @@ class Create extends Component {
         }
         else {
             const groupsRef = firebase.database().ref('groups/')
+            const userGroupRef = firebase.database().ref(`users/${this.props.authUser.uid}/groups/`)
 
             const group = {
                 name: this.state.name,
@@ -57,7 +58,7 @@ class Create extends Component {
             groupsRef.child(newGroupRef.key).set({ ...group, id: newGroupRef.key })
 
             //push group info into personal field
-            firebase.database().ref(`users/${this.props.authUser.uid}/groups/`).push({ name: this.state.name, id: newGroupRef.key })
+            userGroupRef.child(newGroupRef.key).set({ name: this.state.name, id: newGroupRef.key })
 
             //direct to its URL
             this.props.history.push(`groups/${newGroupRef.key}`)

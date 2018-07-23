@@ -16,7 +16,9 @@ class DeleteDialog extends Component {
     delete = () => {
         this.props.history.push(routes.HOME)
         if (this.props.group) {
+            //delete both from the groups field and user's groups field
             firebase.database().ref(`groups/${this.props.child}`).remove()
+            firebase.database().ref(`users/${this.props.authUser.uid}/groups/${this.props.child}`).remove() 
         }
         else {
             firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.child}`).remove()

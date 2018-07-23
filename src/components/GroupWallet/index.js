@@ -71,8 +71,20 @@ class GroupWallet extends Component {
 
     componentDidMount() {
         firebase.database().ref(`groups/${this.props.match.params.id}`).on('value', snapshot => {
-            this.setState({ group: snapshot.val(), isLoading: false })
+            if (snapshot.val()) {
+                this.setState({ group: snapshot.val(), isLoading: false })
+            }
         })
+    }
+
+    componentDidUpdate(props) {
+        if (this.props.location.key !== props.location.key) {
+            firebase.database().ref(`groups/${this.props.match.params.id}`).on('value', snapshot => {
+                if (snapshot.val()) {
+                    this.setState({ group: snapshot.val(), isLoading: false })
+                }
+            })
+        }
     }
 
     setAnchorEl = (anchorEl) => {
@@ -158,11 +170,11 @@ class GroupWallet extends Component {
             <div>
                 {
                     isLoading
-                    ? <CircularProgress className={classes.progress} size={50} />
-                    :
-                    <div>
-                        <h1>{group.name}</h1>
-                        <span style={{ fontSize: "170%", color: group.money >= 0 ? "#3fb5a3" : "#ff0000" }}>{formatNumber({ prefix: "$" })(parseFloat(group.money).toFixed(2))}</span>
+                        ? <CircularProgress className={classes.progress} size={50} />
+                        :
+                        <div>
+                            <h1>{group.name}</h1>
+                            <span style={{ fontSize: "170%", color: group.money >= 0 ? "#3fb5a3" : "#ff0000" }}>{formatNumber({ prefix: "$" })(parseFloat(group.money).toFixed(2))}</span>
 
                             <Divider />
 
@@ -232,7 +244,7 @@ class GroupWallet extends Component {
                                     message="Operation successful!"
                                 />
                             </Snackbar>
-                    </div>
+                        </div>
                 }
             </div>
         )
