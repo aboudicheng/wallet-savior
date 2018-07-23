@@ -111,8 +111,6 @@ class NavigationAuth extends React.Component {
 
     signOut = () => {
         auth.doSignOut();
-        this.setState({ open: false })
-        this.redirect(routes.LOGIN)
     }
 
     setDialog = (open, option) => {
