@@ -15,7 +15,12 @@ class DeleteDialog extends Component {
 
     delete = () => {
         this.props.history.push(routes.HOME)
-        firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.child}`).remove()
+        if (this.props.group) {
+            firebase.database().ref(`groups/${this.props.child}`).remove()
+        }
+        else {
+            firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.child}`).remove()
+        }
     }
 
     render() {

@@ -117,30 +117,6 @@ class HomePage extends Component {
     this.setState({ modifyOpen })
   }
 
-  setTotalAmount = (operation, amount) => {
-    switch (operation) {
-      case "insert":
-        this.setState(prevState => ({
-          totalAmount: parseFloat(parseFloat(prevState.totalAmount) + parseFloat(amount)).toFixed(2)
-        }))
-        break;
-
-      case "withdraw":
-        this.setState(prevState => ({
-          totalAmount: parseFloat(parseFloat(prevState.totalAmount) - parseFloat(amount)).toFixed(2)
-        }))
-        break;
-
-      case "reset":
-        this.setState(prevState => ({
-          totalAmount: parseFloat(amount).toFixed(2)
-        }))
-        break;
-
-      default: return;
-    }
-  }
-
   handleSnackbarClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -234,11 +210,11 @@ class HomePage extends Component {
         {/*Operation Dialogs*/}
         {modifyOpen &&
           insert
-          ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} setTotalAmount={this.setTotalAmount} walletName={walletName} totalAmount={totalAmount} child={0} setSnackbarOpen={this.setSnackbarOpen} />
+          ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} walletName={walletName} totalAmount={totalAmount} child={0} setSnackbarOpen={this.setSnackbarOpen} />
           : withdraw
-            ? <WithdrawDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} setTotalAmount={this.setTotalAmount} walletName={walletName} totalAmount={totalAmount} child={0} setSnackbarOpen={this.setSnackbarOpen} />
+            ? <WithdrawDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} walletName={walletName} totalAmount={totalAmount} child={0} setSnackbarOpen={this.setSnackbarOpen} />
             : reset
-              ? <ResetDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} setTotalAmount={this.setTotalAmount} walletName={walletName} child={0} setSnackbarOpen={this.setSnackbarOpen} />
+              ? <ResetDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} walletName={walletName} child={0} setSnackbarOpen={this.setSnackbarOpen} />
               : null
         }
 

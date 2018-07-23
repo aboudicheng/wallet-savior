@@ -25,31 +25,18 @@ class ResetDialog extends React.Component {
 
     submit = () => {
         if (this.state.value.length !== 0 && !isNaN(this.state.value)) {
-            //const date = new Date();
 
             this.props.handleClose(false);
             this.props.handleMenuClose(null);
-            this.props.setTotalAmount("reset", this.state.value)
 
             const money = parseFloat(this.state.value).toFixed(2)
 
-            firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.child}`).update({ money })
-
-            // const record = {
-            //     type: "Reset",
-            //     amount: this.state.value,
-            //     wallet: "Personal",
-            //     date: {
-            //         year: date.getFullYear(),
-            //         month: months[date.getMonth()],
-            //         day: ("0" + date.getDate()).slice(-2),
-            //         hour: ("0" + date.getHours()).slice(-2),
-            //         min: ("0" + date.getMinutes()).slice(-2),
-            //     },
-            //     description: this.state.text
-            // }
-
-            // usersRef.child(this.props.authUser.uid).child("history").push(record)
+            if (this.props.group) {
+                firebase.database().ref(`groups/${this.props.child}`).update({ money })
+            }
+            else {
+                firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.child}`).update({ money })
+            }
 
             this.props.setSnackbarOpen(true);
             this.setState({ value: "", text: "" })

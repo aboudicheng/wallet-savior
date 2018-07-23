@@ -32,14 +32,18 @@ class WithdrawDialog extends React.Component {
 
             this.props.handleClose(false);
             this.props.handleMenuClose(null);
-            this.props.setTotalAmount("withdraw", this.state.value)
 
             const previousTotalAmount = parseFloat(this.props.totalAmount)
             const newValue = parseFloat(this.state.value)
 
             const money = parseFloat(previousTotalAmount - newValue).toFixed(2)
 
-            firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.child}`).update({ money })
+            if (this.props.group) {
+                firebase.database().ref(`groups/${this.props.child}`).update({ money })
+            }
+            else {
+                firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.child}`).update({ money })
+            }
             
             const record = {
                 type: "Withdraw",
