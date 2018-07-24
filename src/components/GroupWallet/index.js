@@ -24,7 +24,7 @@ import InviteDialog from '../Operations/inviteDialog'
 import InsertDialog from '../Operations/insertDialog'
 import WithdrawDialog from '../Operations/withdrawDialog'
 import ResetDialog from '../Operations/resetDialog'
-import DeleteDialog from '../Operations/deleteDialog'
+import QuitDialog from '../Operations/quitDialog'
 import MySnackbarContentWrapper from '../MySnackbarContentWrapper'
 import Rename from '../Operations/rename'
 
@@ -69,7 +69,7 @@ class GroupWallet extends Component {
                 reset: false,
             },
 
-            delete: false,
+            quit: false,
 
             renameOpen: false,
 
@@ -110,7 +110,7 @@ class GroupWallet extends Component {
                         insert: false,
                         withdraw: false,
                         reset: false,
-                        delete: false,
+                        quit: false,
                     },
                     modifyOpen: true
                 })
@@ -123,7 +123,7 @@ class GroupWallet extends Component {
                         insert: false,
                         withdraw: false,
                         reset: false,
-                        delete: false,
+                        quit: false,
                     },
                     modifyOpen: true
                 })
@@ -135,7 +135,7 @@ class GroupWallet extends Component {
                         invite: false,
                         withdraw: false,
                         reset: false,
-                        delete: false,
+                        quit: false,
                     },
                     modifyOpen: true
                 })
@@ -147,7 +147,7 @@ class GroupWallet extends Component {
                         invite: false,
                         withdraw: true,
                         reset: false,
-                        delete: false,
+                        quit: false,
                     },
                     modifyOpen: true
                 })
@@ -159,19 +159,19 @@ class GroupWallet extends Component {
                         invite: false,
                         withdraw: false,
                         reset: true,
-                        delete: false,
+                        quit: false,
                     },
                     modifyOpen: true
                 })
                 break;
-            case "delete":
+            case "quit":
                 this.setState({
                     option: {
                         insert: false,
                         invite: false,
                         withdraw: false,
                         reset: false,
-                        delete: true,
+                        quit: true,
                     },
                     modifyOpen: true
                 })
@@ -254,7 +254,7 @@ class GroupWallet extends Component {
                                 <MenuItem data-option="insert" onClick={this.handleOptionClick}>Insert</MenuItem>
                                 <MenuItem data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</MenuItem>
                                 <MenuItem data-option="reset" onClick={this.handleOptionClick}>Reset</MenuItem>
-                                <MenuItem data-option="delete" onClick={this.handleOptionClick}>Delete</MenuItem>
+                                <MenuItem data-option="quit" onClick={this.handleOptionClick}>Quit</MenuItem>
                             </Menu>
 
                             <div className="menubar">
@@ -263,7 +263,7 @@ class GroupWallet extends Component {
                                 <Button className={classes.menuButton} color="default" data-option="insert" onClick={this.handleOptionClick}><span data-option="insert" onClick={this.handleOptionClick}>Insert</span></Button>
                                 <Button className={classes.menuButton} color="default" data-option="withdraw" onClick={this.handleOptionClick}><span data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</span></Button>
                                 <Button className={classes.menuButton} color="default" data-option="reset" onClick={this.handleOptionClick}><span data-option="reset" onClick={this.handleOptionClick}>Reset</span></Button>
-                                <Button className={classes.menuButton} color="default" data-option="delete" onClick={this.handleOptionClick}><span data-option="delete" onClick={this.handleOptionClick}>Delete</span></Button>
+                                <Button className={classes.menuButton} color="default" data-option="quit" onClick={this.handleOptionClick}><span data-option="quit" onClick={this.handleOptionClick}>Quit</span></Button>
                             </div>
 
                             {/*Operation Dialogs*/}
@@ -278,7 +278,7 @@ class GroupWallet extends Component {
                                             ? <WithdrawDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} walletName={group.name} totalAmount={group.money} child={group.id} setSnackbarOpen={this.setSnackbarOpen} group={true} />
                                             : option.reset
                                                 ? <ResetDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} walletName={group.name} child={group.id} setSnackbarOpen={this.setSnackbarOpen} group={true} />
-                                                : <DeleteDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} child={group.id} setSnackbarOpen={this.setSnackbarOpen} group={true} />
+                                                : <QuitDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} child={group.id} setSnackbarOpen={this.setSnackbarOpen} group={true} />
                             }
 
                             {/*Snackbar poppup*/}
