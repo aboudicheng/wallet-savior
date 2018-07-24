@@ -30,6 +30,7 @@ class Rename extends React.Component {
 
                 if (this.props.group) {
                     firebase.database().ref(`groups/${this.props.child}`).update({ name: this.state.value })
+                    firebase.database().ref(`users/${this.props.authUser.uid}/groups/${this.props.child}`).update({ name: this.state.value })
                 }
                 else {
                     firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.child}`).update({ name: this.state.value })

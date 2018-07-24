@@ -73,6 +73,7 @@ class NewWallet extends Component {
     }
 
     componentDidMount() {
+        console.log(this.props)
         //if user access via history.push or pressing back button
         if (this.props.history.action === "PUSH" || this.props.authUser) {
             firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.match.params.id}`).on('value', snapshot => {
@@ -87,6 +88,7 @@ class NewWallet extends Component {
     }
 
     componentDidUpdate(props) {
+        console.log(props)
         /*if user transtitions between extra wallets then componentDidMount won't get called*/
         //Wait until it gets authUser info
         if (this.props.authUser && ((this.props.location.key !== props.location.key) || this.state.isLoading)) {
@@ -272,9 +274,10 @@ const mapStateToProps = (state) => ({
 
 const authCondition = (authUser) => !!authUser;
 
+//withAuthorization doesn't work properly
 export default compose(
     connect(mapStateToProps),
-    withAuthorization(authCondition),
+    //withAuthorization(authCondition),
     withStyles(styles),
     withRouter,
 )(NewWallet);
