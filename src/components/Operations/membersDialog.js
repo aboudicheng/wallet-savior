@@ -21,7 +21,7 @@ const styles = {
     },
 };
 
-class Members extends React.Component {
+class MembersDialog extends React.Component {
     constructor(props) {
         super(props)
 
@@ -90,4 +90,4 @@ const mapStateToProps = (state) => ({
 export default compose(
     connect(mapStateToProps),
     withStyles(styles),
-)(Members);
+)(MembersDialog);

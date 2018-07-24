@@ -19,8 +19,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 
-import Members from '../Operations/membersDialog'
-import Invite from '../Operations/inviteDialog'
+import MembersDialog from '../Operations/membersDialog'
+import InviteDialog from '../Operations/inviteDialog'
 import InsertDialog from '../Operations/insertDialog'
 import WithdrawDialog from '../Operations/withdrawDialog'
 import ResetDialog from '../Operations/resetDialog'
@@ -269,9 +269,9 @@ class GroupWallet extends Component {
                             {/*Operation Dialogs*/}
                             {modifyOpen &&
                                 option.members
-                                ? <Members open={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} groupId={group.id} addMember={this.handleOptionClick} />
+                                ? <MembersDialog open={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} groupId={group.id} addMember={this.handleOptionClick} />
                                 : option.invite
-                                    ? <Invite open={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} groupId={group.id} groupName={group.name} setSnackbarOpen={this.setSnackbarOpen} />
+                                    ? <InviteDialog open={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} groupId={group.id} groupName={group.name} setSnackbarOpen={this.setSnackbarOpen} />
                                     : option.insert
                                         ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} walletName={group.name} totalAmount={group.money} child={group.id} setSnackbarOpen={this.setSnackbarOpen} group={true} />
                                         : option.withdraw

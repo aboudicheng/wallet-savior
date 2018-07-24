@@ -9,7 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import * as firebase from 'firebase/app'
 
-class Invite extends React.Component {
+class InviteDialog extends React.Component {
     constructor(props) {
         super(props)
 
@@ -108,4 +108,4 @@ const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
 })
 
-export default connect(mapStateToProps)(Invite);
+export default connect(mapStateToProps)(InviteDialog);
