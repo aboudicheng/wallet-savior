@@ -32,11 +32,15 @@ class Members extends React.Component {
     }
 
     componentDidMount() {
-        firebase.database().ref(`groups/${this.props.groupId}/member`).on('value', snapshot => {
-            firebase.database().ref(`users/${this.props.authUser.uid}/email`).once('value', s => {
-                this.setState(prevState => ({
-                    members: [...prevState.members, s.val()]
-                }))
+        firebase.database().ref(`groups/${this.props.groupId}/member`).once('value', snapshot => {
+            snapshot.val().map(id => {
+                return (
+                    firebase.database().ref(`users/${id}/email`).once('value', s => {
+                        this.setState(prevState => ({
+                            members: [...prevState.members, s.val()]
+                        }))
+                    })
+                )
             })
         })
     }
@@ -50,7 +54,7 @@ class Members extends React.Component {
                 onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null) }}
                 aria-labelledby="simple-dialog-title"
             >
-                <DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
+                <DialogTitle id="simple-dialog-title">Members</DialogTitle>
                 <div>
                     <List>
                         {members.length > 0 &&
@@ -64,7 +68,7 @@ class Members extends React.Component {
                                     <ListItemText primary={email} />
                                 </ListItem>
                             ))}
-                        <ListItem button onClick={() => console.log("add")}>
+                        <ListItem button data-option="invite" onClick={this.props.addMember}>
                             <ListItemAvatar>
                                 <Avatar>
                                     <AddIcon />

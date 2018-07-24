@@ -20,6 +20,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 
 import Members from '../Operations/membersDialog'
+import Invite from '../Operations/inviteDialog'
 import InsertDialog from '../Operations/insertDialog'
 import WithdrawDialog from '../Operations/withdrawDialog'
 import ResetDialog from '../Operations/resetDialog'
@@ -105,6 +106,20 @@ class GroupWallet extends Component {
                 this.setState({
                     option: {
                         members: true,
+                        invite: false,
+                        insert: false,
+                        withdraw: false,
+                        reset: false,
+                        delete: false,
+                    },
+                    modifyOpen: true
+                })
+                break;
+            case "invite":
+                this.setState({
+                    option: {
+                        members: false,
+                        invite: true,
                         insert: false,
                         withdraw: false,
                         reset: false,
@@ -117,6 +132,7 @@ class GroupWallet extends Component {
                 this.setState({
                     option: {
                         insert: true,
+                        invite: false,
                         withdraw: false,
                         reset: false,
                         delete: false,
@@ -128,6 +144,7 @@ class GroupWallet extends Component {
                 this.setState({
                     option: {
                         insert: false,
+                        invite: false,
                         withdraw: true,
                         reset: false,
                         delete: false,
@@ -139,6 +156,7 @@ class GroupWallet extends Component {
                 this.setState({
                     option: {
                         insert: false,
+                        invite: false,
                         withdraw: false,
                         reset: true,
                         delete: false,
@@ -150,6 +168,7 @@ class GroupWallet extends Component {
                 this.setState({
                     option: {
                         insert: false,
+                        invite: false,
                         withdraw: false,
                         reset: false,
                         delete: true,
@@ -250,14 +269,16 @@ class GroupWallet extends Component {
                             {/*Operation Dialogs*/}
                             {modifyOpen &&
                                 option.members
-                                ? <Members open={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} groupId={this.props.match.params.id} />
-                                : option.insert
-                                    ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} walletName={group.name} totalAmount={group.money} child={group.id} setSnackbarOpen={this.setSnackbarOpen} group={true} />
-                                    : option.withdraw
-                                        ? <WithdrawDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} walletName={group.name} totalAmount={group.money} child={group.id} setSnackbarOpen={this.setSnackbarOpen} group={true} />
-                                        : option.reset
-                                            ? <ResetDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} walletName={group.name} child={group.id} setSnackbarOpen={this.setSnackbarOpen} group={true} />
-                                            : <DeleteDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} child={group.id} setSnackbarOpen={this.setSnackbarOpen} group={true} />
+                                ? <Members open={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} groupId={group.id} addMember={this.handleOptionClick} />
+                                : option.invite
+                                    ? <Invite open={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} groupId={group.id} groupName={group.name} />
+                                    : option.insert
+                                        ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} walletName={group.name} totalAmount={group.money} child={group.id} setSnackbarOpen={this.setSnackbarOpen} group={true} />
+                                        : option.withdraw
+                                            ? <WithdrawDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} walletName={group.name} totalAmount={group.money} child={group.id} setSnackbarOpen={this.setSnackbarOpen} group={true} />
+                                            : option.reset
+                                                ? <ResetDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} walletName={group.name} child={group.id} setSnackbarOpen={this.setSnackbarOpen} group={true} />
+                                                : <DeleteDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} child={group.id} setSnackbarOpen={this.setSnackbarOpen} group={true} />
                             }
 
                             {/*Snackbar poppup*/}
