@@ -14,8 +14,7 @@
 
 ## TODO List
 
-* Add people to groups
-* Notification when invited
+* History for groups
 * Delete single history
 * Delete account
 * OAuth 
