@@ -71,7 +71,6 @@ class GroupWallet extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props)
         firebase.database().ref(`groups/${this.props.match.params.id}`).on('value', snapshot => {
             if (snapshot.val()) {
                 this.setState({ group: snapshot.val(), isLoading: false })
@@ -260,8 +259,8 @@ const mapStateToProps = (state) => ({
 const authCondition = (authUser) => !!authUser;
 
 export default compose(
-    withAuthorization(authCondition),
+    //withAuthorization(authCondition),
     withStyles(styles),
     connect(mapStateToProps),
-    withRouter
+    withRouter,
 )(GroupWallet);

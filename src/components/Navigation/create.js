@@ -41,7 +41,7 @@ class Create extends Component {
 
             walletRef.child(newWallet.key).set({ ...wallet, id: newWallet.key })
 
-            this.props.history.push(`wallets/${newWallet.key}`)
+            this.props.history.push(`/wallets/${newWallet.key}`)
         }
         else {
             const groupsRef = firebase.database().ref('groups/')
@@ -61,7 +61,7 @@ class Create extends Component {
             userGroupRef.child(newGroupRef.key).set({ name: this.state.name, id: newGroupRef.key })
 
             //direct to its URL
-            this.props.history.push(`groups/${newGroupRef.key}`)
+            this.props.history.push(`/groups/${newGroupRef.key}`)
         }
     }
 
