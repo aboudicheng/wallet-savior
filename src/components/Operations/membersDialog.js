@@ -59,7 +59,7 @@ class Members extends React.Component {
                     <List>
                         {members.length > 0 &&
                             members.map(email => (
-                                <ListItem button onClick={() => console.log(email)} key={email}>
+                                <ListItem key={email}>
                                     <ListItemAvatar>
                                         <Avatar className={classes.avatar}>
                                             <PersonIcon />

@@ -50,6 +50,7 @@ class Invite extends React.Component {
 
                                 this.props.handleClose(false);
                                 this.props.handleMenuClose(null);
+                                this.props.setSnackbarOpen(true)
                             }
                         })
 
@@ -60,8 +61,6 @@ class Invite extends React.Component {
                     this.setState({ error: "User not found!" })
                 }
             })
-
-            //this.props.setSnackbarOpen(true);
         }
     }
 

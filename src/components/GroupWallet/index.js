@@ -271,7 +271,7 @@ class GroupWallet extends Component {
                                 option.members
                                 ? <Members open={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} groupId={group.id} addMember={this.handleOptionClick} />
                                 : option.invite
-                                    ? <Invite open={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} groupId={group.id} groupName={group.name} />
+                                    ? <Invite open={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} groupId={group.id} groupName={group.name} setSnackbarOpen={this.setSnackbarOpen} />
                                     : option.insert
                                         ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} walletName={group.name} totalAmount={group.money} child={group.id} setSnackbarOpen={this.setSnackbarOpen} group={true} />
                                         : option.withdraw
