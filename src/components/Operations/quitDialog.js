@@ -19,7 +19,7 @@ class QuitDialog extends Component {
         firebase.database().ref(`users/${this.props.authUser.uid}/groups/${this.props.child}`).remove()
 
         firebase.database().ref(`groups/${this.props.child}/member/`).once('value', snapshot => {
-            snapshot.val().map((member, i) => {
+            snapshot.val().forEach((member, i) => {
                 if (member === this.props.authUser.uid) {
                     firebase.database().ref(`groups/${this.props.child}/member/${i}`).remove()
                 }
