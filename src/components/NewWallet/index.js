@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import withAuthorization from '../Session/withAuthorization';
+//import withAuthorization from '../Session/withAuthorization';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import classNames from 'classnames';
@@ -27,6 +27,8 @@ import ResetDialog from '../Operations/resetDialog'
 import DeleteDialog from '../Operations/deleteDialog'
 import MySnackbarContentWrapper from '../MySnackbarContentWrapper'
 import Rename from '../Operations/rename'
+
+//TODO: add withAuthorization
 
 const styles = theme => ({
     editButton: {
@@ -73,7 +75,6 @@ class NewWallet extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props)
         //if user access via history.push or pressing back button
         if (this.props.history.action === "PUSH" || this.props.authUser) {
             firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.match.params.id}`).on('value', snapshot => {
@@ -88,10 +89,9 @@ class NewWallet extends Component {
     }
 
     componentDidUpdate(props) {
-        console.log(props)
         /*if user transtitions between extra wallets then componentDidMount won't get called*/
         //Wait until it gets authUser info
-        if (this.props.authUser && ((this.props.location.key !== props.location.key) || this.state.isLoading)) {
+        if ((this.props.location.key !== props.location.key) || this.state.isLoading) {
             firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.match.params.id}`).on('value', snapshot => {
                 this.setState({
                     wallet: snapshot.val(),
@@ -272,12 +272,13 @@ const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
 });
 
-const authCondition = (authUser) => !!authUser;
+//const authCondition = (authUser) => !!authUser;
 
 //withAuthorization doesn't work properly
 export default compose(
+    withRouter,
     connect(mapStateToProps),
     //withAuthorization(authCondition),
     withStyles(styles),
-    withRouter,
+
 )(NewWallet);

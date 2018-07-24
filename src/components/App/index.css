@@ -10,7 +10,7 @@
   position: absolute;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 741px) {
 
   .menuicon {
     display: none !important;
@@ -18,7 +18,7 @@
 
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 740px) {
 
   .menubar {
     display: none;
