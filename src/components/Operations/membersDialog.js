@@ -48,6 +48,8 @@ class MembersDialog extends React.Component {
     render() {
         const { members } = this.state
         const { classes } = this.props;
+
+        //TODO: onClick range
         return (
             <Dialog
                 open={this.props.open}
@@ -69,9 +71,9 @@ class MembersDialog extends React.Component {
                                 </ListItem>
                             ))}
                         <ListItem button data-option="invite" onClick={this.props.addMember}>
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <AddIcon />
+                            <ListItemAvatar data-option="invite">
+                                <Avatar data-option="invite">
+                                    <AddIcon data-option="invite" />
                                 </Avatar>
                             </ListItemAvatar>
                             <ListItemText primary="add member" />

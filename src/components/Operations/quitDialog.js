@@ -19,11 +19,17 @@ class QuitDialog extends Component {
         firebase.database().ref(`users/${this.props.authUser.uid}/groups/${this.props.child}`).remove()
 
         firebase.database().ref(`groups/${this.props.child}/member/`).once('value', snapshot => {
-            snapshot.val().forEach((member, i) => {
-                if (member === this.props.authUser.uid) {
-                    firebase.database().ref(`groups/${this.props.child}/member/${i}`).remove()
-                }
-            })
+            //if there is only one member left, delete the whole group
+            if (snapshot.val().length === 1) {
+                firebase.database().ref(`groups/${this.props.child}`).remove()
+            }
+            else {
+                snapshot.val().forEach((member, i) => {
+                    if (member === this.props.authUser.uid) {
+                        firebase.database().ref(`groups/${this.props.child}/member/${i}`).remove()
+                    }
+                })
+            }
         })
     }
 
