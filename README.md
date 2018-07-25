@@ -18,4 +18,3 @@
 * History for groups
 * Delete single history
 * Delete account
-* OAuth 
