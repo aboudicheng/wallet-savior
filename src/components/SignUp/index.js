@@ -4,6 +4,8 @@ import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
+import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
+
 import {
   Link,
   withRouter,
@@ -85,27 +87,27 @@ class SignUpForm extends Component {
   //     })
   // }
 
-  // signInWithFacebook = () => {
-  //   const provider = new firebase.auth.FacebookAuthProvider()
-  //   auth.doSignInWithPopup(provider)
-  //     .then(res => {
-  //       console.log(res)
-  //       const user = res.user
+  signInWithFacebook = () => {
+    const provider = new firebase.auth.FacebookAuthProvider()
+    auth.doSignInWithPopup(provider)
+      .then(res => {
+        console.log(res)
+        const user = res.user
 
-  //       db.doCreateUser(user.uid, user.displayName, user.email)
-  //         .then(() => {
-  //           this.setState(() => ({ ...INITIAL_STATE }));
-  //           this.props.history.push(routes.HOME);
-  //         })
-  //         .catch(error => {
-  //           this.setState(updateByPropertyName('error', error));
-  //         });
+        db.doCreateUser(user.uid, user.displayName, user.email)
+          .then(() => {
+            this.setState(() => ({ ...INITIAL_STATE }));
+            this.props.history.push(routes.HOME);
+          })
+          .catch(error => {
+            this.setState(updateByPropertyName('error', error));
+          });
 
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
 
   onSubmit = (event) => {
     const {
@@ -197,13 +199,9 @@ class SignUpForm extends Component {
           <Button variant="contained" color="primary" disabled={isInvalid} type="submit" className={classes.button}>Sign Up</Button>
         </div>
 
-        {/* <div style={{ margin: '0 auto', width: '100%' }}>
-          <Button variant="contained" color="primary" className={classes.facebook} onClick={this.signInWithFacebook}>Sign in with Facebook</Button>
-        </div> */}
+        <FacebookLoginButton style={{ fontSize: 17, width: "100%" }} align="center" onClick={this.signInWithFacebook} />
 
-        {/* <div style={{ margin: '0 auto', width: '100%' }}>
-          <Button variant="contained" color="primary" className={classes.google} onClick={this.signInWithGoogle}>Sign in with Google</Button>
-        </div> */}
+        <GoogleLoginButton style={{ fontSize: 17, width: "100%" }} align="center" onClick={this.signInWithGoogle} />
 
         {error && <p style={{ color: "#d32f2f" }}>{error.message}</p>}
 

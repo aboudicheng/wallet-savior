@@ -137,7 +137,7 @@ class NavigationAuth extends React.Component {
                                     <Money style={{ color: "#f39c12" }} />
                                 </ListItemIcon>
                                 <ListItemText primary={wallets[0].name} />
-                                <span style={{ color: wallets[0].money >= 0 ? "#3fb5a3" : "#ff0000" }}>{formatNumber({ prefix: "$" })(wallets[0].money)}</span>
+                                <span style={{ color: wallets[0].money >= 0 ? "#3fb5a3" : "#ff0000" }}>{formatNumber({ prefix: "$" })(parseFloat(wallets[0].money).toFixed(2))}</span>
                             </ListItem>
                         </List>
                     </Collapse>

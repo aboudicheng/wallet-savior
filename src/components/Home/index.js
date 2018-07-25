@@ -160,7 +160,7 @@ class HomePage extends Component {
         <h1>{walletName}</h1>
         {isLoading
           ? <CircularProgress className={classes.progress} size={50} />
-          : <span style={{ fontSize: "170%", color: totalAmount >= 0 ? "#3fb5a3" : "#ff0000" }}>{formatNumber({ prefix: "$" })(totalAmount)}</span>
+          : <span style={{ fontSize: "170%", color: totalAmount >= 0 ? "#3fb5a3" : "#ff0000" }}>{formatNumber({ prefix: "$" })(parseFloat(totalAmount).toFixed(2))}</span>
         }
         <p>Check <Link to={routes.HISTORY}>History</Link></p>
         <Divider />
