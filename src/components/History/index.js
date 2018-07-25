@@ -4,11 +4,7 @@ import { connect } from 'react-redux';
 import firebase from 'firebase/app';
 import withAuthorization from '../Session/withAuthorization';
 import { withStyles } from '@material-ui/core/styles';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Paper from '@material-ui/core/Paper';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import formatNumber from "format-number";
 import Tooltip from '@material-ui/core/Tooltip';
@@ -29,17 +25,17 @@ const styles = theme => ({
         bottom: "1.8rem",
         position: "fixed",
     },
-    heading: {
-        fontSize: theme.typography.pxToRem(15),
-        fontWeight: theme.typography.fontWeightRegular,
-    },
-    details: {
-        flexFlow: "column wrap",
-        textAlign: "left"
-    },
     typography: {
         width: "100%",
         fontSize: "1.2rem"
+    },
+    paper: {
+        ...theme.mixins.gutters(),
+        paddingTop: theme.spacing.unit * 2,
+        paddingBottom: theme.spacing.unit * 2,
+        margin: theme.spacing.unit * 2,
+        display: "inline-flex",
+        flexFlow: "column wrap",
     }
 });
 
@@ -114,29 +110,26 @@ class History extends Component {
                         : <div>
                             {history.slice().reverse().map((record, i) => {
                                 return (
-                                    <ExpansionPanel key={"panel" + i}>
-                                        <ExpansionPanelSummary key={"summary" + i} expandIcon={<ExpandMoreIcon />}>
-                                            <Typography key={"typo1" + i} className={classes.heading}>{`${record.date.day} ${record.date.month} ${record.date.year} ${record.date.hour}:${record.date.min}`}</Typography>
-                                        </ExpansionPanelSummary>
-                                        <ExpansionPanelDetails key={"details" + i} className={classes.details}>
-                                            <Typography key={"wallet" + i} className={classes.typography}>
-                                                <span style={fieldStyle}>Wallet: </span>{record.wallet}
-                                            </Typography>
-                                            <Typography key={"type" + i} className={classes.typography}>
-                                                <span style={fieldStyle}>Type: </span>{record.type}
-                                            </Typography>
-                                            <Typography key={"amount" + i} className={classes.typography}>
-                                                <span style={fieldStyle}>Amount: </span>{formatNumber({ prefix: "$" })(record.amount)}
-                                            </Typography>
-                                            {record.description !== ""
-                                                ? <Typography key={"description" + i} className={classes.typography}>
-                                                    <span style={fieldStyle}>Description: </span>{record.description}
-                                                </Typography>
-                                                : <div></div>
-                                            }
+                                    <Paper className={classes.paper} elevation={5} key={i}>
+                                        <h3>
+                                            {`${record.date.day} ${record.date.month} ${record.date.year} ${record.date.hour}:${record.date.min}`}
+                                        </h3>
+                                        <div>
+                                            <span style={fieldStyle}>Wallet: </span>{record.wallet}
+                                        </div>
+                                        <div>
+                                            <span style={fieldStyle}>Type: </span>{record.type}
+                                        </div>
+                                        <div>
+                                            <span style={fieldStyle}>Amount: </span>{formatNumber({ prefix: "$" })(record.amount)}
+                                        </div>
 
-                                        </ExpansionPanelDetails>
-                                    </ExpansionPanel>
+                                        <div>
+                                            {record.description !== ""
+                                                && <div><span style={fieldStyle}>Description: </span>{record.description}</div>
+                                            }
+                                        </div>
+                                    </Paper>
                                 )
                             })
                             }
