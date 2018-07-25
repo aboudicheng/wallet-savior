@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
 import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
-
 import {
   Link,
   withRouter,
@@ -44,7 +44,7 @@ const styles = theme => ({
 const SignUpPage = (props) =>
   <div>
     <h1>SignUp</h1>
-    <SignUpForm history={props.history} classes={props.classes} />
+    <SignUpForm history={props.history} classes={props.classes} authUser={props.authUser} />
     <SignInLink />
   </div>
 
@@ -75,37 +75,91 @@ class SignUpForm extends Component {
     );
   }
 
-  // signInWithGoogle = () => {
-  //   const provider = new firebase.auth.GoogleAuthProvider()
-  //   auth.doSignInWithPopup(provider)
-  //     .then(res => {
-  //       const user = res.user
+  signInWithGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthProvider()
+    auth.doSignInWithPopup(provider)
+      .then(res => {
+        const user = res.user
+        let found = false
 
-  //       const result = this.state.users.find(u => user.email === u.email)
+        firebase.database().ref('users').once('value', snapshot => {
 
-  //       this.props.history.push(routes.HOME);
-  //     })
-  // }
+          for (let key in snapshot.val()) {
+
+            //if user already exists then do login
+            if (snapshot.val()[key].email === user.email) {
+              found = true
+              firebase.auth().signInAndRetrieveDataWithCredential(res.credential)
+                .then(() => {
+                  this.setState(() => ({ ...INITIAL_STATE }));
+
+                  this.props.history.push(routes.HOME);
+                })
+                .catch(error => {
+                  this.setState(updateByPropertyName('error', error));
+                });
+            }
+          }
+
+          //if user doesn't exist then do signup
+          if (!found) {
+            db.doCreateUser(user.uid, user.displayName, user.email)
+              .then(() => {
+                this.setState(() => ({ ...INITIAL_STATE }));
+                this.props.history.push(routes.HOME);
+              })
+              .catch(error => {
+                this.setState(updateByPropertyName('error', error));
+              });
+          }
+        })
+      })
+      .catch(error => {
+        this.setState(updateByPropertyName('error', error));
+      })
+  }
 
   signInWithFacebook = () => {
     const provider = new firebase.auth.FacebookAuthProvider()
     auth.doSignInWithPopup(provider)
       .then(res => {
-        console.log(res)
         const user = res.user
+        let found = false
 
-        db.doCreateUser(user.uid, user.displayName, user.email)
-          .then(() => {
-            this.setState(() => ({ ...INITIAL_STATE }));
-            this.props.history.push(routes.HOME);
-          })
-          .catch(error => {
-            this.setState(updateByPropertyName('error', error));
-          });
+        firebase.database().ref('users').once('value', snapshot => {
 
+          for (let key in snapshot.val()) {
+
+            //if user already exists then do login
+            if (snapshot.val()[key].email === user.email) {
+              found = true
+              firebase.auth().signInAndRetrieveDataWithCredential(res.credential)
+                .then(() => {
+                  this.setState(() => ({ ...INITIAL_STATE }));
+
+                  this.props.history.push(routes.HOME);
+                })
+                .catch(error => {
+                  this.setState(updateByPropertyName('error', error));
+                });
+            }
+          }
+
+          //if user doesn't exist then do signup
+          if (!found) {
+            db.doCreateUser(user.uid, user.displayName, user.email)
+              .then(() => {
+                this.setState(() => ({ ...INITIAL_STATE }));
+                this.props.history.push(routes.HOME);
+              })
+              .catch(error => {
+                this.setState(updateByPropertyName('error', error));
+              });
+          }
+        })
       })
       .catch(error => {
-        console.log(error)
+        this.setState(updateByPropertyName('error', error));
       })
   }
 
@@ -217,9 +271,14 @@ const SignUpLink = () =>
     <Link to={routes.SIGN_UP}>Sign Up</Link>
   </p>
 
+const mapStateToProps = (state) => ({
+  authUser: state.sessionState.authUser,
+})
+
 export default compose(
   withRouter,
   withStyles(styles),
+  connect(mapStateToProps)
 )(SignUpPage)
 
 export {

@@ -4,10 +4,11 @@ import { compose } from 'recompose';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
 import { withRouter, Link } from 'react-router-dom';
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
-import { auth } from '../../firebase';
+import { auth, db } from '../../firebase';
 import * as routes from '../../constants/routes';
 import firebase from 'firebase/app';
 
@@ -66,50 +67,93 @@ class SignInForm extends Component {
     );
   }
 
-  // signInWithGoogle = () => {
-  //   const provider = new firebase.auth.GoogleAuthProvider()
-  //   auth.doSignInWithPopup(provider)
-  //     .then(res => {
-  //       const user = res.user
+  signInWithGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthProvider()
+    auth.doSignInWithPopup(provider)
+      .then(res => {
+        const user = res.user
+        let found = false
 
-  //       const result = this.state.users.find(u => user.email === u.email)
+        firebase.database().ref('users').once('value', snapshot => {
 
-  //       if (!result) {
-  //         db.doCreateUser(user.uid, user.displayName, user.email)
-  //           .then(() => {
-  //             this.setState(() => ({ ...INITIAL_STATE }));
-  //             this.props.history.push(routes.HOME);
-  //           })
-  //           .catch(error => {
-  //             this.setState(updateByPropertyName('error', error));
-  //           });
-  //       }
-  //       else {
-  //         firebase.auth().signInWithEmailLink(user.email)
-  //           .then(() => {
-  //             this.setState(() => ({ ...INITIAL_STATE }));
-  //           })
-  //           .catch(error => console.log(error))
-  //       }
-  //     })
-  // }
+          for (let key in snapshot.val()) {
 
-  // signInWithFacebook = () => {
-  //   const provider = new firebase.auth.FacebookAuthProvider()
-  //   firebase.auth().signInWithRedirect(provider)
-  //     .then(res => {
-  //       const user = res.user
+            //if user already exists then do login
+            if (snapshot.val()[key].email === user.email) {
+              found = true
+              firebase.auth().signInAndRetrieveDataWithCredential(res.credential)
+                .then(() => {
+                  this.setState(() => ({ ...INITIAL_STATE }));
 
-  //       firebase.auth().signInWithEmailLink(user.email)
-  //         .then(() => {
-  //           this.setState(() => ({ ...INITIAL_STATE }));
-  //         })
+                  this.props.history.push(routes.HOME);
+                })
+                .catch(error => {
+                  this.setState(updateByPropertyName('error', error));
+                });
+            }
+          }
 
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // }
+          //if user doesn't exist then do signup
+          if (!found) {
+            db.doCreateUser(user.uid, user.displayName, user.email)
+              .then(() => {
+                this.setState(() => ({ ...INITIAL_STATE }));
+                this.props.history.push(routes.HOME);
+              })
+              .catch(error => {
+                this.setState(updateByPropertyName('error', error));
+              });
+          }
+        })
+      })
+      .catch(error => {
+        this.setState(updateByPropertyName('error', error));
+      })
+  }
+
+  signInWithFacebook = () => {
+    const provider = new firebase.auth.FacebookAuthProvider()
+    auth.doSignInWithPopup(provider)
+      .then(res => {
+        const user = res.user
+        let found = false
+
+        firebase.database().ref('users').once('value', snapshot => {
+
+          for (let key in snapshot.val()) {
+
+            //if user already exists then do login
+            if (snapshot.val()[key].email === user.email) {
+              found = true
+              firebase.auth().signInAndRetrieveDataWithCredential(res.credential)
+                .then(() => {
+                  this.setState(() => ({ ...INITIAL_STATE }));
+
+                  this.props.history.push(routes.HOME);
+                })
+                .catch(error => {
+                  this.setState(updateByPropertyName('error', error));
+                });
+            }
+          }
+
+          //if user doesn't exist then do signup
+          if (!found) {
+            db.doCreateUser(user.uid, user.displayName, user.email)
+              .then(() => {
+                this.setState(() => ({ ...INITIAL_STATE }));
+                this.props.history.push(routes.HOME);
+              })
+              .catch(error => {
+                this.setState(updateByPropertyName('error', error));
+              });
+          }
+        })
+      })
+      .catch(error => {
+        this.setState(updateByPropertyName('error', error));
+      })
+  }
 
   onSubmit = (event) => {
     const {
@@ -173,13 +217,9 @@ class SignInForm extends Component {
         />
         <Button variant="contained" color="primary" disabled={isInvalid} type="submit" className={classes.button}>Login</Button>
 
-        {/* <div style={{ margin: '0 auto', width: '100%' }}>
-          <Button variant="contained" color="primary" className={classes.facebook} onClick={this.signInWithFacebook}>Sign in with Facebook</Button>
-        </div> */}
+        <FacebookLoginButton style={{ fontSize: 17, width: "100%" }} align="center" onClick={this.signInWithFacebook} />
 
-        {/* <div style={{ margin: '0 auto', width: '100%' }}>
-          <Button variant="contained" color="secondary" className={classes.google} onClick={this.signInWithGoogle}>Sign in with Google</Button>
-        </div> */}
+        <GoogleLoginButton style={{ fontSize: 17, width: "100%" }} align="center" onClick={this.signInWithGoogle} />
 
         {error && <p style={{ color: "#d32f2f" }}>{error.message}</p>}
       </form>
