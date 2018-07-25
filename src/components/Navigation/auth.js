@@ -71,13 +71,14 @@ class NavigationAuth extends React.Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         firebase.database().ref(`users/${this.props.authUser.uid}`).on('value', snapshot => {
             const { groups, wallets } = snapshot.val()
             let groupWallets = []
 
             for (let key in groups) {
                 firebase.database().ref(`groups/`).once('value', s => {
+                    console.log("update")
                     groupWallets.push(s.val()[groups[key].id])
                 })
             }

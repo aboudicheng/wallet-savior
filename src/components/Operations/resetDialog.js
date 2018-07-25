@@ -8,7 +8,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import * as firebase from 'firebase/app'
-//import { months } from '../../constants/months'
+import { months } from '../../constants/months'
+
+const usersRef = firebase.database().ref('users/')
 
 class ResetDialog extends React.Component {
     constructor(props) {
@@ -25,6 +27,7 @@ class ResetDialog extends React.Component {
 
     submit = () => {
         if (this.state.value.length !== 0 && !isNaN(this.state.value)) {
+            const date = new Date();
 
             this.props.handleClose(false);
             this.props.handleMenuClose(null);
@@ -38,8 +41,24 @@ class ResetDialog extends React.Component {
                 firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.child}`).update({ money })
             }
 
+            const record = {
+                type: "Reset",
+                amount: this.state.value,
+                wallet: this.props.walletName,
+                date: {
+                    year: date.getFullYear(),
+                    month: months[date.getMonth()],
+                    day: ("0" + date.getDate()).slice(-2),
+                    hour: ("0" + date.getHours()).slice(-2),
+                    min: ("0" + date.getMinutes()).slice(-2),
+                },
+                description: "",
+            }
+
+            usersRef.child(this.props.authUser.uid).child("history").push(record)
+
             this.props.setSnackbarOpen(true);
-            this.setState({ value: "", text: "" })
+            this.setState({ value: "" })
         }
     }
 
