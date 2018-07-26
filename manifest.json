@@ -3,6 +3,11 @@
   "name": "Wallet $avior",
   "icons": [
     {
+      "src": "./image/icon",
+      "sizes": "640x599",
+      "type": "image/png"
+    },
+    {
       "src": "./image/android-icon-72x72",
       "sizes": "72x72",
       "type": "image/png"
