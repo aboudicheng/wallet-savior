@@ -3,8 +3,8 @@
   "name": "Wallet $avior",
   "icons": [
     {
-      "src": "image/icon.png",
-      "sizes": "640x599",
+      "src": "./image/192x192.png",
+      "sizes": "192x192",
       "type": "image/png"
     },
     {
