@@ -82,7 +82,7 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
-    usersRef.child(this.props.authUser.uid).on('value', snapshot => {
+    usersRef.child(this.props.authUser.uid).once('value', snapshot => {
       if (snapshot.val().firstUse) {
         this.setState({ firstUse: true })
       }

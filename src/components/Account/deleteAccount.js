@@ -9,9 +9,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import firebase from 'firebase/app'
-//import { admin } from '../../firebase/firebase'
-
-//TODO: delete auth user both from firebase and redux store
+import { withRouter } from 'react-router'
+import * as routes from '../../constants/routes'
 
 const styles = theme => ({
     button: {
@@ -38,14 +37,14 @@ class DeleteAccount extends Component {
     confirmDelete = () => {
         this.handleClose();
 
-        //remove from database
-        firebase.database().ref('users').child(this.props.authUser.uid).remove()
+        firebase.auth().currentUser.delete().then(() => {
+            //remove from database
+            firebase.database().ref('users').child(this.props.authUser.uid).remove()
+            this.props.history.push(routes.LOGIN)
+            this.props.deleteAuthUser()
 
-        //remove from authentication list
-        // admin.auth().deleteUser(this.props.authUser.uid)
-        // .catch(() => {
-        //     console.log("error")
-        // })
+        })
+            .catch(error => console.log(error))
     }
 
     render() {
@@ -82,7 +81,12 @@ const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+    deleteAuthUser: () => dispatch({ type: 'DELETE_AUTH_USER' })
+})
+
 export default compose(
     withStyles(styles),
-    connect(mapStateToProps)
+    connect(mapStateToProps, mapDispatchToProps),
+    withRouter
 )(DeleteAccount);
