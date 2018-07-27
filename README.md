@@ -41,4 +41,3 @@ Feel free to submit any issue or PR.
 * Group visibility limited to members
 * History for groups
 * Delete single history
-* Delete account
