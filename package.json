@@ -5,7 +5,7 @@
   "homepage": "https://aboudicheng.github.io/wallet-savior/",
   "dependencies": {
     "@material-ui/core": "^1.4.0",
-    "@material-ui/icons": "^1.1.0",
+    "@material-ui/icons": "^2.0.0",
     "fast-crc32c": "^1.0.4",
     "firebase": "^5.2.0",
     "firebase-admin": "^5.12.1",
