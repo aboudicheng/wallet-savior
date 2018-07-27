@@ -38,12 +38,12 @@ class InviteDialog extends React.Component {
 
                         //iterate through member id
                         membersRef.once('value', s => {
-                            if (s.val().includes(key)) {
+                            if (s.val().hasOwnProperty(key)) {
                                 this.setState({ error: "The member is already in the group!" })
                             }
                             else {
                                 //push to groups field
-                                membersRef.child(s.val().length).set(key)
+                                membersRef.child(key).set(key)
 
                                 //also push to personal groups field
                                 usersRef.child(`${key}/groups/${this.props.groupId}`).set({ name: this.props.groupName, id: this.props.groupId })

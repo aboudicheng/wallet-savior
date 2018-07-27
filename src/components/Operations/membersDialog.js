@@ -33,15 +33,13 @@ class MembersDialog extends React.Component {
 
     componentDidMount() {
         firebase.database().ref(`groups/${this.props.groupId}/member`).once('value', snapshot => {
-            snapshot.val().map(id => {
-                return (
-                    firebase.database().ref(`users/${id}/email`).once('value', s => {
-                        this.setState(prevState => ({
-                            members: [...prevState.members, s.val()]
-                        }))
-                    })
-                )
-            })
+            for (let key in snapshot.val()) {
+                firebase.database().ref(`users/${key}/email`).once('value', s => {
+                    this.setState(prevState => ({
+                        members: [...prevState.members, s.val()]
+                    }))
+                })
+            }
         })
     }
 

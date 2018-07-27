@@ -61,7 +61,7 @@ class History extends Component {
             }))
         })
 
-        usersRef.child(this.props.authUser.uid).on('value', snapshot => {
+        usersRef.child(this.props.authUser.uid).once('value', snapshot => {
             if (!snapshot.val().history) {
                 this.setState({ isLoading: false })
             }

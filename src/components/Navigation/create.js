@@ -49,7 +49,7 @@ class Create extends Component {
 
             const group = {
                 name: this.state.name,
-                member: [this.props.authUser.uid],
+                member: { [this.props.authUser.uid]: this.props.authUser.uid },
                 money: 0,
             }
 
