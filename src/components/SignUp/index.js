@@ -13,6 +13,7 @@ import {
 import { SignInLink } from '../SignIn'
 import { auth, db } from '../../firebase';
 import firebase from 'firebase/app'
+import * as actions from '../../constants/action_types'
 import * as routes from '../../constants/routes';
 
 const styles = theme => ({
@@ -41,25 +42,7 @@ const styles = theme => ({
   }
 });
 
-const updateByPropertyName = (propertyName, value) => () => ({
-  [propertyName]: value,
-});
-
-const INITIAL_STATE = {
-  username: '',
-  email: '',
-  passwordOne: '',
-  passwordTwo: '',
-  error: null,
-};
-
 class SignUpForm extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { ...INITIAL_STATE };
-  }
-
   componentDidUpdate() {
     //if the user is already logged in, prevent logging in again
     if (this.props.authUser) {
@@ -83,12 +66,12 @@ class SignUpForm extends Component {
               found = true
               firebase.auth().signInAndRetrieveDataWithCredential(res.credential)
                 .then(() => {
-                  this.setState(() => ({ ...INITIAL_STATE }));
+                  this.props.initializeSignup();
 
                   this.props.history.push(routes.HOME);
                 })
                 .catch(error => {
-                  this.setState(updateByPropertyName('error', error));
+                  this.props.setSignupError(error)
                 });
             }
           }
@@ -97,17 +80,17 @@ class SignUpForm extends Component {
           if (!found) {
             db.doCreateUser(user.uid, user.displayName, user.email)
               .then(() => {
-                this.setState(() => ({ ...INITIAL_STATE }));
+                this.props.initializeSignup();
                 this.props.history.push(routes.HOME);
               })
               .catch(error => {
-                this.setState(updateByPropertyName('error', error));
+                this.props.setSignupError(error)
               });
           }
         })
       })
       .catch(error => {
-        this.setState(updateByPropertyName('error', error));
+        this.props.setSignupError(error)
       })
   }
 
@@ -127,12 +110,12 @@ class SignUpForm extends Component {
               found = true
               firebase.auth().signInAndRetrieveDataWithCredential(res.credential)
                 .then(() => {
-                  this.setState(() => ({ ...INITIAL_STATE }));
+                  this.props.initializeSignup();
 
                   this.props.history.push(routes.HOME);
                 })
                 .catch(error => {
-                  this.setState(updateByPropertyName('error', error));
+                  this.props.setSignupError(error)
                 });
             }
           }
@@ -141,17 +124,17 @@ class SignUpForm extends Component {
           if (!found) {
             db.doCreateUser(user.uid, user.displayName, user.email)
               .then(() => {
-                this.setState(() => ({ ...INITIAL_STATE }));
+                this.props.initializeSignup();
                 this.props.history.push(routes.HOME);
               })
               .catch(error => {
-                this.setState(updateByPropertyName('error', error));
+                this.props.setSignupError(error)
               });
           }
         })
       })
       .catch(error => {
-        this.setState(updateByPropertyName('error', error));
+        this.props.setSignupError(error)
       })
   }
 
@@ -160,7 +143,7 @@ class SignUpForm extends Component {
       username,
       email,
       passwordOne,
-    } = this.state;
+    } = this.props.state;
 
     const {
       history,
@@ -172,16 +155,16 @@ class SignUpForm extends Component {
         // Create a user in your own accessible Firebase Database too
         db.doCreateUser(authUser.user.uid, username, email)
           .then(() => {
-            this.setState(() => ({ ...INITIAL_STATE }));
+            this.props.initializeSignup();
             history.push(routes.HOME);
           })
           .catch(error => {
-            this.setState(updateByPropertyName('error', error));
+            this.props.setSignupError(error)
           });
 
       })
       .catch(error => {
-        this.setState(updateByPropertyName('error', error));
+        this.props.setSignupError(error)
       });
 
     event.preventDefault();
@@ -194,7 +177,7 @@ class SignUpForm extends Component {
       passwordOne,
       passwordTwo,
       error,
-    } = this.state;
+    } = this.props.state;
 
     const isInvalid =
       passwordOne !== passwordTwo ||
@@ -213,7 +196,7 @@ class SignUpForm extends Component {
             label="Username"
             className={classes.textField}
             value={username}
-            onChange={event => this.setState(updateByPropertyName('username', event.target.value))}
+            onChange={event => this.props.setSignupUsername(event.target.value)}
             margin="normal"
           />
           <TextField
@@ -221,7 +204,7 @@ class SignUpForm extends Component {
             label="Email Address"
             className={classes.textField}
             value={email}
-            onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
+            onChange={event => this.props.setSignupEmail(event.target.value)}
             margin="normal"
           />
           <TextField
@@ -230,7 +213,7 @@ class SignUpForm extends Component {
             type="password"
             className={classes.textField}
             value={passwordOne}
-            onChange={event => this.setState(updateByPropertyName('passwordOne', event.target.value))}
+            onChange={event => this.props.setSignupPasswordOne(event.target.value)}
             margin="normal"
           />
           <TextField
@@ -239,7 +222,7 @@ class SignUpForm extends Component {
             type="password"
             className={classes.textField}
             value={passwordTwo}
-            onChange={event => this.setState(updateByPropertyName('passwordTwo', event.target.value))}
+            onChange={event => this.props.setSignupPasswordTwo(event.target.value)}
             margin="normal"
           />
 
@@ -269,12 +252,22 @@ const SignUpLink = () =>
 
 const mapStateToProps = (state) => ({
   authUser: state.sessionState.authUser,
+  state: state.signupState
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  initializeSignup: () => dispatch({ type: actions.INITIALIZE_SIGNUP }),
+  setSignupError: (error) => dispatch({ type: actions.SET_SIGNUP_ERROR, error }),
+  setSignupUsername: (username) => dispatch({ type: actions.SET_SIGNUP_USERNAME, username }),
+  setSignupEmail: (email) => dispatch({ type: actions.SET_SIGNUP_EMAIL, email }),
+  setSignupPasswordOne: (passwordOne) => dispatch({ type: actions.SET_SIGNUP_PASSWORD1, passwordOne }),
+  setSignupPasswordTwo: (passwordTwo) => dispatch({ type: actions.SET_SIGNUP_PASSWORD2, passwordTwo })
 })
 
 export default compose(
   withRouter,
   withStyles(styles),
-  connect(mapStateToProps)
+  connect(mapStateToProps, mapDispatchToProps)
 )(SignUpForm)
 
 export {
