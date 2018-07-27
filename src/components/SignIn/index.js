@@ -12,6 +12,11 @@ import { auth, db } from '../../firebase';
 import * as routes from '../../constants/routes';
 import firebase from 'firebase/app';
 
+//TODO: extract signin functions and let redux handle the states
+function isRunningStandalone() {
+  return (window.matchMedia('(display-mode: standalone)').matches);
+}
+
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -34,14 +39,6 @@ const styles = theme => ({
   }
 });
 
-const SignInPage = (props) =>
-  <div>
-    <h1>Login</h1>
-    <SignInForm history={props.history} classes={props.classes} authUser={props.authUser} />
-    <PasswordForgetLink />
-    <SignUpLink />
-  </div>
-
 const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
 });
@@ -57,6 +54,12 @@ class SignInForm extends Component {
     super(props);
 
     this.state = { ...INITIAL_STATE, users: [] };
+  }
+
+  componentDidUpdate() {
+    if (this.props.authUser) {
+      this.props.history.push(routes.HOME);
+    }
   }
 
   componentDidMount() {
@@ -177,12 +180,6 @@ class SignInForm extends Component {
     event.preventDefault();
   }
 
-  componentDidUpdate() {
-    if (this.props.authUser) {
-      this.props.history.push(routes.HOME);
-    }
-  }
-
   render() {
     const {
       email,
@@ -197,32 +194,38 @@ class SignInForm extends Component {
     const { classes } = this.props
 
     return (
-      <form onSubmit={this.onSubmit} className={classes.container}>
-        <TextField
-          id="email"
-          label="Email Address"
-          className={classes.textField}
-          value={email}
-          onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
-          margin="normal"
-        />
-        <TextField
-          id="password"
-          label="Password"
-          type="password"
-          className={classes.textField}
-          value={password}
-          onChange={event => this.setState(updateByPropertyName('password', event.target.value))}
-          margin="normal"
-        />
-        <Button variant="contained" color="primary" disabled={isInvalid} type="submit" className={classes.button}>Login</Button>
+      <div>
+        <h1>Login</h1>
+        <form onSubmit={this.onSubmit} className={classes.container}>
+          <TextField
+            id="email"
+            label="Email Address"
+            className={classes.textField}
+            value={email}
+            onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
+            margin="normal"
+          />
+          <TextField
+            id="password"
+            label="Password"
+            type="password"
+            className={classes.textField}
+            value={password}
+            onChange={event => this.setState(updateByPropertyName('password', event.target.value))}
+            margin="normal"
+          />
+          <Button variant="contained" color="primary" disabled={isInvalid} type="submit" className={classes.button}>Login</Button>
 
-        <FacebookLoginButton style={{ fontSize: 17, width: "100%" }} align="center" onClick={this.signInWithFacebook} />
+          <FacebookLoginButton style={{ fontSize: 17, width: "100%" }} align="center" onClick={this.signInWithFacebook} />
 
-        <GoogleLoginButton style={{ fontSize: 17, width: "100%" }} align="center" onClick={this.signInWithGoogle} />
+          <GoogleLoginButton style={{ fontSize: 17, width: "100%" }} align="center" onClick={this.signInWithGoogle} />
 
-        {error && <p style={{ color: "#d32f2f" }}>{error.message}</p>}
-      </form>
+          {error && <p style={{ color: "#d32f2f" }}>{error.message}</p>}
+        </form>
+
+        <PasswordForgetLink />
+        <SignUpLink />
+      </div>
     );
   }
 }
@@ -241,10 +244,9 @@ const mapStateToProps = (state) => ({
 export default compose(
   withRouter,
   withStyles(styles),
-  connect(mapStateToProps)
-)(SignInPage);
+  connect(mapStateToProps),
+)(SignInForm);
 
 export {
-  SignInForm,
   SignInLink
 };

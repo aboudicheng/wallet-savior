@@ -41,13 +41,6 @@ const styles = theme => ({
   }
 });
 
-const SignUpPage = (props) =>
-  <div>
-    <h1>SignUp</h1>
-    <SignUpForm history={props.history} classes={props.classes} authUser={props.authUser} />
-    <SignInLink />
-  </div>
-
 const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
 });
@@ -65,6 +58,13 @@ class SignUpForm extends Component {
     super(props);
 
     this.state = { ...INITIAL_STATE, users: [] };
+  }
+
+  componentDidUpdate() {
+    //if the user is already logged in, prevent logging in again
+    if (this.props.authUser) {
+      this.props.history.push(routes.HOME)
+    }
   }
 
   componentDidMount() {
@@ -213,53 +213,57 @@ class SignUpForm extends Component {
     const { classes } = this.props
 
     return (
-      <form onSubmit={this.onSubmit} className={classes.container}>
-        <TextField
-          id="username"
-          label="Username"
-          className={classes.textField}
-          value={username}
-          onChange={event => this.setState(updateByPropertyName('username', event.target.value))}
-          margin="normal"
-        />
-        <TextField
-          id="email"
-          label="Email Address"
-          className={classes.textField}
-          value={email}
-          onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
-          margin="normal"
-        />
-        <TextField
-          id="passwordone"
-          label="Password"
-          type="password"
-          className={classes.textField}
-          value={passwordOne}
-          onChange={event => this.setState(updateByPropertyName('passwordOne', event.target.value))}
-          margin="normal"
-        />
-        <TextField
-          id="passwordtwo"
-          label="Confirm Password"
-          type="password"
-          className={classes.textField}
-          value={passwordTwo}
-          onChange={event => this.setState(updateByPropertyName('passwordTwo', event.target.value))}
-          margin="normal"
-        />
+      <div>
+        <h1>SignUp</h1>
+        <form onSubmit={this.onSubmit} className={classes.container}>
+          <TextField
+            id="username"
+            label="Username"
+            className={classes.textField}
+            value={username}
+            onChange={event => this.setState(updateByPropertyName('username', event.target.value))}
+            margin="normal"
+          />
+          <TextField
+            id="email"
+            label="Email Address"
+            className={classes.textField}
+            value={email}
+            onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
+            margin="normal"
+          />
+          <TextField
+            id="passwordone"
+            label="Password"
+            type="password"
+            className={classes.textField}
+            value={passwordOne}
+            onChange={event => this.setState(updateByPropertyName('passwordOne', event.target.value))}
+            margin="normal"
+          />
+          <TextField
+            id="passwordtwo"
+            label="Confirm Password"
+            type="password"
+            className={classes.textField}
+            value={passwordTwo}
+            onChange={event => this.setState(updateByPropertyName('passwordTwo', event.target.value))}
+            margin="normal"
+          />
 
-        <div style={{ margin: '0 auto', width: '100%' }}>
-          <Button variant="contained" color="primary" disabled={isInvalid} type="submit" className={classes.button}>Sign Up</Button>
-        </div>
+          <div style={{ margin: '0 auto', width: '100%' }}>
+            <Button variant="contained" color="primary" disabled={isInvalid} type="submit" className={classes.button}>Sign Up</Button>
+          </div>
 
-        <FacebookLoginButton style={{ fontSize: 17, width: "100%" }} align="center" onClick={this.signInWithFacebook} />
+          <FacebookLoginButton style={{ fontSize: 17, width: "100%" }} align="center" onClick={this.signInWithFacebook} />
 
-        <GoogleLoginButton style={{ fontSize: 17, width: "100%" }} align="center" onClick={this.signInWithGoogle} />
+          <GoogleLoginButton style={{ fontSize: 17, width: "100%" }} align="center" onClick={this.signInWithGoogle} />
 
-        {error && <p style={{ color: "#d32f2f" }}>{error.message}</p>}
+          {error && <p style={{ color: "#d32f2f" }}>{error.message}</p>}
 
-      </form>
+        </form>
+        <SignInLink />
+      </div>
     );
   }
 }
@@ -279,9 +283,8 @@ export default compose(
   withRouter,
   withStyles(styles),
   connect(mapStateToProps)
-)(SignUpPage)
+)(SignUpForm)
 
 export {
-  SignUpForm,
   SignUpLink,
 };
