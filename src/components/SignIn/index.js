@@ -9,6 +9,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import { auth, db } from '../../firebase';
+import * as actions from '../../constants/action_types'
 import * as routes from '../../constants/routes';
 import firebase from 'firebase/app';
 
@@ -39,35 +40,11 @@ const styles = theme => ({
   }
 });
 
-const updateByPropertyName = (propertyName, value) => () => ({
-  [propertyName]: value,
-});
-
-const INITIAL_STATE = {
-  email: '',
-  password: '',
-  error: null,
-};
-
 class SignInForm extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { ...INITIAL_STATE, users: [] };
-  }
-
   componentDidUpdate() {
     if (this.props.authUser) {
       this.props.history.push(routes.HOME);
     }
-  }
-
-  componentDidMount() {
-    firebase.database().ref('users').on('child_added', snapshot =>
-      this.setState(prevState => ({
-        users: [...prevState.users, snapshot.val()]
-      }))
-    );
   }
 
   signInWithGoogle = () => {
@@ -86,12 +63,12 @@ class SignInForm extends Component {
               found = true
               firebase.auth().signInAndRetrieveDataWithCredential(res.credential)
                 .then(() => {
-                  this.setState(() => ({ ...INITIAL_STATE }));
+                  this.props.initializeLogin()
 
                   this.props.history.push(routes.HOME);
                 })
                 .catch(error => {
-                  this.setState(updateByPropertyName('error', error));
+                  this.props.setLoginError(error)
                 });
             }
           }
@@ -100,17 +77,17 @@ class SignInForm extends Component {
           if (!found) {
             db.doCreateUser(user.uid, user.displayName, user.email)
               .then(() => {
-                this.setState(() => ({ ...INITIAL_STATE }));
+                this.props.initializeLogin()
                 this.props.history.push(routes.HOME);
               })
               .catch(error => {
-                this.setState(updateByPropertyName('error', error));
+                this.props.setLoginError(error)
               });
           }
         })
       })
       .catch(error => {
-        this.setState(updateByPropertyName('error', error));
+        this.props.setLoginError(error)
       })
   }
 
@@ -130,12 +107,12 @@ class SignInForm extends Component {
               found = true
               firebase.auth().signInAndRetrieveDataWithCredential(res.credential)
                 .then(() => {
-                  this.setState(() => ({ ...INITIAL_STATE }));
+                  this.props.initializeLogin()
 
                   this.props.history.push(routes.HOME);
                 })
                 .catch(error => {
-                  this.setState(updateByPropertyName('error', error));
+                  this.props.setLoginError(error)
                 });
             }
           }
@@ -144,17 +121,17 @@ class SignInForm extends Component {
           if (!found) {
             db.doCreateUser(user.uid, user.displayName, user.email)
               .then(() => {
-                this.setState(() => ({ ...INITIAL_STATE }));
+                this.props.initializeLogin()
                 this.props.history.push(routes.HOME);
               })
               .catch(error => {
-                this.setState(updateByPropertyName('error', error));
+                this.props.setLoginError(error)
               });
           }
         })
       })
       .catch(error => {
-        this.setState(updateByPropertyName('error', error));
+        this.props.setLoginError(error)
       })
   }
 
@@ -162,7 +139,7 @@ class SignInForm extends Component {
     const {
       email,
       password,
-    } = this.state;
+    } = this.props.state;
 
     const {
       history,
@@ -170,11 +147,11 @@ class SignInForm extends Component {
 
     auth.doSignInWithEmailAndPassword(email, password)
       .then(() => {
-        this.setState(() => ({ ...INITIAL_STATE }));
+        this.props.initializeLogin()
         history.push(routes.HOME);
       })
       .catch(error => {
-        this.setState(updateByPropertyName('error', error));
+        this.props.setLoginError(error)
       });
 
     event.preventDefault();
@@ -185,7 +162,7 @@ class SignInForm extends Component {
       email,
       password,
       error,
-    } = this.state;
+    } = this.props.state;
 
     const isInvalid =
       password === '' ||
@@ -202,7 +179,7 @@ class SignInForm extends Component {
             label="Email Address"
             className={classes.textField}
             value={email}
-            onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
+            onChange={event => this.props.setLoginEmail(event.target.value)}
             margin="normal"
           />
           <TextField
@@ -211,7 +188,7 @@ class SignInForm extends Component {
             type="password"
             className={classes.textField}
             value={password}
-            onChange={event => this.setState(updateByPropertyName('password', event.target.value))}
+            onChange={event => this.props.setLoginPassword(event.target.value)}
             margin="normal"
           />
           <Button variant="contained" color="primary" disabled={isInvalid} type="submit" className={classes.button}>Login</Button>
@@ -238,13 +215,21 @@ const SignInLink = () =>
   </p>
 
 const mapStateToProps = (state) => ({
-  authUser: state.sessionState.authUser
+  authUser: state.sessionState.authUser,
+  state: state.loginState
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  initializeLogin: () => dispatch({ type: actions.INITIALIZE_LOGIN }),
+  setLoginError: (error) => dispatch({ type: actions.SET_LOGIN_ERROR, error }),
+  setLoginEmail: (email) => dispatch({ type: actions.SET_LOGIN_EMAIL, email }),
+  setLoginPassword: (password) => dispatch({ type: actions.SET_LOGIN_PASSWORD, password })
 })
 
 export default compose(
   withRouter,
   withStyles(styles),
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
 )(SignInForm);
 
 export {

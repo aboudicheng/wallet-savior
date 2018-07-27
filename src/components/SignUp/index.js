@@ -57,7 +57,7 @@ class SignUpForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { ...INITIAL_STATE, users: [] };
+    this.state = { ...INITIAL_STATE };
   }
 
   componentDidUpdate() {
@@ -65,14 +65,6 @@ class SignUpForm extends Component {
     if (this.props.authUser) {
       this.props.history.push(routes.HOME)
     }
-  }
-
-  componentDidMount() {
-    firebase.database().ref('users').on('child_added', snapshot =>
-      this.setState(prevState => ({
-        users: [...prevState.users, snapshot.val()]
-      }))
-    );
   }
 
   signInWithGoogle = () => {
