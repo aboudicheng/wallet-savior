@@ -8,10 +8,11 @@ import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-butto
 import { withRouter, Link } from 'react-router-dom';
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
-import { auth, db } from '../../firebase';
+import { auth } from '../../firebase';
 import * as actions from '../../constants/action_types'
 import * as routes from '../../constants/routes';
 import firebase from 'firebase/app';
+import { signMethodHandler } from '../../helpers';
 
 //TODO: extract signin functions and let redux handle the states
 function isRunningStandalone() {
@@ -50,42 +51,14 @@ class SignInForm extends Component {
   signInWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider()
     auth.doSignInWithPopup(provider)
-      .then(res => {
-        const user = res.user
-        let found = false
-
-        firebase.database().ref('users').once('value', snapshot => {
-
-          for (let key in snapshot.val()) {
-
-            //if user already exists then do login
-            if (snapshot.val()[key].email === user.email) {
-              found = true
-              firebase.auth().signInAndRetrieveDataWithCredential(res.credential)
-                .then(() => {
-                  this.props.initializeLogin()
-
-                  this.props.history.push(routes.HOME);
-                })
-                .catch(error => {
-                  this.props.setLoginError(error)
-                });
-            }
-          }
-
-          //if user doesn't exist then do signup
-          if (!found) {
-            db.doCreateUser(user.uid, user.displayName, user.email)
-              .then(() => {
-                this.props.initializeLogin()
-                this.props.history.push(routes.HOME);
-              })
-              .catch(error => {
-                this.props.setLoginError(error)
-              });
-          }
+      .then(res =>
+        signMethodHandler({
+          res,
+          history: this.props.history,
+          initialize: this.props.initializeLogin,
+          setError: this.props.setLoginError
         })
-      })
+      )
       .catch(error => {
         this.props.setLoginError(error)
       })
@@ -94,42 +67,14 @@ class SignInForm extends Component {
   signInWithFacebook = () => {
     const provider = new firebase.auth.FacebookAuthProvider()
     auth.doSignInWithPopup(provider)
-      .then(res => {
-        const user = res.user
-        let found = false
-
-        firebase.database().ref('users').once('value', snapshot => {
-
-          for (let key in snapshot.val()) {
-
-            //if user already exists then do login
-            if (snapshot.val()[key].email === user.email) {
-              found = true
-              firebase.auth().signInAndRetrieveDataWithCredential(res.credential)
-                .then(() => {
-                  this.props.initializeLogin()
-
-                  this.props.history.push(routes.HOME);
-                })
-                .catch(error => {
-                  this.props.setLoginError(error)
-                });
-            }
-          }
-
-          //if user doesn't exist then do signup
-          if (!found) {
-            db.doCreateUser(user.uid, user.displayName, user.email)
-              .then(() => {
-                this.props.initializeLogin()
-                this.props.history.push(routes.HOME);
-              })
-              .catch(error => {
-                this.props.setLoginError(error)
-              });
-          }
+      .then(res =>
+        signMethodHandler({
+          res,
+          history: this.props.history,
+          initialize: this.props.initializeLogin,
+          setError: this.props.setLoginError
         })
-      })
+      )
       .catch(error => {
         this.props.setLoginError(error)
       })

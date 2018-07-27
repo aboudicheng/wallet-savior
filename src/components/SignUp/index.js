@@ -13,6 +13,7 @@ import {
 import { SignInLink } from '../SignIn'
 import { auth, db } from '../../firebase';
 import firebase from 'firebase/app'
+import { signMethodHandler } from '../../helpers';
 import * as actions from '../../constants/action_types'
 import * as routes from '../../constants/routes';
 
@@ -53,42 +54,14 @@ class SignUpForm extends Component {
   signInWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider()
     auth.doSignInWithPopup(provider)
-      .then(res => {
-        const user = res.user
-        let found = false
-
-        firebase.database().ref('users').once('value', snapshot => {
-
-          for (let key in snapshot.val()) {
-
-            //if user already exists then do login
-            if (snapshot.val()[key].email === user.email) {
-              found = true
-              firebase.auth().signInAndRetrieveDataWithCredential(res.credential)
-                .then(() => {
-                  this.props.initializeSignup();
-
-                  this.props.history.push(routes.HOME);
-                })
-                .catch(error => {
-                  this.props.setSignupError(error)
-                });
-            }
-          }
-
-          //if user doesn't exist then do signup
-          if (!found) {
-            db.doCreateUser(user.uid, user.displayName, user.email)
-              .then(() => {
-                this.props.initializeSignup();
-                this.props.history.push(routes.HOME);
-              })
-              .catch(error => {
-                this.props.setSignupError(error)
-              });
-          }
+      .then(res =>
+        signMethodHandler({
+          res,
+          history: this.props.history,
+          initialize: this.props.initializeSignup,
+          setError: this.props.setSignupError
         })
-      })
+      )
       .catch(error => {
         this.props.setSignupError(error)
       })
@@ -97,42 +70,14 @@ class SignUpForm extends Component {
   signInWithFacebook = () => {
     const provider = new firebase.auth.FacebookAuthProvider()
     auth.doSignInWithPopup(provider)
-      .then(res => {
-        const user = res.user
-        let found = false
-
-        firebase.database().ref('users').once('value', snapshot => {
-
-          for (let key in snapshot.val()) {
-
-            //if user already exists then do login
-            if (snapshot.val()[key].email === user.email) {
-              found = true
-              firebase.auth().signInAndRetrieveDataWithCredential(res.credential)
-                .then(() => {
-                  this.props.initializeSignup();
-
-                  this.props.history.push(routes.HOME);
-                })
-                .catch(error => {
-                  this.props.setSignupError(error)
-                });
-            }
-          }
-
-          //if user doesn't exist then do signup
-          if (!found) {
-            db.doCreateUser(user.uid, user.displayName, user.email)
-              .then(() => {
-                this.props.initializeSignup();
-                this.props.history.push(routes.HOME);
-              })
-              .catch(error => {
-                this.props.setSignupError(error)
-              });
-          }
+      .then(res =>
+        signMethodHandler({
+          res,
+          history: this.props.history,
+          initialize: this.props.initializeSignup,
+          setError: this.props.setSignupError
         })
-      })
+      )
       .catch(error => {
         this.props.setSignupError(error)
       })
