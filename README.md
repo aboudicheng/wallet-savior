@@ -1,5 +1,6 @@
 # Wallet $avior
 
+![https://david-dm.org/aboudicheng/wallet-savior](https://img.shields.io/david/aboudicheng/wallet-savior.svg)
 ## Live Demo
 [https://aboudicheng.github.io/wallet-savior/](https://aboudicheng.github.io/wallet-savior/)
 
@@ -23,7 +24,10 @@ git clone https://github.com/aboudicheng/wallet-savior.git
 // Change directory
 cd wallet-savior
 
-// Create .env in root directory and set up variables with your own Firebase credentials used in src/firebase/firebase.js
+/*
+Create .env in root directory and set up variables with your own
+Firebase credentials used in src/firebase/firebase.js
+/*
 touch .env
 
 // Install required dependencies
@@ -34,10 +38,11 @@ npm start
 ```
 
 ## Contributing
-Feel free to submit any issue or PR.
+Feel free to submit any issue or PR. If needed to access the database, please contact [aboudicheng@gmail.com](mailto:aboudicheng@gmail.com)
 
 ## TODO List
 
 * Group visibility limited to members
 * History for groups
 * Delete single history
+* Delete account
