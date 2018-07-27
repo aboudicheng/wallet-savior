@@ -15,12 +15,29 @@ A single page web application that allows users to keep track of their expenditu
 * Material-UI v1
 * react-router v4
 
+## Installation
+```
+// Clone repository from github
+git clone https://github.com/aboudicheng/wallet-savior.git
+
+// Change directory
+cd wallet-savior
+
+// Create .env in root directory and set up variables with your own Firebase credentials used in src/firebase/firebase.js
+touch .env
+
+// Install required dependencies
+npm install
+
+// Start development server on http://localhost:3000
+npm start
+```
+
 ## Contributing
-Feel free to submit any issue or PR. If needed to access the database, please contact [aboudicheng@gmail.com](mailto:aboudicheng@gmail.com)
+Feel free to submit any issue or PR.
 
 ## TODO List
 
 * Group visibility limited to members
 * History for groups
 * Delete single history
-* Delete account
