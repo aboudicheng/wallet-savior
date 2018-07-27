@@ -14,7 +14,6 @@ import * as routes from '../../constants/routes';
 import firebase from 'firebase/app';
 import { signMethodHandler } from '../../helpers';
 
-//TODO: extract signin functions and let redux handle the states
 function isRunningStandalone() {
   return (window.matchMedia('(display-mode: standalone)').matches);
 }
