@@ -40,7 +40,7 @@ class MembersDialog extends React.Component {
                     }));
                 });
             }
-        })
+        });
     }
 
     render() {

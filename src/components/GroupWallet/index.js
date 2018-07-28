@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import withAuthorization from "../Session/withAuthorization";
-import { withRouter } from "react-router"
+import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { compose } from "recompose";
 import classNames from "classnames";
 import firebase from "firebase/app";
 import formatNumber from "format-number";
 import Button from "@material-ui/core/Button";
-import Edit from "@material-ui/icons/Edit"
+import Edit from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -83,14 +83,14 @@ class GroupWallet extends Component {
             if (snapshot.val()) {
                 this.setState({ group: snapshot.val(), isLoading: false });
             }
-        })
+        });
     }
 
     componentDidUpdate(props) {
         if (this.props.location.key !== props.location.key) {
             firebase.database().ref(`groups/${this.props.match.params.id}`).on("value", (snapshot) => {
                 if (snapshot.val()) {
-                    this.setState({ group: snapshot.val(), isLoading: false })
+                    this.setState({ group: snapshot.val(), isLoading: false });
                 }
             })
         }
@@ -209,8 +209,8 @@ class GroupWallet extends Component {
             anchorEl,
             modifyOpen,
             snackbarOpen,
-        } = this.state
-        const { classes } = this.props
+        } = this.state;
+        const { classes } = this.props;
         return (
             <div>
                 {
@@ -238,7 +238,7 @@ class GroupWallet extends Component {
                             <IconButton
                                 aria-owns={anchorEl ? "simple-menu" : null}
                                 aria-haspopup="true"
-                                onClick={e => this.setAnchorEl(e.currentTarget)}
+                                onClick={(e) => this.setAnchorEl(e.currentTarget)}
                                 className={classNames("menuicon", classes.label)}
                             >
                                 <MoreVertIcon />
@@ -300,7 +300,7 @@ class GroupWallet extends Component {
                         </div>
                 }
             </div>
-        )
+        );
     }
 }
 

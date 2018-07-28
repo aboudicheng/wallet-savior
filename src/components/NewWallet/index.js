@@ -6,7 +6,7 @@ import classNames from "classnames";
 import firebase from "firebase/app";
 import formatNumber from "format-number";
 import Button from "@material-ui/core/Button";
-import Edit from "@material-ui/icons/Edit"
+import Edit from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -82,7 +82,7 @@ class NewWallet extends Component {
                     this.setState({
                         wallet: snapshot.val(),
                         isLoading: false
-                    })
+                    });
                 }
             })
         }
@@ -209,7 +209,7 @@ class NewWallet extends Component {
                             <IconButton
                                 aria-owns={anchorEl ? "simple-menu" : null}
                                 aria-haspopup="true"
-                                onClick={e => this.setAnchorEl(e.currentTarget)}
+                                onClick={(e) => this.setAnchorEl(e.currentTarget)}
                                 className={classNames("menuicon", classes.label)}
                             >
                                 <MoreVertIcon />
@@ -264,7 +264,7 @@ class NewWallet extends Component {
                         </div>
                 }
             </div>
-        )
+        );
     }
 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { compose } from "recompose";
 import { connect } from "react-redux";
-import { withRouter } from "react-router"
+import { withRouter } from "react-router";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -34,7 +34,7 @@ class Create extends Component {
             const wallet = {
                 name: this.state.name,
                 money: 0,
-            }
+            };
 
             //push wallet into user"s wallet field
             const newWallet = walletRef.push(wallet);

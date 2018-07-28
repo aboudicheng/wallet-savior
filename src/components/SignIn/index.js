@@ -94,8 +94,8 @@ class SignInForm extends Component {
         this.props.initializeLogin();
         history.push(routes.HOME);
       })
-      .catch(error => {
-        this.props.setLoginError(error)
+      .catch((error) => {
+        this.props.setLoginError(error);
       });
 
     event.preventDefault();
@@ -161,7 +161,7 @@ const SignInLink = () =>
 const mapStateToProps = (state) => ({
   authUser: state.sessionState.authUser,
   state: state.loginState
-})
+});
 
 const mapDispatchToProps = (dispatch) => ({
   initializeLogin: () => dispatch({ type: actions.INITIALIZE_LOGIN }),

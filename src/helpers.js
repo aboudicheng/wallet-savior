@@ -21,7 +21,7 @@ export const signMethodHandler = (props) => {
                     })
                     .catch((error) => {
                         props.setError(error);
-                    });
+                    })
             }
         }
 
@@ -32,9 +32,9 @@ export const signMethodHandler = (props) => {
                     props.initialize()
                     props.history.push(routes.HOME);
                 })
-                .catch(error => {
-                    props.setError(error)
-                });
+                .catch((error) => {
+                    props.setError(error);
+                })
         }
     });
 };

@@ -53,7 +53,7 @@ class DeleteAccount extends Component {
                         });
                     }
                 }
-            })
+            });
             //remove from database
             firebase.database().ref("users").child(this.props.authUser.uid).remove();
             this.props.history.push(routes.LOGIN);
@@ -88,7 +88,7 @@ class DeleteAccount extends Component {
                     </DialogActions>
                 </Dialog>
             </div>
-        )
+        );
     }
 }
 

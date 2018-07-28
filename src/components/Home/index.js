@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "recompose";
 import classNames from "classnames";
-import FirstUse from "./firstUseDialog"
+import FirstUse from "./firstUseDialog";
 import withAuthorization from "../Session/withAuthorization";
 import firebase from "firebase/app";
 import formatNumber from "format-number";
@@ -185,7 +185,7 @@ class HomePage extends Component {
         <IconButton
           aria-owns={anchorEl ? "simple-menu" : null}
           aria-haspopup="true"
-          onClick={e => this.setAnchorEl(e.currentTarget)}
+          onClick={(e) => this.setAnchorEl(e.currentTarget)}
           className={classNames("menuicon", classes.label)}
         >
           <MoreVertIcon />

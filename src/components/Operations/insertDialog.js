@@ -56,7 +56,7 @@ class InsertDialog extends React.Component {
                     min: ("0" + date.getMinutes()).slice(-2),
                 },
                 description: this.state.text
-            }
+            };
 
             usersRef.child(this.props.authUser.uid).child("history").push(record);
 

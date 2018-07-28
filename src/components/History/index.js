@@ -65,7 +65,7 @@ class History extends Component {
             if (!snapshot.val().history) {
                 this.setState({ isLoading: false });
             }
-        })
+        });
     }
 
     componentWillUnmount() {
@@ -90,7 +90,7 @@ class History extends Component {
             return;
         }
 
-        this.setSnackbar(false)
+        this.setSnackbar(false);
     };
 
     render() {
@@ -99,7 +99,8 @@ class History extends Component {
 
         const fieldStyle = {
             fontWeight: "bold"
-        }
+        };
+        
         return (
             <div>
                 <h1>History</h1>
@@ -161,7 +162,7 @@ class History extends Component {
                     />
                 </Snackbar>
             </div>
-        )
+        );
     }
 }
 

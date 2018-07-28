@@ -12,7 +12,7 @@ import {
 } from "react-router-dom";
 import { SignInLink } from "../SignIn";
 import { auth, db } from "../../firebase";
-import firebase from "firebase/app"
+import firebase from "firebase/app";
 import { signMethodHandler } from "../../helpers";
 import * as actions from "../../constants/action_types";
 import * as routes from "../../constants/routes";
@@ -64,7 +64,7 @@ class SignUpForm extends Component {
       )
       .catch((error) => {
         this.props.setSignupError(error);
-      })
+      });
   }
 
   signInWithFacebook = () => {

@@ -60,7 +60,7 @@ class InviteDialog extends React.Component {
                 if (!found) {
                     this.setState({ error: "User not found!" });
                 }
-            })
+            });
         }
     }
 

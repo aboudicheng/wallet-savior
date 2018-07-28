@@ -13,7 +13,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Home from "@material-ui/icons/Home";
 import Settings from "@material-ui/icons/Settings";
 import Group from "@material-ui/icons/Group";
-import Exit from "@material-ui/icons/ExitToApp"
+import Exit from "@material-ui/icons/ExitToApp";
 import AddCircle from "@material-ui/icons/AddCircleOutline";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
@@ -74,21 +74,21 @@ class NavigationAuth extends React.Component {
     componentDidMount() {
         firebase.database().ref(`users/${this.props.authUser.uid}`).on("value", (snapshot) => {
             if (firebase.auth().currentUser) {
-                const { groups, wallets } = snapshot.val()
-                let groupWallets = []
+                const { groups, wallets } = snapshot.val();
+                let groupWallets = [];
 
                 for (let key in groups) {
-                    firebase.database().ref(`groups/`).once("value", (s) => {
-                        groupWallets.push(s.val()[groups[key].id])
-                    })
+                    firebase.database().ref("groups/").once("value", (s) => {
+                        groupWallets.push(s.val()[groups[key].id]);
+                    });
                 }
 
-                const newWallets = _.values(wallets)
+                const newWallets = _.values(wallets);
 
                 this.setState({
                     wallets: newWallets,
                     groupWallets,
-                })
+                });
             }
         })
     }
@@ -99,16 +99,16 @@ class NavigationAuth extends React.Component {
 
     toggleOption = (e, option) => {
         if (option === "wallet") {
-            this.setState(state => ({ walletOpen: !state.walletOpen }));
+            this.setState((state) => ({ walletOpen: !state.walletOpen }));
         }
         else {
-            this.setState(state => ({ groupOpen: !state.groupOpen }));
+            this.setState((state) => ({ groupOpen: !state.groupOpen }));
         }
     };
 
     redirect = (route) => {
-        this.setState({ open: false })
-        this.props.history.push(route)
+        this.setState({ open: false });
+        this.props.history.push(route);
     }
 
     signOut = () => {
@@ -117,20 +117,20 @@ class NavigationAuth extends React.Component {
 
     setDialog = (open, option) => {
         if (!open) {
-            this.setState({ dialog: open, option: "" })
+            this.setState({ dialog: open, option: "" });
         }
         else {
-            this.setState({ dialog: open, option })
+            this.setState({ dialog: open, option });
         }
     }
 
     render() {
         const { classes } = this.props;
-        const { open, walletOpen, groupOpen, dialog, option, wallets, groupWallets } = this.state
+        const { open, walletOpen, groupOpen, dialog, option, wallets, groupWallets } = this.state;
 
         const sideList = (
             <div className={classes.list}>
-                <List><ListItem button onClick={e => this.toggleOption(e, "wallet")}><ListItemIcon><Home style={{ color: "#2ecc71" }} /></ListItemIcon><ListItemText primary="Personal" />{walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
+                <List><ListItem button onClick={(e) => this.toggleOption(e, "wallet")}><ListItemIcon><Home style={{ color: "#2ecc71" }} /></ListItemIcon><ListItemText primary="Personal" />{walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
                 {wallets.length > 0 &&
                     <Collapse in={walletOpen} timeout="auto" unmountOnExit>
                         <List>
@@ -163,7 +163,7 @@ class NavigationAuth extends React.Component {
                     <List><ListItem button onClick={() => this.setDialog(true, "wallet")}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Add Wallet" /></ListItem></List>
                 </Collapse>
 
-                <List><ListItem button onClick={e => this.toggleOption(e, "group")}><ListItemIcon><Group style={{ color: "#2980b9" }} /></ListItemIcon><ListItemText primary="Group" />{groupOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
+                <List><ListItem button onClick={(e) => this.toggleOption(e, "group")}><ListItemIcon><Group style={{ color: "#2980b9" }} /></ListItemIcon><ListItemText primary="Group" />{groupOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
                 {groupWallets.length > 0 &&
                     groupWallets.map((group, i) =>
                         <Collapse in={groupOpen} timeout="auto" unmountOnExit key={`collapse${i}`}>
@@ -220,7 +220,7 @@ class NavigationAuth extends React.Component {
                     <Create open={dialog} handleClose={this.setDialog} toggleDrawer={this.toggleDrawer} option={option} />
                 }
             </div>
-        )
+        );
     }
 }
 

@@ -53,7 +53,7 @@ class ResetDialog extends React.Component {
                     min: ("0" + date.getMinutes()).slice(-2),
                 },
                 description: "",
-            }
+            };
 
             usersRef.child(this.props.authUser.uid).child("history").push(record);
 
