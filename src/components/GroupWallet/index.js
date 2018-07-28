@@ -88,7 +88,7 @@ class GroupWallet extends Component {
 
     componentDidUpdate(props) {
         if (this.props.location.key !== props.location.key) {
-            firebase.database().ref(`groups/${this.props.match.params.id}`).on("value", snapshot => {
+            firebase.database().ref(`groups/${this.props.match.params.id}`).on("value", (snapshot) => {
                 if (snapshot.val()) {
                     this.setState({ group: snapshot.val(), isLoading: false })
                 }

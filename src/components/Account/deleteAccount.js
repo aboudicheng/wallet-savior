@@ -89,7 +89,7 @@ class DeleteAccount extends Component {
                 </Dialog>
             </div>
         )
-    };
+    }
 }
 
 const mapStateToProps = (state) => ({

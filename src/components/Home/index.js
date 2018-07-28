@@ -7,7 +7,7 @@ import withAuthorization from "../Session/withAuthorization";
 import firebase from "firebase/app";
 import formatNumber from "format-number";
 import Button from "@material-ui/core/Button";
-import Edit from "@material-ui/icons/Edit"
+import Edit from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -20,7 +20,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Zoom from "@material-ui/core/Zoom";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
-import * as routes from "../../constants/routes";;
+import * as routes from "../../constants/routes";
 
 import InsertDialog from "../Operations/insertDialog";
 import WithdrawDialog from "../Operations/withdrawDialog";
