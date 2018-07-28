@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
-import { compose } from 'recompose';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router'
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
-import * as firebase from 'firebase/app';
+import React, { Component } from "react";
+import { compose } from "recompose";
+import { connect } from "react-redux";
+import { withRouter } from "react-router"
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import TextField from "@material-ui/core/TextField";
+import * as firebase from "firebase/app";
 
 class Create extends Component {
     constructor() {
@@ -17,35 +17,35 @@ class Create extends Component {
 
         this.state = {
             name: ""
-        }
+        };
     }
 
     handleChange = (e) => {
-        this.setState({ name: e.target.value })
+        this.setState({ name: e.target.value });
     }
 
     submit = () => {
-        this.props.handleClose(false)
-        this.props.toggleDrawer(false)
+        this.props.handleClose(false);
+        this.props.toggleDrawer(false);
 
-        if (this.props.option === 'wallet') {
-            const walletRef = firebase.database().ref(`users/${this.props.authUser.uid}/wallets/`)
+        if (this.props.option === "wallet") {
+            const walletRef = firebase.database().ref(`users/${this.props.authUser.uid}/wallets/`);
 
             const wallet = {
                 name: this.state.name,
                 money: 0,
             }
 
-            //push wallet into user's wallet field
-            const newWallet = walletRef.push(wallet)
+            //push wallet into user"s wallet field
+            const newWallet = walletRef.push(wallet);
 
-            walletRef.child(newWallet.key).set({ ...wallet, id: newWallet.key })
+            walletRef.child(newWallet.key).set({ ...wallet, id: newWallet.key });
 
-            this.props.history.push(`/wallets/${newWallet.key}`)
+            this.props.history.push(`/wallets/${newWallet.key}`);
         }
         else {
-            const groupsRef = firebase.database().ref('groups/')
-            const userGroupRef = firebase.database().ref(`users/${this.props.authUser.uid}/groups/`)
+            const groupsRef = firebase.database().ref("groups/");
+            const userGroupRef = firebase.database().ref(`users/${this.props.authUser.uid}/groups/`);
 
             const group = {
                 name: this.state.name,
@@ -54,14 +54,14 @@ class Create extends Component {
             }
 
             //push group info into group field
-            const newGroupRef = groupsRef.push(group)
-            groupsRef.child(newGroupRef.key).set({ ...group, id: newGroupRef.key })
+            const newGroupRef = groupsRef.push(group);
+            groupsRef.child(newGroupRef.key).set({ ...group, id: newGroupRef.key });
 
             //push group info into personal field
-            userGroupRef.child(newGroupRef.key).set({ name: this.state.name, id: newGroupRef.key })
+            userGroupRef.child(newGroupRef.key).set({ name: this.state.name, id: newGroupRef.key });
 
             //direct to its URL
-            this.props.history.push(`/groups/${newGroupRef.key}`)
+            this.props.history.push(`/groups/${newGroupRef.key}`);
         }
     }
 
@@ -108,13 +108,13 @@ class Create extends Component {
   </Button>
                 </DialogActions>
             </Dialog>
-        )
+        );
     }
 }
 
 const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
-})
+});
 
 export default compose(
     withRouter,

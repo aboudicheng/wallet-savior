@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import TextField from '@material-ui/core/TextField';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
-import { auth } from '../../firebase';
-import * as routes from '../../constants/routes';
+import React, { Component } from "react";
+import TextField from "@material-ui/core/TextField";
+import { withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
+import { auth } from "../../firebase";
+import * as routes from "../../constants/routes";
 
-const styles = theme => ({
+const styles = (theme) => ({
   container: {
-    display: 'flex',
-    justifyContent: 'center',
-    margin: '0 auto',
-    flexWrap: 'wrap',
+    display: "flex",
+    justifyContent: "center",
+    margin: "0 auto",
+    flexWrap: "wrap",
     width: "14rem",
   },
   textField: {
@@ -28,14 +28,14 @@ const PasswordForgetPage = ({ classes }) =>
   <div>
     <h1>Password Forget</h1>
     <PasswordForgetForm classes={classes}/>
-  </div>
+  </div>;
 
 const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
 });
 
 const INITIAL_STATE = {
-  email: '',
+  email: "",
   error: null,
 };
 
@@ -53,8 +53,8 @@ class PasswordForgetForm extends Component {
       .then(() => {
         this.setState(() => ({ ...INITIAL_STATE }));
       })
-      .catch(error => {
-        this.setState(updateByPropertyName('error', error));
+      .catch((error) => {
+        this.setState(updateByPropertyName("error", error));
       });
 
     event.preventDefault();
@@ -66,9 +66,9 @@ class PasswordForgetForm extends Component {
       error,
     } = this.state;
 
-    const isInvalid = email === '';
+    const isInvalid = email === "";
 
-    const { classes } = this.props
+    const { classes } = this.props;
 
     return (
       <form onSubmit={this.onSubmit} className={classes.container}>
@@ -77,7 +77,7 @@ class PasswordForgetForm extends Component {
           label="Email Address"
           className={classes.textField}
           value={email}
-          onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
+          onChange={(event) => this.setState(updateByPropertyName("email", event.target.value))}
           margin="normal"
         />
 
@@ -92,7 +92,7 @@ class PasswordForgetForm extends Component {
 const PasswordForgetLink = () =>
   <p>
     <Link to={routes.PASSWORD_FORGET}>Forgot Password?</Link>
-  </p>
+  </p>;
 
 export default withStyles(styles)(PasswordForgetPage);
 

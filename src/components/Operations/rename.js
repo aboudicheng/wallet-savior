@@ -1,52 +1,52 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
-import * as firebase from 'firebase/app'
+import React from "react";
+import { connect } from "react-redux";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import TextField from "@material-ui/core/TextField";
+import * as firebase from "firebase/app";
 
 class Rename extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             value: "",
             error: null,
-        }
+        };
     }
 
     handleChange = (e) => {
-        this.setState({ value: e.target.value })
+        this.setState({ value: e.target.value });
     }
 
     submit = () => {
         if (this.state.value !== "") {
             if (this.state.value.length <= 14) {
-                this.setState({ error: null })
+                this.setState({ error: null });
 
                 if (this.props.group) {
-                    firebase.database().ref(`groups/${this.props.child}`).update({ name: this.state.value })
-                    firebase.database().ref(`users/${this.props.authUser.uid}/groups/${this.props.child}`).update({ name: this.state.value })
+                    firebase.database().ref(`groups/${this.props.child}`).update({ name: this.state.value });
+                    firebase.database().ref(`users/${this.props.authUser.uid}/groups/${this.props.child}`).update({ name: this.state.value });
                 }
                 else {
-                    firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.child}`).update({ name: this.state.value })
+                    firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.child}`).update({ name: this.state.value });
                 }
                 
                 this.props.setSnackbarOpen(true);
                 this.props.setRenameDialog(false);
             }
             else {
-                this.setState({ error: "Please choose a name within 14 characters!" })
+                this.setState({ error: "Please choose a name within 14 characters!" });
             }
         }
     }
 
     render() {
-        const { error } = this.state
+        const { error } = this.state;
         return (
             <Dialog
                 open={this.props.open}
@@ -81,12 +81,12 @@ class Rename extends React.Component {
       </Button>
                 </DialogActions>
             </Dialog>
-        )
+        );
     }
 }
 
 const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
-})
+});
 
 export default connect(mapStateToProps)(Rename);

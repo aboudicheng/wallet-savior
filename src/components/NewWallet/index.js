@@ -1,36 +1,36 @@
-import React, { Component } from 'react';
-//import withAuthorization from '../Session/withAuthorization';
-import { connect } from 'react-redux';
-import { compose } from 'recompose';
-import classNames from 'classnames';
-import firebase from 'firebase/app';
+import React, { Component } from "react";
+//import withAuthorization from "../Session/withAuthorization";
+import { connect } from "react-redux";
+import { compose } from "recompose";
+import classNames from "classnames";
+import firebase from "firebase/app";
 import formatNumber from "format-number";
-import Button from '@material-ui/core/Button';
-import Edit from '@material-ui/icons/Edit'
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { withStyles } from '@material-ui/core/styles';
-import Divider from '@material-ui/core/Divider';
-import Snackbar from '@material-ui/core/Snackbar';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Tooltip from '@material-ui/core/Tooltip';
-import Zoom from '@material-ui/core/Zoom';
-import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router'
-import * as routes from '../../constants/routes';
+import Button from "@material-ui/core/Button";
+import Edit from "@material-ui/icons/Edit"
+import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { withStyles } from "@material-ui/core/styles";
+import Divider from "@material-ui/core/Divider";
+import Snackbar from "@material-ui/core/Snackbar";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Tooltip from "@material-ui/core/Tooltip";
+import Zoom from "@material-ui/core/Zoom";
+import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
+import * as routes from "../../constants/routes";
 
-import InsertDialog from '../Operations/insertDialog'
-import WithdrawDialog from '../Operations/withdrawDialog'
-import ResetDialog from '../Operations/resetDialog'
-import DeleteDialog from '../Operations/deleteDialog'
-import MySnackbarContentWrapper from '../MySnackbarContentWrapper'
-import Rename from '../Operations/rename'
+import InsertDialog from "../Operations/insertDialog";
+import WithdrawDialog from "../Operations/withdrawDialog";
+import ResetDialog from "../Operations/resetDialog";
+import DeleteDialog from "../Operations/deleteDialog";
+import MySnackbarContentWrapper from "../MySnackbarContentWrapper";
+import Rename from "../Operations/rename";
 
 //TODO: add withAuthorization
 
-const styles = theme => ({
+const styles = (theme) => ({
     editButton: {
         margin: theme.spacing.unit,
         right: "1.8rem",
@@ -48,7 +48,7 @@ const styles = theme => ({
     menuButton: {
         color: "#3fb5a3",
     }
-})
+});
 
 class NewWallet extends Component {
     constructor() {
@@ -70,14 +70,14 @@ class NewWallet extends Component {
             renameOpen: false,
 
             snackbarOpen: false,
-        }
+        };
 
     }
 
     componentDidMount() {
         //if user access via history.push or pressing back button
         if (this.props.history.action === "PUSH" || this.props.authUser) {
-            firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.match.params.id}`).on('value', snapshot => {
+            firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.match.params.id}`).on("value", (snapshot) => {
                 if (snapshot.val()) {
                     this.setState({
                         wallet: snapshot.val(),
@@ -89,10 +89,10 @@ class NewWallet extends Component {
     }
 
     componentDidUpdate(props) {
-        /*if user transtitions between extra wallets then componentDidMount won't get called*/
+        /*if user transtitions between extra wallets then componentDidMount won"t get called*/
         //Wait until it gets authUser info
         if ((this.props.location.key !== props.location.key) || this.state.isLoading) {
-            firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.match.params.id}`).on('value', snapshot => {
+            firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.match.params.id}`).on("value", snapshot => {
                 this.setState({
                     wallet: snapshot.val(),
                     isLoading: false
@@ -102,7 +102,7 @@ class NewWallet extends Component {
     }
 
     setAnchorEl = (anchorEl) => {
-        this.setState({ anchorEl })
+        this.setState({ anchorEl });
     }
 
     handleOptionClick = (e) => {
@@ -148,23 +148,23 @@ class NewWallet extends Component {
     }
 
     setModifyOpenDialog = (modifyOpen) => {
-        this.setState({ modifyOpen })
+        this.setState({ modifyOpen });
     }
 
     handleSnackbarClose = (event, reason) => {
-        if (reason === 'clickaway') {
+        if (reason === "clickaway") {
             return;
         }
 
-        this.setState({ snackbarOpen: false })
+        this.setState({ snackbarOpen: false });
     };
 
     setSnackbarOpen = (snackbarOpen) => {
-        this.setState({ snackbarOpen })
+        this.setState({ snackbarOpen });
     }
 
     setRenameDialog = (renameOpen) => {
-        this.setState({ renameOpen })
+        this.setState({ renameOpen });
     }
 
     render() {
@@ -178,8 +178,8 @@ class NewWallet extends Component {
             anchorEl,
             modifyOpen,
             snackbarOpen,
-        } = this.state
-        const { classes } = this.props
+        } = this.state;
+        const { classes } = this.props;
 
         return (
             <div>
@@ -207,7 +207,7 @@ class NewWallet extends Component {
 
                             {/*Menu Bar at top right corner*/}
                             <IconButton
-                                aria-owns={anchorEl ? 'simple-menu' : null}
+                                aria-owns={anchorEl ? "simple-menu" : null}
                                 aria-haspopup="true"
                                 onClick={e => this.setAnchorEl(e.currentTarget)}
                                 className={classNames("menuicon", classes.label)}
@@ -247,8 +247,8 @@ class NewWallet extends Component {
                             {/*Snackbar poppup*/}
                             <Snackbar
                                 anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'left',
+                                    vertical: "bottom",
+                                    horizontal: "left",
                                 }}
                                 open={snackbarOpen}
                                 autoHideDuration={3000}
@@ -274,7 +274,7 @@ const mapStateToProps = (state) => ({
 
 //const authCondition = (authUser) => !!authUser;
 
-//withAuthorization doesn't work properly
+//withAuthorization doesn"t work properly
 export default compose(
     withRouter,
     connect(mapStateToProps),

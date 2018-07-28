@@ -1,28 +1,28 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
-import * as firebase from 'firebase/app'
-import { months } from '../../constants/months'
+import React from "react";
+import { connect } from "react-redux";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import TextField from "@material-ui/core/TextField";
+import * as firebase from "firebase/app";
+import { months } from "../../constants/months";
 
-const usersRef = firebase.database().ref('users/')
+const usersRef = firebase.database().ref("users/");
 
 class ResetDialog extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             value: "",
-        }
+        };
     }
 
     handleChange = (e, prop) => {
-        this.setState({ [prop]: e.target.value })
+        this.setState({ [prop]: e.target.value });
     }
 
     submit = () => {
@@ -32,13 +32,13 @@ class ResetDialog extends React.Component {
             this.props.handleClose(false);
             this.props.handleMenuClose(null);
 
-            const money = parseFloat(this.state.value).toFixed(2)
+            const money = parseFloat(this.state.value).toFixed(2);
 
             if (this.props.group) {
-                firebase.database().ref(`groups/${this.props.child}`).update({ money })
+                firebase.database().ref(`groups/${this.props.child}`).update({ money });
             }
             else {
-                firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.child}`).update({ money })
+                firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.child}`).update({ money });
             }
 
             const record = {
@@ -55,10 +55,10 @@ class ResetDialog extends React.Component {
                 description: "",
             }
 
-            usersRef.child(this.props.authUser.uid).child("history").push(record)
+            usersRef.child(this.props.authUser.uid).child("history").push(record);
 
             this.props.setSnackbarOpen(true);
-            this.setState({ value: "" })
+            this.setState({ value: "" });
         }
     }
 
@@ -66,7 +66,7 @@ class ResetDialog extends React.Component {
         return (
             <Dialog
                 open={this.props.modifyOpen}
-                onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null) }}
+                onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null); }}
                 aria-labelledby="form-dialog-title"
             >
                 <DialogTitle id="form-dialog-title">Reset Wallet</DialogTitle>
@@ -86,7 +86,7 @@ class ResetDialog extends React.Component {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => { this.props.handleClose(false); this.props.handleMenuClose(null) }} color="primary">
+                    <Button onClick={() => { this.props.handleClose(false); this.props.handleMenuClose(null); }} color="primary">
                         Cancel
       </Button>
                     <Button onClick={this.submit} color="primary">
@@ -94,13 +94,13 @@ class ResetDialog extends React.Component {
       </Button>
                 </DialogActions>
             </Dialog>
-        )
+        );
     }
 }
 
 const mapStateToProps = (state) => ({
     state: state.homeState,
     authUser: state.sessionState.authUser,
-})
+});
 
 export default connect(mapStateToProps)(ResetDialog);

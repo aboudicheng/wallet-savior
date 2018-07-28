@@ -1,4 +1,4 @@
-import { auth } from './firebase';
+import { auth } from "./firebase";
 
 // Sign Up
 export const doCreateUserWithEmailAndPassword = (email, password) =>
@@ -22,11 +22,11 @@ export const doPasswordUpdate = (password) =>
 
 // OAuth Sign in
 export const doSignInWithPopup = (provider) =>
-  auth.signInWithPopup(provider)
+  auth.signInWithPopup(provider);
 
 export const doSignInWithRedirect = (provider) =>
-  auth.signInWithRedirect(provider)
+  auth.signInWithRedirect(provider);
 
 // Delete User
 export const doDeleteUser = (uid) =>
-  auth.deleteUser(uid)
+  auth.deleteUser(uid);

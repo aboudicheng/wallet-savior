@@ -1,19 +1,19 @@
-import React from 'react'
-import { withRouter } from 'react-router'
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import Account from '@material-ui/icons/AccountCircle'
-import Person from '@material-ui/icons/PersonAdd'
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import { withStyles } from '@material-ui/core/styles';
-import * as routes from '../../constants/routes';
+import React from "react";
+import { withRouter } from "react-router"
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import Account from "@material-ui/icons/AccountCircle"
+import Person from "@material-ui/icons/PersonAdd"
+import Drawer from "@material-ui/core/Drawer";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import { withStyles } from "@material-ui/core/styles";
+import * as routes from "../../constants/routes";
 
 const styles = {
     root: {
@@ -30,7 +30,7 @@ const styles = {
         width: 250,
     },
     fullList: {
-        width: 'auto',
+        width: "auto",
     },
 };
 
@@ -39,7 +39,7 @@ class NavigationNonAuth extends React.Component {
         super();
         this.state = {
             open: false,
-        }
+        };
     }
 
     toggleDrawer = (open) => () => {
@@ -47,7 +47,7 @@ class NavigationNonAuth extends React.Component {
     };
 
     redirect = (route) => {
-        this.props.history.push(route)
+        this.props.history.push(route);
     }
 
     render() {
@@ -87,7 +87,7 @@ class NavigationNonAuth extends React.Component {
                     </Toolbar>
                 </AppBar>
             </div>
-        )
+        );
     }
 }
 

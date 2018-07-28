@@ -1,23 +1,23 @@
-import React, { Component } from 'react';
-import { compose } from 'recompose';
-import { connect } from 'react-redux';
-import firebase from 'firebase/app';
-import withAuthorization from '../Session/withAuthorization';
-import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import React, { Component } from "react";
+import { compose } from "recompose";
+import { connect } from "react-redux";
+import firebase from "firebase/app";
+import withAuthorization from "../Session/withAuthorization";
+import { withStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import formatNumber from "format-number";
-import Tooltip from '@material-ui/core/Tooltip';
-import Button from '@material-ui/core/Button';
-import Zoom from '@material-ui/core/Zoom';
-import Delete from '@material-ui/icons/Delete';
-import Snackbar from '@material-ui/core/Snackbar';
-import MySnackbarContentWrapper from '../MySnackbarContentWrapper'
-import DeleteAll from './deleteAll'
+import Tooltip from "@material-ui/core/Tooltip";
+import Button from "@material-ui/core/Button";
+import Zoom from "@material-ui/core/Zoom";
+import Delete from "@material-ui/icons/Delete";
+import Snackbar from "@material-ui/core/Snackbar";
+import MySnackbarContentWrapper from "../MySnackbarContentWrapper";
+import DeleteAll from "./deleteAll";
 
-const styles = theme => ({
+const styles = (theme) => ({
     root: {
-        width: '100%',
+        width: "100%",
     },
     deleteButton: {
         margin: theme.spacing.unit,
@@ -39,7 +39,7 @@ const styles = theme => ({
     }
 });
 
-const usersRef = firebase.database().ref('users/')
+const usersRef = firebase.database().ref("users/");
 
 class History extends Component {
     constructor() {
@@ -50,43 +50,43 @@ class History extends Component {
             history: [],
             deleteAllDialog: false,
             snackbarOpen: false,
-        }
+        };
     }
 
     componentDidMount() {
-        usersRef.child(this.props.authUser.uid).child("history").on('child_added', snapshot => {
-            this.setState(prevState => ({
+        usersRef.child(this.props.authUser.uid).child("history").on("child_added", (snapshot) => {
+            this.setState((prevState) => ({
                 history: [...prevState.history, snapshot.val()],
                 isLoading: false
-            }))
-        })
+            }));
+        });
 
-        usersRef.child(this.props.authUser.uid).once('value', snapshot => {
+        usersRef.child(this.props.authUser.uid).once("value", (snapshot) => {
             if (!snapshot.val().history) {
-                this.setState({ isLoading: false })
+                this.setState({ isLoading: false });
             }
         })
     }
 
     componentWillUnmount() {
-        this.setSnackbar(false)
+        this.setSnackbar(false);
     }
 
     handleDeleteAllDialog = (open) => {
-        this.setState({ deleteAllDialog: open })
+        this.setState({ deleteAllDialog: open });
     }
 
     deleteAllHistory = () => {
-        this.setState({ history: [] })
-        usersRef.child(this.props.authUser.uid).update({ history: false })
+        this.setState({ history: [] });
+        usersRef.child(this.props.authUser.uid).update({ history: false });
     }
 
     setSnackbar = (open) => {
-        this.setState({ snackbarOpen: open })
+        this.setState({ snackbarOpen: open });
     }
 
     handleSnackbarClose = (event, reason) => {
-        if (reason === 'clickaway') {
+        if (reason === "clickaway") {
             return;
         }
 
@@ -94,8 +94,8 @@ class History extends Component {
     };
 
     render() {
-        const { history, deleteAllDialog, isLoading, snackbarOpen } = this.state
-        const { classes } = this.props
+        const { history, deleteAllDialog, isLoading, snackbarOpen } = this.state;
+        const { classes } = this.props;
 
         const fieldStyle = {
             fontWeight: "bold"
@@ -130,7 +130,7 @@ class History extends Component {
                                             }
                                         </div>
                                     </Paper>
-                                )
+                                );
                             })
                             }
                         </div>
@@ -147,8 +147,8 @@ class History extends Component {
                 {/*Snackbar poppup*/}
                 <Snackbar
                     anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'left',
+                        vertical: "bottom",
+                        horizontal: "left",
                     }}
                     open={snackbarOpen}
                     autoHideDuration={3000}

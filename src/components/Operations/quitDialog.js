@@ -1,34 +1,34 @@
-import React, { Component } from 'react';
-import { compose } from 'recompose';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router'
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import * as firebase from 'firebase/app'
-import * as routes from '../../constants/routes';
+import React, { Component } from "react";
+import { compose } from "recompose";
+import { connect } from "react-redux";
+import { withRouter } from "react-router"
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import * as firebase from "firebase/app";
+import * as routes from "../../constants/routes";
 
 class QuitDialog extends Component {
 
     delete = () => {
-        this.props.history.push(routes.HOME)
-        //pop both from the groups field and user's groups field
-        firebase.database().ref(`users/${this.props.authUser.uid}/groups/${this.props.child}`).remove()
+        this.props.history.push(routes.HOME);
+        //pop both from the groups field and user"s groups field
+        firebase.database().ref(`users/${this.props.authUser.uid}/groups/${this.props.child}`).remove();
 
-        firebase.database().ref(`groups/${this.props.child}/member/`).once('value', snapshot => {
+        firebase.database().ref(`groups/${this.props.child}/member/`).once("value", (snapshot) => {
             //if there is only one member left, delete the whole group
             if (snapshot.val().length === 1) {
-                firebase.database().ref(`groups/${this.props.child}`).remove()
+                firebase.database().ref(`groups/${this.props.child}`).remove();
             }
             else {
                 snapshot.val().forEach((member, i) => {
                     if (member === this.props.authUser.uid) {
-                        firebase.database().ref(`groups/${this.props.child}/member/${i}`).remove()
+                        firebase.database().ref(`groups/${this.props.child}/member/${i}`).remove();
                     }
-                })
+                });
             }
         })
     }
@@ -56,7 +56,7 @@ class QuitDialog extends Component {
           </Button>
                 </DialogActions>
             </Dialog>
-        )
+        );
     }
 }
 

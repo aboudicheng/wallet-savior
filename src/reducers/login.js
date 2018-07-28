@@ -1,21 +1,21 @@
-import * as actions from '../constants/action_types'
+import * as actions from "../constants/action_types"
 
 const INITIAL_STATE = {
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     error: null,
 };
 
 function loginReducer(state = INITIAL_STATE, action) {
     switch(action.type) {
         case actions.INITIALIZE_LOGIN:
-            return { ...INITIAL_STATE }
+            return { ...INITIAL_STATE };
         case actions.SET_LOGIN_ERROR:
-            return { ...state, error: action.error }
+            return { ...state, error: action.error };
         case actions.SET_LOGIN_EMAIL:
-            return { ...state, email: action.email }
+            return { ...state, email: action.email };
         case actions.SET_LOGIN_PASSWORD:
-            return { ...state, password: action.password }
+            return { ...state, password: action.password };
         default: return state;
     }
 }

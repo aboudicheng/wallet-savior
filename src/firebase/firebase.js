@@ -1,6 +1,6 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/database';
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
 
 const prodConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -20,7 +20,7 @@ const devConfig = {
   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID
 };
 
-const config = process.env.NODE_ENV === 'production'
+const config = process.env.NODE_ENV === "production"
   ? prodConfig
   : devConfig;
 

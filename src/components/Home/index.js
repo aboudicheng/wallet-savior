@@ -1,34 +1,34 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { compose } from 'recompose';
-import classNames from 'classnames';
-import FirstUse from './firstUseDialog'
-import withAuthorization from '../Session/withAuthorization';
-import firebase from 'firebase/app';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { compose } from "recompose";
+import classNames from "classnames";
+import FirstUse from "./firstUseDialog"
+import withAuthorization from "../Session/withAuthorization";
+import firebase from "firebase/app";
 import formatNumber from "format-number";
-import Button from '@material-ui/core/Button';
-import Edit from '@material-ui/icons/Edit'
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { withStyles } from '@material-ui/core/styles';
-import Divider from '@material-ui/core/Divider';
-import Snackbar from '@material-ui/core/Snackbar';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Tooltip from '@material-ui/core/Tooltip';
-import Zoom from '@material-ui/core/Zoom';
-import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router'
-import * as routes from '../../constants/routes';
+import Button from "@material-ui/core/Button";
+import Edit from "@material-ui/icons/Edit"
+import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { withStyles } from "@material-ui/core/styles";
+import Divider from "@material-ui/core/Divider";
+import Snackbar from "@material-ui/core/Snackbar";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Tooltip from "@material-ui/core/Tooltip";
+import Zoom from "@material-ui/core/Zoom";
+import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
+import * as routes from "../../constants/routes";;
 
-import InsertDialog from '../Operations/insertDialog'
-import WithdrawDialog from '../Operations/withdrawDialog'
-import ResetDialog from '../Operations/resetDialog'
-import MySnackbarContentWrapper from '../MySnackbarContentWrapper'
-import Rename from '../Operations/rename'
+import InsertDialog from "../Operations/insertDialog";
+import WithdrawDialog from "../Operations/withdrawDialog";
+import ResetDialog from "../Operations/resetDialog";
+import MySnackbarContentWrapper from "../MySnackbarContentWrapper";
+import Rename from "../Operations/rename";
 
-const styles = theme => ({
+const styles = (theme) => ({
   editButton: {
     margin: theme.spacing.unit,
     right: "1.8rem",
@@ -48,7 +48,7 @@ const styles = theme => ({
   }
 });
 
-const usersRef = firebase.database().ref('users/')
+const usersRef = firebase.database().ref("users/");
 
 class HomePage extends Component {
   constructor() {
@@ -77,68 +77,68 @@ class HomePage extends Component {
   }
 
   setFirstUse = () => {
-    usersRef.child(this.props.authUser.uid).update({ firstUse: false })
-    this.setState({ firstUse: false })
+    usersRef.child(this.props.authUser.uid).update({ firstUse: false });
+    this.setState({ firstUse: false });
   }
 
   componentDidMount() {
-    usersRef.child(this.props.authUser.uid).once('value', snapshot => {
+    usersRef.child(this.props.authUser.uid).once("value", (snapshot) => {
       if (snapshot.val().firstUse) {
-        this.setState({ firstUse: true })
+        this.setState({ firstUse: true });
       }
-      this.setState({ isLoading: false, walletName: snapshot.val().wallets[0].name, totalAmount: snapshot.val().wallets[0].money })
-    })
+      this.setState({ isLoading: false, walletName: snapshot.val().wallets[0].name, totalAmount: snapshot.val().wallets[0].money });
+    });
   }
 
   setAnchorEl = (anchorEl) => {
-    this.setState({ anchorEl })
+    this.setState({ anchorEl });
   }
 
-  handleMenuClick = event => {
-    this.setState({ anchorEl: event.currentTarget })
+  handleMenuClick = (event) => {
+    this.setState({ anchorEl: event.currentTarget });
   }
 
   handleOptionClick = (e) => {
     switch (e.target.dataset.option) {
       case "insert":
-        this.setState({ insert: true, withdraw: false, reset: false, modifyOpen: true })
+        this.setState({ insert: true, withdraw: false, reset: false, modifyOpen: true });
         break;
       case "withdraw":
-        this.setState({ insert: false, withdraw: true, reset: false, modifyOpen: true })
+        this.setState({ insert: false, withdraw: true, reset: false, modifyOpen: true });
         break;
       case "reset":
-        this.setState({ insert: false, withdraw: false, reset: true, modifyOpen: true })
+        this.setState({ insert: false, withdraw: false, reset: true, modifyOpen: true });
         break;
       default: return;
     }
   }
 
   setModifyOpenDialog = (modifyOpen) => {
-    this.setState({ modifyOpen })
+    this.setState({ modifyOpen });
   }
 
   handleSnackbarClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
-    this.setState({ snackbarOpen: false })
+    this.setState({ snackbarOpen: false });
   };
 
   setOpenDialog = (open) => {
-    this.setState({ open })
+    this.setState({ open });
   }
 
   setSnackbarOpen = (snackbarOpen) => {
-    this.setState({ snackbarOpen })
+    this.setState({ snackbarOpen });
   }
 
   setRenameDialog = (renameOpen) => {
-    this.setState({ renameOpen })
+    this.setState({ renameOpen });
   }
 
   render() {
-    const { classes } = this.props
+    const { classes } = this.props;
     const {
       walletName,
       totalAmount,
@@ -152,7 +152,7 @@ class HomePage extends Component {
       modifyOpen,
       snackbarOpen,
       renameOpen
-    } = this.state
+    } = this.state;
 
     return (
       <div>
@@ -183,7 +183,7 @@ class HomePage extends Component {
 
         {/*Menu Bar at top right corner*/}
         <IconButton
-          aria-owns={anchorEl ? 'simple-menu' : null}
+          aria-owns={anchorEl ? "simple-menu" : null}
           aria-haspopup="true"
           onClick={e => this.setAnchorEl(e.currentTarget)}
           className={classNames("menuicon", classes.label)}
@@ -221,8 +221,8 @@ class HomePage extends Component {
         {/*Snackbar poppup*/}
         <Snackbar
           anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
+            vertical: "bottom",
+            horizontal: "left",
           }}
           open={snackbarOpen}
           autoHideDuration={3000}

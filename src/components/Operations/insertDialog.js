@@ -1,29 +1,29 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
-import firebase from 'firebase/app'
-import { months } from '../../constants/months'
+import React from "react";
+import { connect } from "react-redux";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import TextField from "@material-ui/core/TextField";
+import firebase from "firebase/app";
+import { months } from "../../constants/months";
 
-const usersRef = firebase.database().ref('users/')
+const usersRef = firebase.database().ref("users/");
 
 class InsertDialog extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             value: "",
             text: "",
-        }
+        };
     }
 
     handleChange = (e, prop) => {
-        this.setState({ [prop]: e.target.value })
+        this.setState({ [prop]: e.target.value });
     }
 
     submit = () => {
@@ -32,16 +32,16 @@ class InsertDialog extends React.Component {
 
             this.props.handleClose(false);
             this.props.handleMenuClose(null);
-            const previousTotalAmount = parseFloat(this.props.totalAmount)
-            const newValue = parseFloat(this.state.value)
+            const previousTotalAmount = parseFloat(this.props.totalAmount);
+            const newValue = parseFloat(this.state.value);
 
-            const money = parseFloat(previousTotalAmount + newValue).toFixed(2)
+            const money = parseFloat(previousTotalAmount + newValue).toFixed(2);
 
             if (this.props.group) {
-                firebase.database().ref(`groups/${this.props.child}`).update({ money })
+                firebase.database().ref(`groups/${this.props.child}`).update({ money });
             }
             else {
-                firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.child}`).update({ money })
+                firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.child}`).update({ money });
             }
 
             const record = {
@@ -58,10 +58,10 @@ class InsertDialog extends React.Component {
                 description: this.state.text
             }
 
-            usersRef.child(this.props.authUser.uid).child("history").push(record)
+            usersRef.child(this.props.authUser.uid).child("history").push(record);
 
             this.props.setSnackbarOpen(true);
-            this.setState({ value: "", text: "" })
+            this.setState({ value: "", text: "" });
         }
     }
 
@@ -70,7 +70,7 @@ class InsertDialog extends React.Component {
             <div>
                 <Dialog
                     open={this.props.modifyOpen}
-                    onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null) }}
+                    onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null); }}
                     aria-labelledby="form-dialog-title"
                 >
                     <DialogTitle id="form-dialog-title">Add Money</DialogTitle>
@@ -99,7 +99,7 @@ class InsertDialog extends React.Component {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={() => { this.props.handleClose(false); this.props.handleMenuClose(null) }} color="primary">
+                        <Button onClick={() => { this.props.handleClose(false); this.props.handleMenuClose(null); }} color="primary">
                             Cancel
       </Button>
                         <Button onClick={this.submit} color="primary">
@@ -108,12 +108,12 @@ class InsertDialog extends React.Component {
                     </DialogActions>
                 </Dialog>
             </div>
-        )
+        );
     }
 }
 
 const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
-})
+});
 
 export default connect(mapStateToProps)(InsertDialog);

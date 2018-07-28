@@ -1,37 +1,37 @@
-import React from 'react'
-import _ from 'lodash'
-import { connect } from 'react-redux';
-import { compose } from 'recompose';
-import { withRouter } from 'react-router'
-import formatNumber from 'format-number';
-import { auth } from '../../firebase';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import Home from '@material-ui/icons/Home'
-import Settings from '@material-ui/icons/Settings'
-import Group from '@material-ui/icons/Group'
-import Exit from '@material-ui/icons/ExitToApp'
-import AddCircle from '@material-ui/icons/AddCircleOutline'
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import History from '@material-ui/icons/History'
-import GroupWork from '@material-ui/icons/GroupWork'
-import Money from '@material-ui/icons/MonetizationOn'
-import { withStyles } from '@material-ui/core/styles';
-import * as routes from '../../constants/routes';
-import * as firebase from 'firebase/app'
-import Create from './create'
+import React from "react";
+import _ from "lodash";
+import { connect } from "react-redux";
+import { compose } from "recompose";
+import { withRouter } from "react-router";
+import formatNumber from "format-number";
+import { auth } from "../../firebase";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import Home from "@material-ui/icons/Home";
+import Settings from "@material-ui/icons/Settings";
+import Group from "@material-ui/icons/Group";
+import Exit from "@material-ui/icons/ExitToApp"
+import AddCircle from "@material-ui/icons/AddCircleOutline";
+import Drawer from "@material-ui/core/Drawer";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Collapse from "@material-ui/core/Collapse";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import History from "@material-ui/icons/History";
+import GroupWork from "@material-ui/icons/GroupWork";
+import Money from "@material-ui/icons/MonetizationOn";
+import { withStyles } from "@material-ui/core/styles";
+import * as routes from "../../constants/routes";
+import * as firebase from "firebase/app";
+import Create from "./create";
 
-const styles = theme => ({
+const styles = (theme) => ({
     root: {
         flexGrow: 1,
     },
@@ -49,12 +49,12 @@ const styles = theme => ({
         width: 250,
     },
     fullList: {
-        width: 'auto',
+        width: "auto",
     },
     nested: {
         paddingLeft: theme.spacing.unit * 4,
     },
-})
+});
 
 class NavigationAuth extends React.Component {
     constructor() {
@@ -68,17 +68,17 @@ class NavigationAuth extends React.Component {
             option: "",
             wallets: [],
             groupWallets: [],
-        }
+        };
     }
 
     componentDidMount() {
-        firebase.database().ref(`users/${this.props.authUser.uid}`).on('value', snapshot => {
+        firebase.database().ref(`users/${this.props.authUser.uid}`).on("value", snapshot => {
             if (firebase.auth().currentUser) {
                 const { groups, wallets } = snapshot.val()
                 let groupWallets = []
 
                 for (let key in groups) {
-                    firebase.database().ref(`groups/`).once('value', s => {
+                    firebase.database().ref(`groups/`).once("value", s => {
                         groupWallets.push(s.val()[groups[key].id])
                     })
                 }

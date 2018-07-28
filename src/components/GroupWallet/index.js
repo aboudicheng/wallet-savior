@@ -1,34 +1,34 @@
-import React, { Component } from 'react';
-import withAuthorization from '../Session/withAuthorization';
-import { withRouter } from 'react-router'
-import { connect } from 'react-redux';
-import { compose } from 'recompose';
-import classNames from 'classnames';
-import firebase from 'firebase/app';
+import React, { Component } from "react";
+import withAuthorization from "../Session/withAuthorization";
+import { withRouter } from "react-router"
+import { connect } from "react-redux";
+import { compose } from "recompose";
+import classNames from "classnames";
+import firebase from "firebase/app";
 import formatNumber from "format-number";
-import Button from '@material-ui/core/Button';
-import Edit from '@material-ui/icons/Edit'
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { withStyles } from '@material-ui/core/styles';
-import Divider from '@material-ui/core/Divider';
-import Snackbar from '@material-ui/core/Snackbar';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Tooltip from '@material-ui/core/Tooltip';
-import Zoom from '@material-ui/core/Zoom';
+import Button from "@material-ui/core/Button";
+import Edit from "@material-ui/icons/Edit"
+import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { withStyles } from "@material-ui/core/styles";
+import Divider from "@material-ui/core/Divider";
+import Snackbar from "@material-ui/core/Snackbar";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Tooltip from "@material-ui/core/Tooltip";
+import Zoom from "@material-ui/core/Zoom";
 
-import MembersDialog from '../Operations/membersDialog'
-import InviteDialog from '../Operations/inviteDialog'
-import InsertDialog from '../Operations/insertDialog'
-import WithdrawDialog from '../Operations/withdrawDialog'
-import ResetDialog from '../Operations/resetDialog'
-import QuitDialog from '../Operations/quitDialog'
-import MySnackbarContentWrapper from '../MySnackbarContentWrapper'
-import Rename from '../Operations/rename'
+import MembersDialog from "../Operations/membersDialog";
+import InviteDialog from "../Operations/inviteDialog";
+import InsertDialog from "../Operations/insertDialog";
+import WithdrawDialog from "../Operations/withdrawDialog";
+import ResetDialog from "../Operations/resetDialog";
+import QuitDialog from "../Operations/quitDialog";
+import MySnackbarContentWrapper from "../MySnackbarContentWrapper";
+import Rename from "../Operations/rename";
 
-const styles = theme => ({
+const styles = (theme) => ({
     editButton: {
         margin: theme.spacing.unit,
         right: "1.8rem",
@@ -46,7 +46,7 @@ const styles = theme => ({
     menuButton: {
         color: "#3fb5a3",
     }
-})
+});
 
 class GroupWallet extends Component {
     constructor() {
@@ -74,21 +74,21 @@ class GroupWallet extends Component {
             renameOpen: false,
 
             snackbarOpen: false,
-        }
+        };
 
     }
 
     componentDidMount() {
-        firebase.database().ref(`groups/${this.props.match.params.id}`).on('value', snapshot => {
+        firebase.database().ref(`groups/${this.props.match.params.id}`).on("value", (snapshot) => {
             if (snapshot.val()) {
-                this.setState({ group: snapshot.val(), isLoading: false })
+                this.setState({ group: snapshot.val(), isLoading: false });
             }
         })
     }
 
     componentDidUpdate(props) {
         if (this.props.location.key !== props.location.key) {
-            firebase.database().ref(`groups/${this.props.match.params.id}`).on('value', snapshot => {
+            firebase.database().ref(`groups/${this.props.match.params.id}`).on("value", snapshot => {
                 if (snapshot.val()) {
                     this.setState({ group: snapshot.val(), isLoading: false })
                 }
@@ -97,7 +97,7 @@ class GroupWallet extends Component {
     }
 
     setAnchorEl = (anchorEl) => {
-        this.setState({ anchorEl })
+        this.setState({ anchorEl });
     }
 
     handleOptionClick = (e) => {
@@ -181,23 +181,23 @@ class GroupWallet extends Component {
     }
 
     setModifyOpenDialog = (modifyOpen) => {
-        this.setState({ modifyOpen })
+        this.setState({ modifyOpen });
     }
 
     handleSnackbarClose = (event, reason) => {
-        if (reason === 'clickaway') {
+        if (reason === "clickaway") {
             return;
         }
 
-        this.setState({ snackbarOpen: false })
+        this.setState({ snackbarOpen: false });
     };
 
     setSnackbarOpen = (snackbarOpen) => {
-        this.setState({ snackbarOpen })
+        this.setState({ snackbarOpen });
     }
 
     setRenameDialog = (renameOpen) => {
-        this.setState({ renameOpen })
+        this.setState({ renameOpen });
     }
 
     render() {
@@ -236,7 +236,7 @@ class GroupWallet extends Component {
 
                             {/*Menu Bar at top right corner*/}
                             <IconButton
-                                aria-owns={anchorEl ? 'simple-menu' : null}
+                                aria-owns={anchorEl ? "simple-menu" : null}
                                 aria-haspopup="true"
                                 onClick={e => this.setAnchorEl(e.currentTarget)}
                                 className={classNames("menuicon", classes.label)}
@@ -284,8 +284,8 @@ class GroupWallet extends Component {
                             {/*Snackbar poppup*/}
                             <Snackbar
                                 anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'left',
+                                    vertical: "bottom",
+                                    horizontal: "left",
                                 }}
                                 open={snackbarOpen}
                                 autoHideDuration={3000}

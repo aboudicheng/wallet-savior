@@ -1,29 +1,29 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { compose } from 'recompose';
-import TextField from '@material-ui/core/TextField';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { compose } from "recompose";
+import TextField from "@material-ui/core/TextField";
+import { withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
-import { withRouter, Link } from 'react-router-dom';
-import { SignUpLink } from '../SignUp';
-import { PasswordForgetLink } from '../PasswordForget';
-import { auth } from '../../firebase';
-import * as actions from '../../constants/action_types'
-import * as routes from '../../constants/routes';
-import firebase from 'firebase/app';
-import { signMethodHandler } from '../../helpers';
+import { withRouter, Link } from "react-router-dom";
+import { SignUpLink } from "../SignUp";
+import { PasswordForgetLink } from "../PasswordForget";
+import { auth } from "../../firebase";
+import * as actions from "../../constants/action_types";
+import * as routes from "../../constants/routes";
+import firebase from "firebase/app";
+import { signMethodHandler } from "../../helpers";
 
 function isRunningStandalone() {
-  return (window.matchMedia('(display-mode: standalone)').matches);
+  return (window.matchMedia("(display-mode: standalone)").matches);
 }
 
-const styles = theme => ({
+const styles = (theme) => ({
   container: {
-    display: 'flex',
-    justifyContent: 'center',
-    margin: '0 auto',
-    flexWrap: 'wrap',
+    display: "flex",
+    justifyContent: "center",
+    margin: "0 auto",
+    flexWrap: "wrap",
     width: "14rem",
   },
   textField: {
@@ -48,9 +48,9 @@ class SignInForm extends Component {
   }
 
   signInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider()
+    const provider = new firebase.auth.GoogleAuthProvider();
     auth.doSignInWithPopup(provider)
-      .then(res =>
+      .then((res) =>
         signMethodHandler({
           res,
           history: this.props.history,
@@ -58,15 +58,15 @@ class SignInForm extends Component {
           setError: this.props.setLoginError
         })
       )
-      .catch(error => {
-        this.props.setLoginError(error)
-      })
+      .catch((error) => {
+        this.props.setLoginError(error);
+      });
   }
 
   signInWithFacebook = () => {
-    const provider = new firebase.auth.FacebookAuthProvider()
+    const provider = new firebase.auth.FacebookAuthProvider();
     auth.doSignInWithPopup(provider)
-      .then(res =>
+      .then((res) =>
         signMethodHandler({
           res,
           history: this.props.history,
@@ -74,9 +74,9 @@ class SignInForm extends Component {
           setError: this.props.setLoginError
         })
       )
-      .catch(error => {
-        this.props.setLoginError(error)
-      })
+      .catch((error) => {
+        this.props.setLoginError(error);
+      });
   }
 
   onSubmit = (event) => {
@@ -91,7 +91,7 @@ class SignInForm extends Component {
 
     auth.doSignInWithEmailAndPassword(email, password)
       .then(() => {
-        this.props.initializeLogin()
+        this.props.initializeLogin();
         history.push(routes.HOME);
       })
       .catch(error => {
@@ -109,10 +109,10 @@ class SignInForm extends Component {
     } = this.props.state;
 
     const isInvalid =
-      password === '' ||
-      email === '';
+      password === "" ||
+      email === "";
 
-    const { classes } = this.props
+    const { classes } = this.props;
 
     return (
       <div>
@@ -123,7 +123,7 @@ class SignInForm extends Component {
             label="Email Address"
             className={classes.textField}
             value={email}
-            onChange={event => this.props.setLoginEmail(event.target.value)}
+            onChange={(event) => this.props.setLoginEmail(event.target.value)}
             margin="normal"
           />
           <TextField
@@ -132,7 +132,7 @@ class SignInForm extends Component {
             type="password"
             className={classes.textField}
             value={password}
-            onChange={event => this.props.setLoginPassword(event.target.value)}
+            onChange={(event) => this.props.setLoginPassword(event.target.value)}
             margin="normal"
           />
           <Button variant="contained" color="primary" disabled={isInvalid} type="submit" className={classes.button}>Login</Button>
@@ -156,7 +156,7 @@ const SignInLink = () =>
     Already have an account?
     <br />
     Click <Link to={routes.LOGIN}>here</Link> to login
-  </p>
+  </p>;
 
 const mapStateToProps = (state) => ({
   authUser: state.sessionState.authUser,

@@ -1,18 +1,18 @@
-import React from 'react';
-import { compose } from 'recompose';
-import { withStyles } from '@material-ui/core/styles';
-import { connect } from 'react-redux';
-import Avatar from '@material-ui/core/Avatar';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import PersonIcon from '@material-ui/icons/Person';
-import AddIcon from '@material-ui/icons/Add';
-import blue from '@material-ui/core/colors/blue';
-import * as firebase from 'firebase/app'
+import React from "react";
+import { compose } from "recompose";
+import { withStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
+import Avatar from "@material-ui/core/Avatar";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import ListItemText from "@material-ui/core/ListItemText";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import PersonIcon from "@material-ui/icons/Person";
+import AddIcon from "@material-ui/icons/Add";
+import blue from "@material-ui/core/colors/blue";
+import * as firebase from "firebase/app";
 
 const styles = {
     avatar: {
@@ -23,42 +23,42 @@ const styles = {
 
 class MembersDialog extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             value: "",
             members: [],
-        }
+        };
     }
 
     componentDidMount() {
-        firebase.database().ref(`groups/${this.props.groupId}/member`).once('value', snapshot => {
+        firebase.database().ref(`groups/${this.props.groupId}/member`).once("value", (snapshot) => {
             for (let key in snapshot.val()) {
-                firebase.database().ref(`users/${key}/email`).once('value', s => {
-                    this.setState(prevState => ({
+                firebase.database().ref(`users/${key}/email`).once("value", (s) => {
+                    this.setState((prevState) => ({
                         members: [...prevState.members, s.val()]
-                    }))
-                })
+                    }));
+                });
             }
         })
     }
 
     render() {
-        const { members } = this.state
+        const { members } = this.state;
         const { classes } = this.props;
 
         //TODO: onClick range
         return (
             <Dialog
                 open={this.props.open}
-                onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null) }}
+                onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null); }}
                 aria-labelledby="simple-dialog-title"
             >
                 <DialogTitle id="simple-dialog-title">Members</DialogTitle>
                 <div>
                     <List>
                         {members.length > 0 &&
-                            members.map(email => (
+                            members.map((email) => (
                                 <ListItem key={email}>
                                     <ListItemAvatar>
                                         <Avatar className={classes.avatar}>
@@ -79,7 +79,7 @@ class MembersDialog extends React.Component {
                     </List>
                 </div>
             </Dialog>
-        )
+        );
     }
 }
 

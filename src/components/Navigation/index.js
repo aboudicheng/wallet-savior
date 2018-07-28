@@ -1,8 +1,8 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import NavigationAuth from './auth'
-import NavigationNonAuth from './nonauth'
+import NavigationAuth from "./auth";
+import NavigationNonAuth from "./nonauth";
 
 const Navigation = ({ authUser }) =>
   <div>
@@ -10,7 +10,7 @@ const Navigation = ({ authUser }) =>
       ? <NavigationAuth />
       : <NavigationNonAuth />
     }
-  </div>
+  </div>;
 
 const mapStateToProps = (state) => ({
   authUser: state.sessionState.authUser,

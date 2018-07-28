@@ -1,14 +1,14 @@
-import React from 'react';
-import classNames from 'classnames';
-import ErrorIcon from '@material-ui/icons/Error';
-import InfoIcon from '@material-ui/icons/Info';
-import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '@material-ui/core/IconButton';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import green from '@material-ui/core/colors/green';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import WarningIcon from '@material-ui/icons/Warning';
-import { withStyles } from '@material-ui/core/styles';
+import React from "react";
+import classNames from "classnames";
+import ErrorIcon from "@material-ui/icons/Error";
+import InfoIcon from "@material-ui/icons/Info";
+import CloseIcon from "@material-ui/icons/Close";
+import IconButton from "@material-ui/core/IconButton";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import green from "@material-ui/core/colors/green";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
+import WarningIcon from "@material-ui/icons/Warning";
+import { withStyles } from "@material-ui/core/styles";
 
 const variantIcon = {
     success: CheckCircleIcon,
@@ -17,7 +17,7 @@ const variantIcon = {
     info: InfoIcon,
 };
 
-const styles1 = theme => ({
+const styles1 = (theme) => ({
     success: {
         backgroundColor: green[600],
     },
@@ -29,8 +29,8 @@ const styles1 = theme => ({
         marginRight: theme.spacing.unit,
     },
     message: {
-        display: 'flex',
-        alignItems: 'center',
+        display: "flex",
+        alignItems: "center",
     },
 });
 

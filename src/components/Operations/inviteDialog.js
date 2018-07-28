@@ -1,75 +1,75 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
-import * as firebase from 'firebase/app'
+import React from "react";
+import { connect } from "react-redux";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import TextField from "@material-ui/core/TextField";
+import * as firebase from "firebase/app";
 
 class InviteDialog extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             value: "",
             error: null,
-        }
+        };
     }
 
     handleChange = (e) => {
-        this.setState({ value: e.target.value })
+        this.setState({ value: e.target.value });
     }
 
     submit = () => {
         if (this.state.value !== "") {
-            const usersRef = firebase.database().ref('users')
-            const membersRef = firebase.database().ref(`groups/${this.props.groupId}/member`) 
-            this.setState({ error: null })
-            let found = false
+            const usersRef = firebase.database().ref("users");
+            const membersRef = firebase.database().ref(`groups/${this.props.groupId}/member`) ;
+            this.setState({ error: null });
+            let found = false;
 
-            usersRef.once('value', snapshot => {
+            usersRef.once("value", (snapshot) => {
 
                 for (let key in snapshot.val()) {
                     if (snapshot.val()[key].email === this.state.value) {
-                        found = true
+                        found = true;
 
                         //iterate through member id
-                        membersRef.once('value', s => {
+                        membersRef.once("value", (s) => {
                             if (s.val().hasOwnProperty(key)) {
-                                this.setState({ error: "The member is already in the group!" })
+                                this.setState({ error: "The member is already in the group!" });
                             }
                             else {
                                 //push to groups field
-                                membersRef.child(key).set(key)
+                                membersRef.child(key).set(key);
 
                                 //also push to personal groups field
-                                usersRef.child(`${key}/groups/${this.props.groupId}`).set({ name: this.props.groupName, id: this.props.groupId })
+                                usersRef.child(`${key}/groups/${this.props.groupId}`).set({ name: this.props.groupName, id: this.props.groupId });
 
                                 this.props.handleClose(false);
                                 this.props.handleMenuClose(null);
-                                this.props.setSnackbarOpen(true)
+                                this.props.setSnackbarOpen(true);
                             }
-                        })
+                        });
 
                     }
                 }
 
                 if (!found) {
-                    this.setState({ error: "User not found!" })
+                    this.setState({ error: "User not found!" });
                 }
             })
         }
     }
 
     render() {
-        const { error } = this.state
+        const { error } = this.state;
         return (
             <Dialog
                 open={this.props.open}
-                onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null) }}
+                onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null); }}
                 aria-labelledby="form-dialog-title"
             >
                 <DialogTitle id="form-dialog-title">Add Member</DialogTitle>
@@ -92,7 +92,7 @@ class InviteDialog extends React.Component {
 
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => { this.props.handleClose(false); this.props.handleMenuClose(null) }} color="primary">
+                    <Button onClick={() => { this.props.handleClose(false); this.props.handleMenuClose(null); }} color="primary">
                         Cancel
       </Button>
                     <Button onClick={this.submit} color="primary">
@@ -100,7 +100,7 @@ class InviteDialog extends React.Component {
       </Button>
                 </DialogActions>
             </Dialog>
-        )
+        );
     }
 }
 

@@ -1,10 +1,10 @@
-import * as actions from '../constants/action_types';
+import * as actions from "../constants/action_types";
 
 const INITIAL_STATE = {
-    username: '',
-    email: '',
-    passwordOne: '',
-    passwordTwo: '',
+    username: "",
+    email: "",
+    passwordOne: "",
+    passwordTwo: "",
     error: null,
 };
 
