@@ -24,10 +24,7 @@ git clone https://github.com/aboudicheng/wallet-savior.git
 // Change directory
 cd wallet-savior
 
-/*
-Create .env in root directory and set up variables with your own
-Firebase credentials used in src/firebase/firebase.js
-/*
+// Create .env in root directory and set up variables with your own Firebase credentials used in src/firebase/firebase.js
 touch .env
 
 // Install required dependencies
