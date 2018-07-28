@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Home from "@material-ui/icons/Home";
-import Settings from "@material-ui/icons/Settings";
+import Settings from "@material-ui/icons/SettingsApplications";
 import Group from "@material-ui/icons/Group";
 import Exit from "@material-ui/icons/ExitToApp";
 import AddCircle from "@material-ui/icons/AddCircleOutline";
