@@ -65,7 +65,7 @@ class DeleteAccount extends Component {
     render() {
         return (
             <div>
-                <Button color="secondary" onClick={this.handleClickOpen}>Delete My Account</Button>
+                <Button color="secondary" onClick={this.handleClickOpen}>Delete</Button>
                 <Dialog
                     open={this.state.open}
                     onClose={this.handleClose}
@@ -79,10 +79,10 @@ class DeleteAccount extends Component {
             </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
+                        <Button onClick={this.handleClose} color="secondary">
                             No
             </Button>
-                        <Button onClick={this.confirmDelete} color="primary" autoFocus>
+                        <Button onClick={this.confirmDelete} color="primary">
                             Yes
             </Button>
                     </DialogActions>

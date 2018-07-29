@@ -6,6 +6,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import Snackbar from "@material-ui/core/Snackbar";
+import Button from "@material-ui/core/Button";
 import DeleteAccount from "./deleteAccount";
 import PasswordChangeForm from "../PasswordChange";
 import withAuthorization from "../Session/withAuthorization";
@@ -78,6 +79,8 @@ class AccountPage extends Component {
                 value={username}
                 onChange={this.handleChange}
               />
+
+              <Button variant="contained" color="primary" type="submit">Reset</Button>
             </form>
 
             <span style={{ fontWeight: "bold" }}>Email: </span><span>{authUser.email}</span>
