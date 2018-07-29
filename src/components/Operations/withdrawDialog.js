@@ -44,7 +44,7 @@ class WithdrawDialog extends React.Component {
             else {
                 firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.child}`).update({ money });
             }
-            
+
             const record = {
                 type: "Withdraw",
                 amount: this.state.value,
@@ -59,7 +59,27 @@ class WithdrawDialog extends React.Component {
                 description: this.state.text
             };
 
+            //push record to personal history
             usersRef.child(this.props.authUser.uid).child("history").push(record);
+
+            //push record to group history
+            if (this.props.group) {
+                const groupRecord = {
+                    type: "Withdraw",
+                    user: this.props.authUser.uid,
+                    amount: this.state.value,
+                    date: {
+                        year: date.getFullYear(),
+                        month: months[date.getMonth()],
+                        day: ("0" + date.getDate()).slice(-2),
+                        hour: ("0" + date.getHours()).slice(-2),
+                        min: ("0" + date.getMinutes()).slice(-2),
+                    },
+                    description: this.state.text
+                }
+
+                firebase.database().ref(`groups/${this.props.child}/history`).push(groupRecord);
+            }
 
             this.props.setSnackbarOpen(true);
             this.setState({ value: "", text: "" });

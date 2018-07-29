@@ -14,9 +14,9 @@ import * as routes from "../../constants/routes";
 import firebase from "firebase/app";
 import { signMethodHandler } from "../../helpers";
 
-function isRunningStandalone() {
-  return (window.matchMedia("(display-mode: standalone)").matches);
-}
+// function isRunningStandalone() {
+//   return (window.matchMedia("(display-mode: standalone)").matches);
+// }
 
 const styles = (theme) => ({
   container: {

@@ -55,7 +55,26 @@ class ResetDialog extends React.Component {
                 description: "",
             };
 
+            //push record to personal history
             usersRef.child(this.props.authUser.uid).child("history").push(record);
+
+            //push record to group history
+            if (this.props.group) {
+                const groupRecord = {
+                    type: "Reset",
+                    user: this.props.authUser.uid,
+                    amount: this.state.value,
+                    date: {
+                        year: date.getFullYear(),
+                        month: months[date.getMonth()],
+                        day: ("0" + date.getDate()).slice(-2),
+                        hour: ("0" + date.getHours()).slice(-2),
+                        min: ("0" + date.getMinutes()).slice(-2),
+                    },
+                }
+
+                firebase.database().ref(`groups/${this.props.child}/history`).push(groupRecord);
+            }
 
             this.props.setSnackbarOpen(true);
             this.setState({ value: "" });
