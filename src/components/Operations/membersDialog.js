@@ -13,6 +13,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import AddIcon from "@material-ui/icons/Add";
 import blue from "@material-ui/core/colors/blue";
 import * as firebase from "firebase/app";
+import "./index.css";
 
 const styles = {
     avatar: {
@@ -34,9 +35,9 @@ class MembersDialog extends React.Component {
     componentDidMount() {
         firebase.database().ref(`groups/${this.props.groupId}/member`).once("value", (snapshot) => {
             for (let key in snapshot.val()) {
-                firebase.database().ref(`users/${key}/username`).once("value", (s) => {
+                firebase.database().ref(`users/${key}`).once("value", (s) => {
                     //let the current user get shown at the top of the list
-                    if (s.val() === this.props.authUser) {
+                    if (s.val().username.uid === this.props.authUser.uid) {
                         this.setState((prevState) => ({
                             members: [s.val(), ...prevState.members]
                         }));
@@ -66,14 +67,15 @@ class MembersDialog extends React.Component {
                 <div>
                     <List>
                         {members.length > 0 &&
-                            members.map((username, i) => (
+                            members.map((member, i) => (
                                 <ListItem key={i}>
                                     <ListItemAvatar>
                                         <Avatar className={classes.avatar}>
                                             <PersonIcon />
                                         </Avatar>
                                     </ListItemAvatar>
-                                    <ListItemText primary={i === 0 ? "You" : username} />
+                                    {<span className={member.connected ? "online" : "offline"}></span>}
+                                    <ListItemText primary={i === 0 ? "You" : member.username} />
                                 </ListItem>
                             ))}
                         <ListItem button data-option="invite" onClick={this.props.addMember}>

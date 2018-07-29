@@ -113,6 +113,7 @@ class NavigationAuth extends React.Component {
 
     signOut = () => {
         auth.doSignOut();
+        firebase.database().ref(`users/${firebase.auth().currentUser.uid}/connected`).remove()
     }
 
     setDialog = (open, option) => {
