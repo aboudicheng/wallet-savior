@@ -65,7 +65,7 @@ class DeleteAccount extends Component {
     render() {
         return (
             <div>
-                <Button variant="contained" color="secondary" onClick={this.handleClickOpen}>Delete My Account</Button>
+                <Button color="secondary" onClick={this.handleClickOpen}>Delete My Account</Button>
                 <Dialog
                     open={this.state.open}
                     onClose={this.handleClose}
