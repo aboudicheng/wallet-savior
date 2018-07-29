@@ -112,7 +112,6 @@ class GroupWallet extends Component {
                         reset: false,
                         quit: false,
                     },
-                    modifyOpen: true
                 })
                 break;
             case "invite":
@@ -125,7 +124,6 @@ class GroupWallet extends Component {
                         reset: false,
                         quit: false,
                     },
-                    modifyOpen: true
                 })
                 break;
             case "insert":
@@ -137,7 +135,6 @@ class GroupWallet extends Component {
                         reset: false,
                         quit: false,
                     },
-                    modifyOpen: true
                 })
                 break;
             case "withdraw":
@@ -149,7 +146,6 @@ class GroupWallet extends Component {
                         reset: false,
                         quit: false,
                     },
-                    modifyOpen: true
                 })
                 break;
             case "reset":
@@ -161,7 +157,6 @@ class GroupWallet extends Component {
                         reset: true,
                         quit: false,
                     },
-                    modifyOpen: true
                 })
                 break;
             case "quit":
@@ -173,11 +168,13 @@ class GroupWallet extends Component {
                         reset: false,
                         quit: true,
                     },
-                    modifyOpen: true
                 })
                 break;
             default: return;
         }
+        this.setState({
+            modifyOpen: true,
+        })
     }
 
     setModifyOpenDialog = (modifyOpen) => {
