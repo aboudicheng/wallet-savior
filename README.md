@@ -35,11 +35,10 @@ npm start
 ```
 
 ## Contributing
-Feel free to submit any issue or PR. If needed to access the database, please contact [aboudicheng@gmail.com](mailto:aboudicheng@gmail.com)
+Feel free to submit any issue or PR.
 
 ## TODO List
 
 * Group visibility limited to members
 * History for groups
 * Delete single history
-* Delete account
