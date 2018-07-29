@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import _ from "lodash";
 import { compose } from "recompose";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
@@ -19,12 +20,13 @@ class QuitDialog extends Component {
         firebase.database().ref(`users/${this.props.authUser.uid}/groups/${this.props.child}`).remove();
 
         firebase.database().ref(`groups/${this.props.child}/member/`).once("value", (snapshot) => {
+            const members = _.values(snapshot.val())
             //if there is only one member left, delete the whole group
-            if (snapshot.val().length === 1) {
+            if (members.length === 1) {
                 firebase.database().ref(`groups/${this.props.child}`).remove();
             }
             else {
-                snapshot.val().forEach((member, i) => {
+                members.forEach((member, i) => {
                     if (member === this.props.authUser.uid) {
                         firebase.database().ref(`groups/${this.props.child}/member/${i}`).remove();
                     }
