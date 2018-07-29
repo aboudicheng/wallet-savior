@@ -27,7 +27,7 @@ export const signMethodHandler = (props) => {
 
         //if user doesn"t exist then do signup
         if (!found) {
-            db.doCreateUser(user.uid, user.displayName, user.email)
+            db.doCreateUser(user.uid, user.displayName, user.email, user.providerData[0].photoURL)
                 .then(() => {
                     props.initialize()
                     props.history.push(routes.HOME);
