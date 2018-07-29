@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "recompose";
+import Tooltip from "@material-ui/core/Tooltip";
+import Zoom from "@material-ui/core/Zoom";
 import Divider from "@material-ui/core/Divider";
 import DeleteAccount from "./deleteAccount";
 import PasswordChangeForm from "../PasswordChange";
@@ -19,9 +21,14 @@ class AccountPage extends Component {
     return (
       <div>
         {authUser.providerData[0].providerId !== "password" &&
-          <img src={authUser.providerData[0].photoURL} alt={authUser.displayName} style={style} />
+          <Tooltip TransitionComponent={Zoom} title={authUser.displayName}>
+            <img src={authUser.providerData[0].photoURL} alt={authUser.displayName} style={style} />
+          </Tooltip>
+          
         }
-        <p>{authUser.displayName ? authUser.displayName : authUser.email}</p>
+        <h3>{authUser.displayName ? authUser.displayName : authUser.email}</h3>
+
+        <span style={{ fontWeight: "bold" }}>Email: </span><p>{authUser.email}</p>
         {authUser.providerData[0].providerId === "password" &&
           <div>
             <h2>Change Password</h2>
@@ -31,11 +38,11 @@ class AccountPage extends Component {
         }
 
         <div style={{
-            top: "0.8rem",
-            right: "0.5rem",
-            position: "absolute",
+          top: "0.8rem",
+          right: "0.5rem",
+          position: "absolute",
         }}><DeleteAccount /></div>
-        
+
       </div>
     )
   }
