@@ -42,4 +42,3 @@ Feel free to submit any issue or PR. If needed to access the database, please co
 * Group visibility limited to members
 * History for groups
 * Delete single history
-* Delete account
