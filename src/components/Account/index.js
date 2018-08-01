@@ -74,82 +74,82 @@ class AccountPage extends Component {
   render() {
     const { username, isLoading, snackbarOpen } = this.state;
     const { authUser, classes } = this.props;
+
+    if (isLoading)
+      return <CircularProgress size={50} />;
+
     return (
       <div>
-        {isLoading
-          ? <CircularProgress size={50} />
-          :
-          <div>
-            <div style={{ marginBottom: "1rem" }}>
-              {authUser.providerData[0].providerId !== "password"
-                ? <img
-                  src={authUser.providerData[0].photoURL}
-                  alt={username}
-                  style={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: "50%",
-                  }}
-                />
-                : <Avatar className={classes.avatar}>
-                  <PersonIcon style={{ width: "100%", height: "80%" }} />
-                </Avatar>
-              }
-
-              <div style={{ margin: "1rem auto" }}><span style={{ fontWeight: "bold" }}>Email: </span><span>{authUser.email}</span></div>
-
-              <form style={{ width: "100%" }} onSubmit={this.onSubmit}>
-                <TextField
-                  margin="dense"
-                  id="username"
-                  label="Username"
-                  type="text"
-                  className={classes.textField}
-                  //style={{ margin: "1.5rem" }}
-                  value={username}
-                  onChange={this.handleChange}
-                />
-
-                <Button variant="contained" color="primary" type="submit" className={classes.button}>Reset</Button>
-              </form>
-
-            </div>
-
-            <Divider />
-
-            {authUser.providerData[0].providerId === "password" &&
-              <div>
-                <h2>Change Password</h2>
-                <PasswordChangeForm />
-                <Divider />
-              </div>
+        <div>
+          <div style={{ marginBottom: "1rem" }}>
+            {authUser.providerData[0].providerId !== "password"
+              ? <img
+                src={authUser.providerData[0].photoURL}
+                alt={username}
+                style={{
+                  width: 50,
+                  height: 50,
+                  borderRadius: "50%",
+                }}
+              />
+              : <Avatar className={classes.avatar}>
+                <PersonIcon style={{ width: "100%", height: "80%" }} />
+              </Avatar>
             }
 
-            <div style={{
-              top: "0.8rem",
-              right: "0.5rem",
-              position: "absolute",
-            }}><DeleteAccount /></div>
+            <div style={{ margin: "1rem auto" }}><span style={{ fontWeight: "bold" }}>Email: </span><span>{authUser.email}</span></div>
 
-            {/*Snackbar poppup*/}
-            <Snackbar
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              open={snackbarOpen}
-              autoHideDuration={3000}
-              onClose={this.handleSnackbarClose}
-            >
-              <MySnackbarContentWrapper
-                onClose={this.handleSnackbarClose}
-                variant="success"
-                message="Operation successful!"
+            <form style={{ width: "100%" }} onSubmit={this.onSubmit}>
+              <TextField
+                margin="dense"
+                id="username"
+                label="Username"
+                type="text"
+                className={classes.textField}
+                //style={{ margin: "1.5rem" }}
+                value={username}
+                onChange={this.handleChange}
               />
-            </Snackbar>
+
+              <Button variant="contained" color="primary" type="submit" className={classes.button}>Reset</Button>
+            </form>
 
           </div>
-        }
+
+          <Divider />
+
+          {authUser.providerData[0].providerId === "password" &&
+            <div>
+              <h2>Change Password</h2>
+              <PasswordChangeForm />
+              <Divider />
+            </div>
+          }
+
+          <div style={{
+            top: "0.8rem",
+            right: "0.5rem",
+            position: "absolute",
+          }}><DeleteAccount /></div>
+
+          {/*Snackbar poppup*/}
+          <Snackbar
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            open={snackbarOpen}
+            autoHideDuration={3000}
+            onClose={this.handleSnackbarClose}
+          >
+            <MySnackbarContentWrapper
+              onClose={this.handleSnackbarClose}
+              variant="success"
+              message="Operation successful!"
+            />
+          </Snackbar>
+
+        </div>
       </div>
     )
   }

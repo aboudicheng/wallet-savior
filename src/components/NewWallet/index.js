@@ -181,88 +181,83 @@ class NewWallet extends Component {
         } = this.state;
         const { classes } = this.props;
 
+        if (isLoading)
+            return <CircularProgress className={classes.progress} size={50} />;
+
         return (
             <div>
-                {
-                    isLoading
-                        ? <CircularProgress className={classes.progress} size={50} />
-                        :
-                        <div>
-                            <h1>{wallet.name}</h1>
-                            <span style={{ fontSize: "170%", color: wallet.money >= 0 ? "#3fb5a3" : "#ff0000" }}>{formatNumber({ prefix: "$" })(parseFloat(wallet.money).toFixed(2))}</span>
+                <h1>{wallet.name}</h1>
+                <span style={{ fontSize: "170%", color: wallet.money >= 0 ? "#3fb5a3" : "#ff0000" }}>{formatNumber({ prefix: "$" })(parseFloat(wallet.money).toFixed(2))}</span>
 
-                            <p>Check <Link to={routes.HISTORY}>History</Link></p>
-                            <Divider />
+                <p>Check <Link to={routes.HISTORY}>History</Link></p>
+                <Divider />
 
-                            <Tooltip TransitionComponent={Zoom} title="Edit wallet name">
-                                <Button variant="fab" color="secondary" aria-label="Edit" className={classes.editButton} onClick={() => this.setRenameDialog(true)}>
-                                    <Edit />
-                                </Button>
-                            </Tooltip>
+                <Tooltip TransitionComponent={Zoom} title="Edit wallet name">
+                    <Button variant="fab" color="secondary" aria-label="Edit" className={classes.editButton} onClick={() => this.setRenameDialog(true)}>
+                        <Edit />
+                    </Button>
+                </Tooltip>
 
-                            {/*Dialog popup for rename*/}
-                            {renameOpen &&
-                                <Rename open={renameOpen} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} setRenameDialog={this.setRenameDialog} />
-                            }
-
-                            {/*Menu Bar at top right corner*/}
-                            <IconButton
-                                aria-owns={anchorEl ? "simple-menu" : null}
-                                aria-haspopup="true"
-                                onClick={(e) => this.setAnchorEl(e.currentTarget)}
-                                className={classNames("menuicon", classes.label)}
-                            >
-                                <MoreVertIcon />
-                            </IconButton>
-                            <Menu
-                                id="simple-menu"
-                                anchorEl={anchorEl}
-                                open={Boolean(anchorEl)}
-                                onClose={() => this.setAnchorEl(null)}
-                            >
-                                <MenuItem data-option="insert" onClick={this.handleOptionClick}>Insert</MenuItem>
-                                <MenuItem data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</MenuItem>
-                                <MenuItem data-option="reset" onClick={this.handleOptionClick}>Reset</MenuItem>
-                                <MenuItem data-option="delete" onClick={this.handleOptionClick}>Delete</MenuItem>
-                            </Menu>
-
-                            <div className="menubar">
-                                <Button className={classes.menuButton} color="default" data-option="insert" onClick={this.handleOptionClick}><span data-option="insert" onClick={this.handleOptionClick}>Insert</span></Button>
-                                <Button className={classes.menuButton} color="default" data-option="withdraw" onClick={this.handleOptionClick}><span data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</span></Button>
-                                <Button className={classes.menuButton} color="default" data-option="reset" onClick={this.handleOptionClick}><span data-option="reset" onClick={this.handleOptionClick}>Reset</span></Button>
-                                <Button className={classes.menuButton} color="default" data-option="delete" onClick={this.handleOptionClick}><span data-option="delete" onClick={this.handleOptionClick}>Delete</span></Button>
-                            </div>
-
-                            {/*Operation Dialogs*/}
-                            {modifyOpen &&
-                                insert
-                                ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} walletName={wallet.name} totalAmount={wallet.money} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} />
-                                : withdraw
-                                    ? <WithdrawDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} walletName={wallet.name} totalAmount={wallet.money} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} />
-                                    : reset
-                                        ? <ResetDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} walletName={wallet.name} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} />
-                                        : <DeleteDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} />
-                            }
-
-                            {/*Snackbar poppup*/}
-                            <Snackbar
-                                anchorOrigin={{
-                                    vertical: "bottom",
-                                    horizontal: "left",
-                                }}
-                                open={snackbarOpen}
-                                autoHideDuration={3000}
-                                onClose={this.handleSnackbarClose}
-                            >
-                                <MySnackbarContentWrapper
-                                    onClose={this.handleSnackbarClose}
-                                    variant="success"
-                                    message="Operation successful!"
-                                />
-                            </Snackbar>
-
-                        </div>
+                {/*Dialog popup for rename*/}
+                {renameOpen &&
+                    <Rename open={renameOpen} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} setRenameDialog={this.setRenameDialog} />
                 }
+
+                {/*Menu Bar at top right corner*/}
+                <IconButton
+                    aria-owns={anchorEl ? "simple-menu" : null}
+                    aria-haspopup="true"
+                    onClick={(e) => this.setAnchorEl(e.currentTarget)}
+                    className={classNames("menuicon", classes.label)}
+                >
+                    <MoreVertIcon />
+                </IconButton>
+                <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={() => this.setAnchorEl(null)}
+                >
+                    <MenuItem data-option="insert" onClick={this.handleOptionClick}>Insert</MenuItem>
+                    <MenuItem data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</MenuItem>
+                    <MenuItem data-option="reset" onClick={this.handleOptionClick}>Reset</MenuItem>
+                    <MenuItem data-option="delete" onClick={this.handleOptionClick}>Delete</MenuItem>
+                </Menu>
+
+                <div className="menubar">
+                    <Button className={classes.menuButton} color="default" data-option="insert" onClick={this.handleOptionClick}><span data-option="insert" onClick={this.handleOptionClick}>Insert</span></Button>
+                    <Button className={classes.menuButton} color="default" data-option="withdraw" onClick={this.handleOptionClick}><span data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</span></Button>
+                    <Button className={classes.menuButton} color="default" data-option="reset" onClick={this.handleOptionClick}><span data-option="reset" onClick={this.handleOptionClick}>Reset</span></Button>
+                    <Button className={classes.menuButton} color="default" data-option="delete" onClick={this.handleOptionClick}><span data-option="delete" onClick={this.handleOptionClick}>Delete</span></Button>
+                </div>
+
+                {/*Operation Dialogs*/}
+                {modifyOpen &&
+                    insert
+                    ? <InsertDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} walletName={wallet.name} totalAmount={wallet.money} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} />
+                    : withdraw
+                        ? <WithdrawDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} walletName={wallet.name} totalAmount={wallet.money} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} />
+                        : reset
+                            ? <ResetDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} walletName={wallet.name} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} />
+                            : <DeleteDialog modifyOpen={modifyOpen} handleClose={this.setModifyOpenDialog} handleMenuClose={this.setAnchorEl} child={wallet.id} setSnackbarOpen={this.setSnackbarOpen} />
+                }
+
+                {/*Snackbar poppup*/}
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "left",
+                    }}
+                    open={snackbarOpen}
+                    autoHideDuration={3000}
+                    onClose={this.handleSnackbarClose}
+                >
+                    <MySnackbarContentWrapper
+                        onClose={this.handleSnackbarClose}
+                        variant="success"
+                        message="Operation successful!"
+                    />
+                </Snackbar>
             </div>
         );
     }

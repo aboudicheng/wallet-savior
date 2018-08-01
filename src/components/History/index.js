@@ -100,13 +100,14 @@ class History extends Component {
         const fieldStyle = {
             fontWeight: "bold"
         };
+
+        if (isLoading)
+            return <CircularProgress className={classes.progress} size={50} />;
         
         return (
             <div>
                 <h1>History</h1>
-                {isLoading
-                    ? <CircularProgress className={classes.progress} size={50} />
-                    : history.length === 0
+                {history.length === 0
                         ? <p>You have no records yet.</p>
                         : <div>
                             {history.slice().reverse().map((record, i) => {
