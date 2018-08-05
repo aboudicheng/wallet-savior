@@ -4,6 +4,7 @@
   background-color: #3fb5a3;
   border-radius: 50%;
   display: inline-block;
+  padding: 5px;
   margin-left: 1em;
 }
 
@@ -13,5 +14,6 @@
   background-color: rgb(195, 53, 53);
   border-radius: 50%;
   display: inline-block;
+  padding: 5px;
   margin-left: 1em;
 }
