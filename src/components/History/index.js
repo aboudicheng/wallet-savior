@@ -54,6 +54,7 @@ class History extends Component {
     }
 
     componentDidMount() {
+        //iterate through every single history record of the current user
         usersRef.child(this.props.authUser.uid).child("history").on("child_added", (snapshot) => {
             this.setState((prevState) => ({
                 history: [...prevState.history, snapshot.val()],
@@ -61,6 +62,7 @@ class History extends Component {
             }));
         });
 
+        //if this user does not have any record, set isLoading to false
         usersRef.child(this.props.authUser.uid).once("value", (snapshot) => {
             if (!snapshot.val().history) {
                 this.setState({ isLoading: false });
@@ -69,6 +71,7 @@ class History extends Component {
     }
 
     componentWillUnmount() {
+        //prevent the snackbar from popping up again if exited before timeout
         this.setSnackbar(false);
     }
 

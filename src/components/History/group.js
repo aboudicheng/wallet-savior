@@ -7,6 +7,8 @@ import Paper from "@material-ui/core/Paper";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import formatNumber from "format-number";
 
+//TODO: add remove button for records that belong to the current user
+
 const styles = (theme) => ({
     root: {
         width: "100%",
@@ -69,8 +71,10 @@ class GroupHistory extends Component {
     componentDidUpdate(props) {
         //if user switches between two groups then initialize the history
         if (props.id !== this.props.id) {
+
             //iterate through every single history record of the corresponding group
             groupRef.child(`${this.props.id}/history`).on('child_added', (snapshot) => {
+                
                 //find the username in order to push it into the record instead of id
                 firebase.database().ref(`users/${snapshot.val().user}`).once('value', (snap) => {
                     const record = snapshot.val();
