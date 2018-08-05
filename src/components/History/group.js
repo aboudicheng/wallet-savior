@@ -124,12 +124,6 @@ class GroupHistory extends Component {
                                     <div>
                                         <span style={fieldStyle}>Amount: </span>{formatNumber({ prefix: "$" })(record.amount)}
                                     </div>
-
-                                    <div>
-                                        {record.description !== ""
-                                            && <div><span style={fieldStyle}>Description: </span>{record.description}</div>
-                                        }
-                                    </div>
                                 </Paper>
                             );
                         })

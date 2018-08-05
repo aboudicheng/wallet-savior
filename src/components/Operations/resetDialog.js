@@ -52,7 +52,6 @@ class ResetDialog extends React.Component {
                     hour: ("0" + date.getHours()).slice(-2),
                     min: ("0" + date.getMinutes()).slice(-2),
                 },
-                description: "",
             };
 
             //push record to personal history
