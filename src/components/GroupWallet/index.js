@@ -3,6 +3,7 @@ import withAuthorization from "../Session/withAuthorization";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { compose } from "recompose";
+import GroupHistory from "../History/group";
 import classNames from "classnames";
 import firebase from "firebase/app";
 import formatNumber from "format-number";
@@ -216,7 +217,7 @@ class GroupWallet extends Component {
                 <h1>{group.name}</h1>
                 <span style={{ fontSize: "170%", color: group.money >= 0 ? "#3fb5a3" : "#ff0000" }}>{formatNumber({ prefix: "$" })(parseFloat(group.money).toFixed(2))}</span>
 
-                <Divider />
+                <Divider style={{ marginTop: 20 }}/>
 
                 <Tooltip TransitionComponent={Zoom} title="Edit wallet name">
                     <Button variant="fab" color="secondary" aria-label="Edit" className={classes.editButton} onClick={() => this.setRenameDialog(true)}>
@@ -292,6 +293,8 @@ class GroupWallet extends Component {
                         message="Operation successful!"
                     />
                 </Snackbar>
+
+                <GroupHistory id={this.props.match.params.id} />
             </div>
         );
     }
