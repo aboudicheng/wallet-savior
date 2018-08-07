@@ -212,10 +212,11 @@ class GroupWallet extends Component {
 
         if (isLoading)
             return <CircularProgress className={classes.progress} size={50} />;
+
         return (
             <div>
                 <h1>{group.name}</h1>
-                <span style={{ fontSize: "170%", color: group.money >= 0 ? "#3fb5a3" : "#ff0000" }}>{formatNumber({ prefix: "$" })(parseFloat(group.money).toFixed(2))}</span>
+                <div className="wallet" style={{ fontSize: "170%", backgroundColor: group.money >= 0 ? "#3fb5a3" : "#c93e3e" }}>{formatNumber({ prefix: "$" })(parseFloat(group.money).toFixed(2))}</div>
 
                 <Divider style={{ marginTop: 20 }}/>
 

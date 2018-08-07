@@ -154,14 +154,15 @@ class HomePage extends Component {
       renameOpen
     } = this.state;
 
+    if (isLoading)
+      return <CircularProgress className={classes.progress} size={50} />
+
     return (
       <div>
 
         <h1>{walletName}</h1>
-        {isLoading
-          ? <CircularProgress className={classes.progress} size={50} />
-          : <span style={{ fontSize: "170%", color: totalAmount >= 0 ? "#3fb5a3" : "#ff0000" }}>{formatNumber({ prefix: "$" })(parseFloat(totalAmount).toFixed(2))}</span>
-        }
+        <div className="wallet" style={{ fontSize: "170%", backgroundColor: totalAmount >= 0 ? "#3fb5a3" : "#c93e3e" }}>{formatNumber({ prefix: "$" })(parseFloat(totalAmount).toFixed(2))}</div>
+
         <p>Check <Link to={routes.HISTORY}>History</Link></p>
         <Divider />
 

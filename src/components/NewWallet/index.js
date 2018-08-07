@@ -187,7 +187,7 @@ class NewWallet extends Component {
         return (
             <div>
                 <h1>{wallet.name}</h1>
-                <span style={{ fontSize: "170%", color: wallet.money >= 0 ? "#3fb5a3" : "#ff0000" }}>{formatNumber({ prefix: "$" })(parseFloat(wallet.money).toFixed(2))}</span>
+                <div className="wallet" style={{ fontSize: "170%", backgroundColor: wallet.money >= 0 ? "#3fb5a3" : "#c93e3e" }}>{formatNumber({ prefix: "$" })(parseFloat(wallet.money).toFixed(2))}</div>
 
                 <p>Check <Link to={routes.HISTORY}>History</Link></p>
                 <Divider />
