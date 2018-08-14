@@ -34,10 +34,6 @@ const styles = (theme) => ({
   button: {
     margin: theme.spacing.unit,
   },
-  google: {
-    margin: theme.spacing.unit,
-    backgroundColor: "#CF4332"
-  }
 });
 
 class SignInForm extends Component {
