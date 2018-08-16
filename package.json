@@ -6,9 +6,7 @@
   "dependencies": {
     "@material-ui/core": "^1.4.0",
     "@material-ui/icons": "^2.0.0",
-    "fast-crc32c": "^1.0.4",
     "firebase": "^5.2.0",
-    "firebase-admin": "^5.12.1",
     "format-number": "^3.0.0",
     "gh-pages": "^1.2.0",
     "lodash": "^4.17.10",
