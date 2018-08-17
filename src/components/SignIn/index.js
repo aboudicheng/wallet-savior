@@ -9,7 +9,6 @@ import { withRouter, Link } from "react-router-dom";
 import { SignUpLink } from "../SignUp";
 import { PasswordForgetLink } from "../PasswordForget";
 import { auth } from "../../firebase";
-import * as actions from "../../constants/action_types";
 import * as routes from "../../constants/routes";
 import firebase from "firebase/app";
 import { signMethodHandler } from "../../helpers";

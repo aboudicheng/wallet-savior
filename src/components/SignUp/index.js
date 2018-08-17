@@ -14,8 +14,8 @@ import { SignInLink } from "../SignIn";
 import { auth, db } from "../../firebase";
 import firebase from "firebase/app";
 import { signMethodHandler } from "../../helpers";
-import * as actions from "../../constants/action_types";
 import * as routes from "../../constants/routes";
+import * as signupActions from "../../actions/signupActions";
 
 const styles = (theme) => ({
   container: {
@@ -201,12 +201,12 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  initializeSignup: () => dispatch({ type: actions.INITIALIZE_SIGNUP }),
-  setSignupError: (error) => dispatch({ type: actions.SET_SIGNUP_ERROR, error }),
-  setSignupUsername: (username) => dispatch({ type: actions.SET_SIGNUP_USERNAME, username }),
-  setSignupEmail: (email) => dispatch({ type: actions.SET_SIGNUP_EMAIL, email }),
-  setSignupPasswordOne: (passwordOne) => dispatch({ type: actions.SET_SIGNUP_PASSWORD1, passwordOne }),
-  setSignupPasswordTwo: (passwordTwo) => dispatch({ type: actions.SET_SIGNUP_PASSWORD2, passwordTwo })
+  initializeSignup: dispatch(signupActions.initializeSignup()),
+  setSignupError: (error) => dispatch(signupActions.setSignupError(error)),
+  setSignupUsername: (username) => dispatch(signupActions.setSignupUsername(username)),
+  setSignupEmail: (email) => dispatch(signupActions.setSignupEmail(email)),
+  setSignupPasswordOne: (passwordOne) => dispatch(signupActions.setSignupPasswordOne(passwordOne)),
+  setSignupPasswordTwo: (passwordTwo) => dispatch(signupActions.setSignupPasswordTwo(passwordTwo))
 })
 
 export default compose(
