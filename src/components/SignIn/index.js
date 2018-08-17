@@ -13,6 +13,7 @@ import * as actions from "../../constants/action_types";
 import * as routes from "../../constants/routes";
 import firebase from "firebase/app";
 import { signMethodHandler } from "../../helpers";
+import * as loginActions from "../../actions/loginActions";
 
 // function isRunningStandalone() {
 //   return (window.matchMedia("(display-mode: standalone)").matches);
@@ -160,10 +161,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  initializeLogin: () => dispatch({ type: actions.INITIALIZE_LOGIN }),
-  setLoginError: (error) => dispatch({ type: actions.SET_LOGIN_ERROR, error }),
-  setLoginEmail: (email) => dispatch({ type: actions.SET_LOGIN_EMAIL, email }),
-  setLoginPassword: (password) => dispatch({ type: actions.SET_LOGIN_PASSWORD, password })
+  initializeLogin: dispatch(loginActions.initializeLogin()),
+  setLoginError: (error) => dispatch(loginActions.setLoginError(error)),
+  setLoginEmail: (email) => dispatch(loginActions.setLoginEmail(email)),
+  setLoginPassword: (password) => dispatch(loginActions.setLoginPassword(password))
 })
 
 export default compose(
