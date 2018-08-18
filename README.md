@@ -14,7 +14,7 @@ A single page web application that allows users to keep track of their expenditu
 * Redux
 * Firebase
 * Material-UI v1
-* react-router v4
+* React router v4
 
 ## Installation
 ```
@@ -40,5 +40,4 @@ Feel free to submit any issue or PR.
 ## TODO List
 
 * Group visibility limited to members
-* History for groups
 * Delete single history
