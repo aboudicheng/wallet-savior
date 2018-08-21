@@ -40,4 +40,3 @@ Feel free to submit any issue or PR.
 ## TODO List
 
 * Group visibility limited to members
-* Delete single history
