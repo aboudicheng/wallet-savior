@@ -12,7 +12,7 @@ export const ZH_TW = flatten({
         login: "登入",
         email_address: "電子郵件地址",
         password: "密碼",
-        already_have_an_account: "已經有一個帳號了嗎?",
+        already_have_an_account: "已經有帳號了嗎?",
         click: "點擊",
         here: "這裡",
         to_login: "以登入",
@@ -23,5 +23,11 @@ export const ZH_TW = flatten({
         password_forget: "忘記密碼",
         ask: "忘記密碼?",
         reset: "重設"
+    },
+    sign_up: {
+        sign_up: "註冊",
+        username: "使用者名稱",
+        confirm_password: "確認密碼",
+        no_account: "尚未註冊帳號嗎?"
     }
 })

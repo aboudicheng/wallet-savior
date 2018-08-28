@@ -23,5 +23,11 @@ export const EN = flatten({
         password_forget: "Password Forget",
         ask: "Forgot password?",
         reset: "Reset Password"
+    },
+    sign_up: {
+        sign_up: "Sign Up",
+        username: "Username",
+        confirm_password: "Confirm password",
+        no_account: "Don't have an account?"
     }
 })

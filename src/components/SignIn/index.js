@@ -110,15 +110,14 @@ class SignInForm extends Component {
       email === "";
 
     const { classes, intl } = this.props;
-    console.log(intl.formatMessage({ id: "sign_in.login", defaultMessage: "Login" }))
 
     return (
       <div>
-        <h1><FormattedMessage id="sign_in.login" defaultMessage="Login" /></h1>
+        <h1><FormattedMessage id="sign_in.login" /></h1>
         <form onSubmit={this.onSubmit} className={classes.container}>
           <TextField
             id="email"
-            label={intl.formatMessage({ id: "sign_in.email_address", defaultMessage: "Email address" })}
+            label={intl.formatMessage({ id: "sign_in.email_address" })}
             className={classes.textField}
             value={email}
             onChange={(event) => this.props.setLoginEmail(event.target.value)}
@@ -163,15 +162,13 @@ class SignInForm extends Component {
 
 const SignInLink = () =>
   <p>
-    <FormattedMessage id="sign_in">
-      {(value) =>
-        <span>
-          {value.already_have_an_account}
-          <br />
-          {value.click} <Link to={routes.LOGIN}>{value.here}</Link> {value.to_login}
-        </span>
-      }
-    </FormattedMessage>
+    <span>
+      <FormattedMessage id="sign_in.already_have_an_account" />
+      <br />
+      <FormattedMessage id="sign_in.click" /> <Link to={routes.LOGIN}>
+      <FormattedMessage id="sign_in.here" />
+      </Link> <FormattedMessage id="sign_in.login" />
+    </span>
   </p>;
 
 const mapStateToProps = (state) => ({

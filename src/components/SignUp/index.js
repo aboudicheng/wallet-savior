@@ -10,6 +10,7 @@ import {
   Link,
   withRouter,
 } from "react-router-dom";
+import { injectIntl, FormattedMessage } from 'react-intl';
 import { SignInLink } from "../SignIn";
 import { auth, db } from "../../firebase";
 import firebase from "firebase/app";
@@ -130,15 +131,15 @@ class SignUpForm extends Component {
       username === "" ||
       email === "";
 
-    const { classes } = this.props;
+    const { classes, intl } = this.props;
 
     return (
       <div>
-        <h1>SignUp</h1>
+        <h1><FormattedMessage id="sign_up.sign_up" /></h1>
         <form onSubmit={this.onSubmit} className={classes.container}>
           <TextField
             id="username"
-            label="Username"
+            label={intl.formatMessage({ id: "sign_up.username" })}
             className={classes.textField}
             value={username}
             onChange={(event) => this.props.setSignupUsername(event.target.value)}
@@ -146,7 +147,7 @@ class SignUpForm extends Component {
           />
           <TextField
             id="email"
-            label="Email Address"
+            label={intl.formatMessage({ id: "sign_in.email_address" })}
             className={classes.textField}
             value={email}
             onChange={(event) => this.props.setSignupEmail(event.target.value)}
@@ -154,7 +155,7 @@ class SignUpForm extends Component {
           />
           <TextField
             id="passwordone"
-            label="Password"
+            label={intl.formatMessage({ id: "sign_in.password" })}
             type="password"
             className={classes.textField}
             value={passwordOne}
@@ -163,7 +164,7 @@ class SignUpForm extends Component {
           />
           <TextField
             id="passwordtwo"
-            label="Confirm Password"
+            label={intl.formatMessage({ id: "sign_up.confirm_password" })}
             type="password"
             className={classes.textField}
             value={passwordTwo}
@@ -172,12 +173,18 @@ class SignUpForm extends Component {
           />
 
           <div style={{ margin: "0 auto", width: "100%" }}>
-            <Button variant="contained" color="primary" disabled={isInvalid} type="submit" className={classes.button}>Sign Up</Button>
+            <Button variant="contained" color="primary" disabled={isInvalid} type="submit" className={classes.button}>
+              <FormattedMessage id="sign_up.sign_up" />
+            </Button>
           </div>
 
-          <FacebookLoginButton style={{ fontSize: 17, width: "100%" }} align="center" onClick={this.signInWithFacebook} />
+          <FacebookLoginButton style={{ fontSize: 17, width: "100%" }} align="center" onClick={this.signInWithFacebook}>
+            <FormattedMessage id="sign_in.login_with_facebook" />
+          </FacebookLoginButton>
 
-          <GoogleLoginButton style={{ fontSize: 17, width: "100%" }} align="center" onClick={this.signInWithGoogle} />
+          <GoogleLoginButton style={{ fontSize: 17, width: "100%" }} align="center" onClick={this.signInWithGoogle}>
+            <FormattedMessage id="sign_in.login_with_facebook" />
+          </GoogleLoginButton>
 
           {error && <p style={{ color: "#d32f2f" }}>{error.message}</p>}
 
@@ -190,9 +197,9 @@ class SignUpForm extends Component {
 
 const SignUpLink = () =>
   <p>
-    Don't have an account?
+    <FormattedMessage id="sign_up.no_account" />
     {" "}
-    <Link to={routes.SIGN_UP}>Sign Up</Link>
+    <Link to={routes.SIGN_UP}><FormattedMessage id="sign_up.sign_up" /></Link>
   </p>;
 
 const mapStateToProps = (state) => ({
@@ -212,7 +219,8 @@ const mapDispatchToProps = (dispatch) => ({
 export default compose(
   withRouter,
   withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps),
+  injectIntl
 )(SignUpForm);
 
 export {
