@@ -13,6 +13,7 @@ import * as routes from "../../constants/routes";
 import firebase from "firebase/app";
 import { signMethodHandler } from "../../helpers";
 import * as loginActions from "../../actions/loginActions";
+import { injectIntl, FormattedMessage } from 'react-intl';
 
 // function isRunningStandalone() {
 //   return (window.matchMedia("(display-mode: standalone)").matches);
@@ -108,15 +109,16 @@ class SignInForm extends Component {
       password === "" ||
       email === "";
 
-    const { classes } = this.props;
+    const { classes, intl } = this.props;
+    console.log(intl.formatMessage({ id: "sign_in.login", defaultMessage: "Login" }))
 
     return (
       <div>
-        <h1>Login</h1>
+        <h1><FormattedMessage id="sign_in.login" defaultMessage="Login" /></h1>
         <form onSubmit={this.onSubmit} className={classes.container}>
           <TextField
             id="email"
-            label="Email Address"
+            label={intl.formatMessage({ id: "sign_in.email_address", defaultMessage: "Email address" })}
             className={classes.textField}
             value={email}
             onChange={(event) => this.props.setLoginEmail(event.target.value)}
@@ -124,18 +126,30 @@ class SignInForm extends Component {
           />
           <TextField
             id="password"
-            label="Password"
+            label={intl.formatMessage({ id: "sign_in.password", defaultMessage: "Password" })}
             type="password"
             className={classes.textField}
             value={password}
             onChange={(event) => this.props.setLoginPassword(event.target.value)}
             margin="normal"
           />
-          <Button variant="contained" color="primary" disabled={isInvalid} type="submit" className={classes.button}>Login</Button>
+          <Button
+            variant="contained"
+            color="primary"
+            disabled={isInvalid}
+            type="submit"
+            className={classes.button}
+          >
+            <FormattedMessage id="sign_in.login" defaultMessage="Login" />
+          </Button>
 
-          <FacebookLoginButton style={{ fontSize: 17, width: "100%" }} align="center" onClick={this.signInWithFacebook} />
+          <FacebookLoginButton style={{ fontSize: 17, width: "100%" }} align="center" onClick={this.signInWithFacebook}>
+            <FormattedMessage id="sign_in.login_with_facebook" />
+          </FacebookLoginButton>
 
-          <GoogleLoginButton style={{ fontSize: 17, width: "100%" }} align="center" onClick={this.signInWithGoogle} />
+          <GoogleLoginButton style={{ fontSize: 17, width: "100%" }} align="center" onClick={this.signInWithGoogle}>
+            <FormattedMessage id="sign_in.login_with_facebook" />
+          </GoogleLoginButton>
 
           {error && <p style={{ color: "#d32f2f" }}>{error.message}</p>}
         </form>
@@ -149,9 +163,15 @@ class SignInForm extends Component {
 
 const SignInLink = () =>
   <p>
-    Already have an account?
-    <br />
-    Click <Link to={routes.LOGIN}>here</Link> to login
+    <FormattedMessage id="sign_in">
+      {(value) =>
+        <span>
+          {value.already_have_an_account}
+          <br />
+          {value.click} <Link to={routes.LOGIN}>{value.here}</Link> {value.to_login}
+        </span>
+      }
+    </FormattedMessage>
   </p>;
 
 const mapStateToProps = (state) => ({
@@ -170,6 +190,7 @@ export default compose(
   withRouter,
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps),
+  injectIntl
 )(SignInForm);
 
 export {

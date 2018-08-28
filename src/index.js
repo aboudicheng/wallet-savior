@@ -23,9 +23,22 @@ const languages = {
 };
 
 const localeData = languages[locale];
+console.log(localeData)
+
+function get_language(locale)
+{
+    const dash_index = locale.indexOf('-')
+    if (dash_index >= 0)
+    {
+        return locale.substring(0, dash_index)
+    }
+    return locale
+}
+
+console.log(get_language(locale))
 
 ReactDOM.render(
-  <IntlProvider locale={locale} messages={localeData}>
+  <IntlProvider locale={get_language(locale)} messages={localeData}>
     <Provider store={store}>
       <App />
     </Provider>
