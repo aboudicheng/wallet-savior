@@ -21,7 +21,6 @@ import GroupWallet from "../GroupWallet";
 import NotFound from "../NotFound";
 import withAuthentication from "../Session/withAuthentication";
 import * as routes from "../../constants/routes";
-
 import "./index.css";
 
 const styles = (theme) => ({
@@ -33,6 +32,8 @@ const styles = (theme) => ({
 });
 
 class App extends Component {
+
+  //label the user's status as online if logged in
   componentDidUpdate() {
     if (firebase.auth().currentUser) {
       const connectedRef = firebase.database().ref(".info/connected");
@@ -43,7 +44,7 @@ class App extends Component {
       });
     }
   }
-  
+
   render() {
     return (
       <Router basename={process.env.PUBLIC_URL}>
@@ -79,5 +80,5 @@ const mapStateToProps = (state) => ({
 export default compose(
   withAuthentication,
   withStyles(styles),
-  connect (mapStateToProps),
+  connect(mapStateToProps),
 )(App);
