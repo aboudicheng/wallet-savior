@@ -18,5 +18,10 @@ export const ZH_TW = flatten({
         to_login: "以登入",
         login_with_facebook: "用Facebook登入",
         login_with_google: "用Google登入"
+    },
+    password_forget: {
+        password_forget: "忘記密碼",
+        ask: "忘記密碼?",
+        reset: "重設"
     }
 })

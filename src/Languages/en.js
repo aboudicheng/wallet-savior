@@ -18,5 +18,10 @@ export const EN = flatten({
         to_login: "to login",
         login_with_facebook: "Login with Facebook",
         login_with_google: "Login with Google"
+    },
+    password_forget: {
+        password_forget: "Password Forget",
+        ask: "Forgot password?",
+        reset: "Reset Password"
     }
 })
