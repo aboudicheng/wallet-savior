@@ -112,6 +112,15 @@ export const EN = flatten({
         no_records: "This group has no records yet.",
         user: "User",
         type: "Type",
-        amount: "Amount"
+        amount: "Amount",
+        description: "Description"
+    },
+    history: {
+        title: "History",
+        no_records: "You have no records yet.",
+        wallet: "Wallet",
+        type: "Type",
+        amount: "Amount",
+        description: "Description"
     }
 })

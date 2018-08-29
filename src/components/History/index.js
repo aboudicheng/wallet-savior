@@ -12,6 +12,7 @@ import Button from "@material-ui/core/Button";
 import Zoom from "@material-ui/core/Zoom";
 import Delete from "@material-ui/icons/Delete";
 import Snackbar from "@material-ui/core/Snackbar";
+import { FormattedMessage, injectIntl } from "react-intl";
 import MySnackbarContentWrapper from "../MySnackbarContentWrapper";
 import DeleteAll from "./deleteAll";
 
@@ -98,7 +99,7 @@ class History extends Component {
 
     render() {
         const { history, deleteAllDialog, isLoading, snackbarOpen } = this.state;
-        const { classes } = this.props;
+        const { classes, intl } = this.props;
 
         const fieldStyle = {
             fontWeight: "bold"
@@ -109,9 +110,9 @@ class History extends Component {
         
         return (
             <div>
-                <h1>History</h1>
+                <h1><FormattedMessage id="history.title" /></h1>
                 {history.length === 0
-                        ? <p>You have no records yet.</p>
+                        ? <p><FormattedMessage id="history.no_records" /></p>
                         : <div>
                             {history.slice().reverse().map((record, i) => {
                                 return (
@@ -120,18 +121,18 @@ class History extends Component {
                                             {`${record.date.day} ${record.date.month} ${record.date.year} ${record.date.hour}:${record.date.min}`}
                                         </h3>
                                         <div>
-                                            <span style={fieldStyle}>Wallet: </span>{record.wallet}
+                                            <span style={fieldStyle}><FormattedMessage id="history.wallet" />: </span>{record.wallet}
                                         </div>
                                         <div>
-                                            <span style={fieldStyle}>Type: </span>{record.type}
+                                            <span style={fieldStyle}><FormattedMessage id="history.type" />: </span>{record.type}
                                         </div>
                                         <div>
-                                            <span style={fieldStyle}>Amount: </span>{formatNumber({ prefix: "$" })(record.amount)}
+                                            <span style={fieldStyle}><FormattedMessage id="history.amount" />: </span>{formatNumber({ prefix: "$" })(record.amount)}
                                         </div>
 
                                         <div>
                                             {record.description !== ""
-                                                && <div><span style={fieldStyle}>Description: </span>{record.description}</div>
+                                                && <div><span style={fieldStyle}><FormattedMessage id="history.description" />: </span>{record.description}</div>
                                             }
                                         </div>
                                     </Paper>
@@ -162,7 +163,7 @@ class History extends Component {
                     <MySnackbarContentWrapper
                         onClose={this.handleSnackbarClose}
                         variant="success"
-                        message="Operation successful!"
+                        message={intl.formatMessage({ id: "operations.operation_successful" })}
                     />
                 </Snackbar>
             </div>
@@ -181,4 +182,5 @@ export default compose(
     withAuthorization(authCondition),
     connect(mapStateToProps),
     withStyles(styles),
+    injectIntl
 )(History);

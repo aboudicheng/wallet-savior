@@ -6,7 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import formatNumber from "format-number";
-import { FormattedMessage, injectIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 //TODO: add remove button for records that belong to the current user
 
@@ -75,7 +75,7 @@ class GroupHistory extends Component {
 
             //iterate through every single history record of the corresponding group
             groupRef.child(`${this.props.id}/history`).on('child_added', (snapshot) => {
-                
+
                 //find the username in order to push it into the record instead of id
                 firebase.database().ref(`users/${snapshot.val().user}`).once('value', (snap) => {
                     const record = snapshot.val();
@@ -99,7 +99,7 @@ class GroupHistory extends Component {
 
     render() {
         const { history, isLoading } = this.state;
-        const { classes, intl } = this.props;
+        const { classes } = this.props;
 
         const fieldStyle = {
             fontWeight: "bold"
@@ -129,6 +129,12 @@ class GroupHistory extends Component {
                                     <div>
                                         <span style={fieldStyle}><FormattedMessage id="group.amount" />: </span>{formatNumber({ prefix: "$" })(record.amount)}
                                     </div>
+
+                                    <div>
+                                        {record.description !== ""
+                                            && <div><span style={fieldStyle}><FormattedMessage id="group.description" />: </span>{record.description}</div>
+                                        }
+                                    </div>
                                 </Paper>
                             );
                         })
@@ -148,5 +154,4 @@ const mapStateToProps = (state) => ({
 export default compose(
     connect(mapStateToProps),
     withStyles(styles),
-    injectIntl
 )(GroupHistory);

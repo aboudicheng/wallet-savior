@@ -112,6 +112,15 @@ export const ZH_TW = flatten({
         no_records: "此群組尚未有任何紀錄",
         user: "用戶",
         type: "操作類型",
-        amount: "金額"
+        amount: "金額",
+        description: "描述"
+    },
+    history: {
+        title: "歷史",
+        no_records: "您尚未有任何紀錄",
+        wallet: "錢包",
+        type: "操作類型",
+        amount: "金額",
+        description: "描述"
     }
 })
