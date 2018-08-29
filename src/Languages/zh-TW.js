@@ -42,6 +42,7 @@ export const ZH_TW = flatten({
         create_group: "創建群組",
         history: "歷史",
         account: "帳號",
+        language: "語言",
         sign_out: "登出"
     },
     home: {

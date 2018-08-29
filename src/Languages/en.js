@@ -42,6 +42,7 @@ export const EN = flatten({
         create_group: "Create Group",
         history: "History",
         account: "Account",
+        language: "Language",
         sign_out: "Sign Out"
     },
     home: {

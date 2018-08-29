@@ -11,7 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Home from "@material-ui/icons/Home";
-import Settings from "@material-ui/icons/SettingsApplications";
+import Settings from "@material-ui/icons/Settings";
+import Language from "@material-ui/icons/Language";
 import Group from "@material-ui/icons/Group";
 import Exit from "@material-ui/icons/ExitToApp";
 import AddCircle from "@material-ui/icons/AddCircleOutline";
@@ -187,6 +188,7 @@ class NavigationAuth extends React.Component {
 
                 <List><ListItem button onClick={() => this.redirect(routes.HISTORY)}><ListItemIcon><History style={{ color: "#d35400" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.history" })} /></ListItem></List>
                 <List><ListItem button onClick={() => this.redirect(routes.ACCOUNT)}><ListItemIcon><Settings style={{ color: "#7f8c8d" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.account" })} /></ListItem></List>
+                <List><ListItem button><ListItemIcon><Language style={{ color: "#9b59b6" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.language" })} /></ListItem></List>
                 <List><ListItem button onClick={this.signOut}><ListItemIcon><Exit style={{ color: "#2c3e50" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.sign_out" })} /></ListItem></List>
             </div>
         );
