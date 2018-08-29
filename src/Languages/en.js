@@ -143,5 +143,16 @@ export const EN = flatten({
         no: "No",
         yes: "Yes"
     },
+    account: {
+        email: "Email",
+        username: "Username",
+        reset: "Reset",
+        change_password: "Change Password",
+        delete: "Delete",
+        title: "WARNING",
+        text: "Everything that you have stored on this platform will be erased. Are you sure to delete this account?",
+        no: "No",
+        yes: "Yes"
+    },
     not_found: "Oh No! Page Not Found!"
 })

@@ -26,7 +26,7 @@ export const ZH_TW = flatten({
     },
     sign_up: {
         sign_up: "註冊",
-        username: "使用者名稱",
+        username: "用戶名稱",
         confirm_password: "確認密碼",
         no_account: "尚未註冊帳號嗎？"
     },
@@ -140,6 +140,17 @@ export const ZH_TW = flatten({
         description: "描述",
         delete_all: "刪除所有歷史紀錄",
         text: "您確定要刪除所有歷史紀錄嗎？",
+        no: "不",
+        yes: "是"
+    },
+    account: {
+        email: "電子郵件",
+        username: "用戶名稱",
+        reset: "重設",
+        change_password: "變更密碼",
+        delete: "刪除",
+        title: "警告",
+        text: "至今為止在此平台上儲存過的一切都將被清除。您確定要刪除此帳號嗎？",
         no: "不",
         yes: "是"
     },

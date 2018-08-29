@@ -10,6 +10,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import firebase from "firebase/app";
 import { withRouter } from "react-router";
+import { FormattedMessage, injectIntl } from "react-intl";
 import * as routes from "../../constants/routes";
 
 const styles = (theme) => ({
@@ -63,28 +64,29 @@ class DeleteAccount extends Component {
     }
 
     render() {
+        const { intl } = this.props;
         return (
             <div>
-                <Button color="secondary" onClick={this.handleClickOpen}>Delete</Button>
+                <Button color="secondary" onClick={this.handleClickOpen}>{intl.formatMessage({ id: "account.delete" })}</Button>
                 <Dialog
                     open={this.state.open}
                     onClose={this.handleClose}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogTitle id="alert-dialog-title"><span style={{ color: "red" }}>WARNING</span></DialogTitle>
+                    <DialogTitle id="alert-dialog-title"><span style={{ color: "red" }}><FormattedMessage id="account.title" /></span></DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            Everything that you have stored on this platform will be erased. Are you sure to delete this account?
-            </DialogContentText>
+                            <FormattedMessage id="account.text" />
+                        </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="secondary">
-                            No
-            </Button>
+                            <FormattedMessage id="account.no" />
+                        </Button>
                         <Button onClick={this.confirmDelete} color="primary">
-                            Yes
-            </Button>
+                            <FormattedMessage id="account.yes" />
+                        </Button>
                     </DialogActions>
                 </Dialog>
             </div>
@@ -103,5 +105,6 @@ const mapDispatchToProps = (dispatch) => ({
 export default compose(
     withStyles(styles),
     connect(mapStateToProps, mapDispatchToProps),
-    withRouter
+    withRouter,
+    injectIntl
 )(DeleteAccount);

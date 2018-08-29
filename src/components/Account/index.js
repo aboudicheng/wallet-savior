@@ -11,6 +11,7 @@ import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import Snackbar from "@material-ui/core/Snackbar";
 import Button from "@material-ui/core/Button";
+import { FormattedMessage, injectIntl } from "react-intl";
 import DeleteAccount from "./deleteAccount";
 import PasswordChangeForm from "../PasswordChange";
 import withAuthorization from "../Session/withAuthorization";
@@ -73,7 +74,7 @@ class AccountPage extends Component {
 
   render() {
     const { username, isLoading, snackbarOpen } = this.state;
-    const { authUser, classes } = this.props;
+    const { authUser, classes, intl } = this.props;
 
     if (isLoading)
       return <CircularProgress size={50} />;
@@ -97,13 +98,13 @@ class AccountPage extends Component {
               </Avatar>
             }
 
-            <div style={{ margin: "1rem auto" }}><span style={{ fontWeight: "bold" }}>Email: </span><span>{authUser.email}</span></div>
+            <div style={{ margin: "1rem auto" }}><span style={{ fontWeight: "bold" }}><FormattedMessage id="account.email" />: </span><span>{authUser.email}</span></div>
 
             <form style={{ width: "100%" }} onSubmit={this.onSubmit}>
               <TextField
                 margin="dense"
                 id="username"
-                label="Username"
+                label={intl.formatMessage({ id: "account.username" })}
                 type="text"
                 className={classes.textField}
                 //style={{ margin: "1.5rem" }}
@@ -111,7 +112,7 @@ class AccountPage extends Component {
                 onChange={this.handleChange}
               />
 
-              <Button variant="contained" color="primary" type="submit" className={classes.button}>Reset</Button>
+              <Button variant="contained" color="primary" type="submit" className={classes.button}><FormattedMessage id="account.reset" /></Button>
             </form>
 
           </div>
@@ -120,7 +121,7 @@ class AccountPage extends Component {
 
           {authUser.providerData[0].providerId === "password" &&
             <div>
-              <h2>Change Password</h2>
+              <h2><FormattedMessage id="account.change_password" /></h2>
               <PasswordChangeForm />
               <Divider />
             </div>
@@ -145,7 +146,7 @@ class AccountPage extends Component {
             <MySnackbarContentWrapper
               onClose={this.handleSnackbarClose}
               variant="success"
-              message="Operation successful!"
+              message={intl.formatMessage({ id: "operations.operation_successful" })}
             />
           </Snackbar>
 
@@ -166,4 +167,5 @@ export default compose(
   withAuthorization(authCondition),
   connect(mapStateToProps),
   withStyles(styles),
+  injectIntl
 )(AccountPage);
