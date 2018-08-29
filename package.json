@@ -4,8 +4,8 @@
   "private": true,
   "homepage": "https://aboudicheng.github.io/wallet-savior/",
   "dependencies": {
-    "@material-ui/core": "^1.5.1",
-    "@material-ui/icons": "^2.0.3",
+    "@material-ui/core": "^3.0.0",
+    "@material-ui/icons": "^3.0.0",
     "firebase": "^5.2.0",
     "flat": "^4.1.0",
     "format-number": "^3.0.0",
