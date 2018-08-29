@@ -51,7 +51,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default compose(
+    injectIntl,
     connect(mapStateToProps),
     withRouter,
-    injectIntl
 )(DeleteDialog);

@@ -272,9 +272,9 @@ const mapStateToProps = (state) => ({
 
 //withAuthorization doesn"t work properly
 export default compose(
+    injectIntl,
     withRouter,
     connect(mapStateToProps),
     //withAuthorization(authCondition),
     withStyles(styles),
-    injectIntl
 )(NewWallet);

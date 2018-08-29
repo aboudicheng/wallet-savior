@@ -123,4 +123,4 @@ const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
 });
 
-export default connect(mapStateToProps)(injectIntl(ResetDialog));
+export default injectIntl(connect(mapStateToProps)(ResetDialog));

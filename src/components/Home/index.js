@@ -249,8 +249,8 @@ const authCondition = (authUser) => !!authUser;
 
 export default compose(
   withAuthorization(authCondition),
+  injectIntl,
   connect(mapStateToProps),
   withStyles(styles),
   withRouter,
-  injectIntl
 )(HomePage);

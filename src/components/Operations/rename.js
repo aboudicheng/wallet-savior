@@ -91,4 +91,4 @@ const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
 });
 
-export default connect(mapStateToProps)(injectIntl(Rename));
+export default injectIntl(connect(mapStateToProps)(Rename));

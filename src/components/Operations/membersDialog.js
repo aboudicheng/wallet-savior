@@ -99,7 +99,7 @@ const mapStateToProps = (state) => ({
 })
 
 export default compose(
+    injectIntl,
     connect(mapStateToProps),
     withStyles(styles),
-    injectIntl
 )(MembersDialog);

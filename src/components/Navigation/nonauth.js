@@ -94,7 +94,7 @@ class NavigationNonAuth extends React.Component {
 }
 
 export default compose(
+    injectIntl,
     withRouter,
     withStyles(styles),
-    injectIntl
 )(NavigationNonAuth);

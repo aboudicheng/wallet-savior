@@ -184,10 +184,10 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default compose(
+  injectIntl,
   withRouter,
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps),
-  injectIntl
 )(SignInForm);
 
 export {

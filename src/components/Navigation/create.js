@@ -119,7 +119,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default compose(
+    injectIntl,
     withRouter,
     connect(mapStateToProps),
-    injectIntl
 )(Create);

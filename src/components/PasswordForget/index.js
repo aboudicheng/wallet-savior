@@ -96,8 +96,8 @@ const PasswordForgetLink = () =>
   </p>;
 
 export default compose(
+  injectIntl,
   withStyles(styles),
-  injectIntl
 )(PasswordForgetForm);
 
 export {

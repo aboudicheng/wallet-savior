@@ -137,4 +137,4 @@ const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
 });
 
-export default connect(mapStateToProps)(injectIntl(WithdrawDialog));
+export default injectIntl(connect(mapStateToProps)(WithdrawDialog));

@@ -103,8 +103,8 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default compose(
+    injectIntl,
     withStyles(styles),
     connect(mapStateToProps, mapDispatchToProps),
     withRouter,
-    injectIntl
 )(DeleteAccount);
