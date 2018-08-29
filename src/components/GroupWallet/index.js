@@ -309,9 +309,9 @@ const mapStateToProps = (state) => ({
 const authCondition = (authUser) => !!authUser;
 
 export default compose(
-    injectIntl,
     connect(mapStateToProps),
     withAuthorization(authCondition),
     withStyles(styles),
     withRouter,
+    injectIntl,
 )(GroupWallet);

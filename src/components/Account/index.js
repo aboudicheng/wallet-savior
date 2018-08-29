@@ -164,8 +164,8 @@ const mapStateToProps = (state) => ({
 const authCondition = (authUser) => !!authUser;
 
 export default compose(
-  injectIntl,
   withAuthorization(authCondition),
+  injectIntl,
   connect(mapStateToProps),
   withStyles(styles),
 )(AccountPage);

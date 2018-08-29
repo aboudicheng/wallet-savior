@@ -179,8 +179,8 @@ const mapStateToProps = (state) => ({
 });
 
 export default compose(
-    injectIntl,
     withAuthorization(authCondition),
+    injectIntl,
     connect(mapStateToProps),
     withStyles(styles),
 )(History);
