@@ -19,6 +19,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Zoom from "@material-ui/core/Zoom";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
+import { FormattedMessage, injectIntl } from "react-intl";
 import * as routes from "../../constants/routes";
 
 import InsertDialog from "../Operations/insertDialog";
@@ -179,7 +180,7 @@ class NewWallet extends Component {
             modifyOpen,
             snackbarOpen,
         } = this.state;
-        const { classes } = this.props;
+        const { classes, intl } = this.props;
 
         if (isLoading)
             return <CircularProgress className={classes.progress} size={50} />;
@@ -189,10 +190,10 @@ class NewWallet extends Component {
                 <h1>{wallet.name}</h1>
                 <div className="wallet" style={{ fontSize: "170%", backgroundColor: wallet.money >= 0 ? "#3fb5a3" : "#c93e3e" }}>{formatNumber({ prefix: "$" })(parseFloat(wallet.money).toFixed(2))}</div>
 
-                <p>Check <Link to={routes.HISTORY}>History</Link></p>
+                <p><FormattedMessage id="home.check" /> <Link to={routes.HISTORY}><FormattedMessage id="home.history" /></Link></p>
                 <Divider />
 
-                <Tooltip TransitionComponent={Zoom} title="Edit wallet name">
+                <Tooltip TransitionComponent={Zoom} title={intl.formatMessage({ id: "home.edit_wallet_name" })}>
                     <Button variant="fab" color="secondary" aria-label="Edit" className={classes.editButton} onClick={() => this.setRenameDialog(true)}>
                         <Edit />
                     </Button>
@@ -218,17 +219,17 @@ class NewWallet extends Component {
                     open={Boolean(anchorEl)}
                     onClose={() => this.setAnchorEl(null)}
                 >
-                    <MenuItem data-option="insert" onClick={this.handleOptionClick}>Insert</MenuItem>
-                    <MenuItem data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</MenuItem>
-                    <MenuItem data-option="reset" onClick={this.handleOptionClick}>Reset</MenuItem>
-                    <MenuItem data-option="delete" onClick={this.handleOptionClick}>Delete</MenuItem>
+                    <MenuItem data-option="insert" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.insert" })}</MenuItem>
+                    <MenuItem data-option="withdraw" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.withdraw" })}</MenuItem>
+                    <MenuItem data-option="reset" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.reset" })}</MenuItem>
+                    <MenuItem data-option="delete" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.delete" })}</MenuItem>
                 </Menu>
 
                 <div className="menubar">
-                    <Button className={classes.menuButton} color="default" data-option="insert" onClick={this.handleOptionClick}><span data-option="insert" onClick={this.handleOptionClick}>Insert</span></Button>
-                    <Button className={classes.menuButton} color="default" data-option="withdraw" onClick={this.handleOptionClick}><span data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</span></Button>
-                    <Button className={classes.menuButton} color="default" data-option="reset" onClick={this.handleOptionClick}><span data-option="reset" onClick={this.handleOptionClick}>Reset</span></Button>
-                    <Button className={classes.menuButton} color="default" data-option="delete" onClick={this.handleOptionClick}><span data-option="delete" onClick={this.handleOptionClick}>Delete</span></Button>
+                    <Button className={classes.menuButton} color="default" data-option="insert" onClick={this.handleOptionClick}><span data-option="insert" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.insert" })}</span></Button>
+                    <Button className={classes.menuButton} color="default" data-option="withdraw" onClick={this.handleOptionClick}><span data-option="withdraw" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.withdraw" })}</span></Button>
+                    <Button className={classes.menuButton} color="default" data-option="reset" onClick={this.handleOptionClick}><span data-option="reset" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.reset" })}</span></Button>
+                    <Button className={classes.menuButton} color="default" data-option="delete" onClick={this.handleOptionClick}><span data-option="delete" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.delete" })}</span></Button>
                 </div>
 
                 {/*Operation Dialogs*/}
@@ -255,7 +256,7 @@ class NewWallet extends Component {
                     <MySnackbarContentWrapper
                         onClose={this.handleSnackbarClose}
                         variant="success"
-                        message="Operation successful!"
+                        message={intl.formatMessage({ id: "operations.operation_successful"})}
                     />
                 </Snackbar>
             </div>
@@ -275,5 +276,5 @@ export default compose(
     connect(mapStateToProps),
     //withAuthorization(authCondition),
     withStyles(styles),
-
+    injectIntl
 )(NewWallet);

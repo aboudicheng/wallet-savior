@@ -48,12 +48,12 @@ export const EN = flatten({
         check: "Check",
         history: "history",
         edit_wallet_name: "Edit wallet name",
-        operation_successful: "Operation succefful!"
     },
     operations: {
         insert: "Insert",
         withdraw: "Withdraw",
         reset: "Reset",
-        delete: "Delete"
+        delete: "Delete",
+        operation_successful: "Operation succefful!"
     }
 })

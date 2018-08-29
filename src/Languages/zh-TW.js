@@ -48,12 +48,12 @@ export const ZH_TW = flatten({
         check: "查看",
         history: "歷史",
         edit_wallet_name: "編輯錢包名字",
-        operation_successful: "操作成功!"
     },
     operations: {
         insert: "存入",
         withdraw: "提出",
         reset: "重設",
-        delete: "刪除"
+        delete: "刪除",
+        operation_successful: "操作成功!"
     }
 })

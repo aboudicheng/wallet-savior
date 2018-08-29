@@ -233,7 +233,7 @@ class HomePage extends Component {
           <MySnackbarContentWrapper
             onClose={this.handleSnackbarClose}
             variant="success"
-            message="Operation successful!"
+            message={intl.formatMessage({ id: "operations.operation_successful"})}
           />
         </Snackbar>
       </div>
