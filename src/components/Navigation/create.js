@@ -10,6 +10,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import * as firebase from "firebase/app";
+import { FormattedMessage, injectIntl } from "react-intl";
 
 class Create extends Component {
     constructor() {
@@ -66,6 +67,7 @@ class Create extends Component {
     }
 
     render() {
+        const { intl } = this.props;
         return (
             <Dialog
                 open={this.props.open}
@@ -74,22 +76,22 @@ class Create extends Component {
             >
                 <DialogTitle id="form-dialog-title">
                     {this.props.option === "wallet"
-                        ? "Create a Wallet"
-                        : "Create a Group"
+                        ? <FormattedMessage id="dialogs.create.wallet_title" />
+                        : <FormattedMessage id="dialogs.create.group_title" />
                     }
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         {this.props.option === "wallet"
-                            ? "Please provide a name for this wallet:"
-                            : "Please provide a name for this group:"
+                            ? <FormattedMessage id="dialogs.create.wallet_text" />
+                            : <FormattedMessage id="dialogs.create.group_text" />
                         }
                     </DialogContentText>
                     <TextField
                         autoFocus
                         margin="dense"
                         id="rename"
-                        label="Name"
+                        label={intl.formatMessage({ id: "dialogs.create.name" })}
                         type="text"
                         fullWidth
                         value={this.state.name}
@@ -101,10 +103,10 @@ class Create extends Component {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => this.props.handleClose(false)} color="primary">
-                        Cancel
+                    <FormattedMessage id="dialogs.create.cancel" />
   </Button>
                     <Button onClick={this.submit} color="primary">
-                        Create
+                    <FormattedMessage id="dialogs.create.create" />
   </Button>
                 </DialogActions>
             </Dialog>
@@ -118,5 +120,6 @@ const mapStateToProps = (state) => ({
 
 export default compose(
     withRouter,
-    connect(mapStateToProps)
+    connect(mapStateToProps),
+    injectIntl
 )(Create);

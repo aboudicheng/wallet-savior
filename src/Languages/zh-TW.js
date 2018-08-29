@@ -47,13 +47,14 @@ export const ZH_TW = flatten({
     home: {
         check: "查看",
         history: "歷史",
-        edit_wallet_name: "編輯錢包名字",
+        edit_wallet_name: "編輯錢包名稱",
     },
     operations: {
         insert: "存入",
         withdraw: "提取",
         reset: "重設",
         delete: "刪除",
+        quit: "離開",
         operation_successful: "操作成功!"
     },
     dialogs: {
@@ -92,6 +93,20 @@ export const ZH_TW = flatten({
             text: "您將無法復原刪除後的錢包。您確定要刪除嗎？",
             no: "不",
             yes: "是"
+        },
+        create: {
+            wallet_title: "新增錢包",
+            group_title: "創建群組",
+            wallet_text: "請提供此錢包的名稱",
+            group_text: "請提供此群組的名稱",
+            name: "名字",
+            cancel: "取消",
+            create: "創建"
         }
+    },
+    group: {
+        edit_wallet_name: "編輯錢包名稱",
+        members: "成員",
+        invite: "邀請",
     }
 })

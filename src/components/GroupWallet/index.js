@@ -19,6 +19,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Tooltip from "@material-ui/core/Tooltip";
 import Zoom from "@material-ui/core/Zoom";
+import { injectIntl } from "react-intl";
 
 import MembersDialog from "../Operations/membersDialog";
 import InviteDialog from "../Operations/inviteDialog";
@@ -208,7 +209,7 @@ class GroupWallet extends Component {
             modifyOpen,
             snackbarOpen,
         } = this.state;
-        const { classes } = this.props;
+        const { classes, intl } = this.props;
 
         if (isLoading)
             return <CircularProgress className={classes.progress} size={50} />;
@@ -220,7 +221,7 @@ class GroupWallet extends Component {
 
                 <Divider style={{ marginTop: 20 }}/>
 
-                <Tooltip TransitionComponent={Zoom} title="Edit wallet name">
+                <Tooltip TransitionComponent={Zoom} title={intl.formatMessage({ id: "group.edit_wallet_name" })}>
                     <Button variant="fab" color="secondary" aria-label="Edit" className={classes.editButton} onClick={() => this.setRenameDialog(true)}>
                         <Edit />
                     </Button>
@@ -246,21 +247,21 @@ class GroupWallet extends Component {
                     open={Boolean(anchorEl)}
                     onClose={() => this.setAnchorEl(null)}
                 >
-                    <MenuItem data-option="members" onClick={this.handleOptionClick}>Members</MenuItem>
-                    <MenuItem data-option="invite" onClick={this.handleOptionClick}>Invite</MenuItem>
-                    <MenuItem data-option="insert" onClick={this.handleOptionClick}>Insert</MenuItem>
-                    <MenuItem data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</MenuItem>
-                    <MenuItem data-option="reset" onClick={this.handleOptionClick}>Reset</MenuItem>
-                    <MenuItem data-option="quit" onClick={this.handleOptionClick}>Quit</MenuItem>
+                    <MenuItem data-option="members" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "group.members" })}</MenuItem>
+                    <MenuItem data-option="invite" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "group.invite" })}</MenuItem>
+                    <MenuItem data-option="insert" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.insert" })}</MenuItem>
+                    <MenuItem data-option="withdraw" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.withdraw" })}</MenuItem>
+                    <MenuItem data-option="reset" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.reset" })}</MenuItem>
+                    <MenuItem data-option="quit" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.quit" })}</MenuItem>
                 </Menu>
 
                 <div className="menubar">
-                    <Button className={classes.menuButton} color="default" data-option="members" onClick={this.handleOptionClick}><span data-option="members" onClick={this.handleOptionClick}>Members</span></Button>
-                    <Button className={classes.menuButton} color="default" data-option="invite" onClick={this.handleOptionClick}><span data-option="invite" onClick={this.handleOptionClick}>Invite</span></Button>
-                    <Button className={classes.menuButton} color="default" data-option="insert" onClick={this.handleOptionClick}><span data-option="insert" onClick={this.handleOptionClick}>Insert</span></Button>
-                    <Button className={classes.menuButton} color="default" data-option="withdraw" onClick={this.handleOptionClick}><span data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</span></Button>
-                    <Button className={classes.menuButton} color="default" data-option="reset" onClick={this.handleOptionClick}><span data-option="reset" onClick={this.handleOptionClick}>Reset</span></Button>
-                    <Button className={classes.menuButton} color="default" data-option="quit" onClick={this.handleOptionClick}><span data-option="quit" onClick={this.handleOptionClick}>Quit</span></Button>
+                    <Button className={classes.menuButton} color="default" data-option="members" onClick={this.handleOptionClick}><span data-option="members" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "group.members" })}</span></Button>
+                    <Button className={classes.menuButton} color="default" data-option="invite" onClick={this.handleOptionClick}><span data-option="invite" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "group.invite" })}</span></Button>
+                    <Button className={classes.menuButton} color="default" data-option="insert" onClick={this.handleOptionClick}><span data-option="insert" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.insert" })}</span></Button>
+                    <Button className={classes.menuButton} color="default" data-option="withdraw" onClick={this.handleOptionClick}><span data-option="withdraw" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.withdraw" })}</span></Button>
+                    <Button className={classes.menuButton} color="default" data-option="reset" onClick={this.handleOptionClick}><span data-option="reset" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.reset" })}</span></Button>
+                    <Button className={classes.menuButton} color="default" data-option="quit" onClick={this.handleOptionClick}><span data-option="quit" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.quit" })}</span></Button>
                 </div>
 
                 {/*Operation Dialogs*/}
@@ -291,7 +292,7 @@ class GroupWallet extends Component {
                     <MySnackbarContentWrapper
                         onClose={this.handleSnackbarClose}
                         variant="success"
-                        message="Operation successful!"
+                        message={intl.formatMessage({ id: "operations.operation_successful"})}
                     />
                 </Snackbar>
 
@@ -312,4 +313,5 @@ export default compose(
     withAuthorization(authCondition),
     withStyles(styles),
     withRouter,
+    injectIntl
 )(GroupWallet);

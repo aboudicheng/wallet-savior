@@ -54,6 +54,7 @@ export const EN = flatten({
         withdraw: "Withdraw",
         reset: "Reset",
         delete: "Delete",
+        quit: "Quit",
         operation_successful: "Operation succefful!"
     },
     dialogs: {
@@ -92,6 +93,20 @@ export const EN = flatten({
             text: "You won't be able to undo once you delete your wallet. Are you sure to delete it?",
             no: "No",
             yes: "Yes"
+        },
+        create: {
+            wallet_title: "Add a new Wallet",
+            group_title: "Create a Group",
+            wallet_text: "Please provide a name for this wallet:",
+            group_text: "Please provide a name for this group:",
+            name: "Name",
+            cancel: "Cancel",
+            create: "Create"
         }
+    },
+    group: {
+        edit_wallet_name: "Edit wallet name",
+        members: "Members",
+        invite: "Invite",
     }
 })
