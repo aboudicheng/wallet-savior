@@ -13,6 +13,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import AddIcon from "@material-ui/icons/Add";
 import blue from "@material-ui/core/colors/blue";
 import * as firebase from "firebase/app";
+import { FormattedMessage, injectIntl } from "react-intl";
 import "./index.css";
 
 const styles = {
@@ -54,7 +55,7 @@ class MembersDialog extends React.Component {
 
     render() {
         const { members } = this.state;
-        const { classes } = this.props;
+        const { classes, intl } = this.props;
 
         //TODO: onClick range
         return (
@@ -63,7 +64,7 @@ class MembersDialog extends React.Component {
                 onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null); }}
                 aria-labelledby="simple-dialog-title"
             >
-                <DialogTitle id="simple-dialog-title">Members</DialogTitle>
+                <DialogTitle id="simple-dialog-title"><FormattedMessage id="dialogs.members.title" /></DialogTitle>
                 <div>
                     <List>
                         {members.length > 0 &&
@@ -75,7 +76,7 @@ class MembersDialog extends React.Component {
                                         </Avatar>
                                     </ListItemAvatar>
                                     {<span className={member.connected ? "online" : "offline"}></span>}
-                                    <ListItemText primary={i === 0 ? "You" : member.username} />
+                                    <ListItemText primary={i === 0 ? intl.formatMessage({ id: "dialogs.members.you" }) : member.username} />
                                 </ListItem>
                             ))}
                         <ListItem button data-option="invite" onClick={this.props.addMember}>
@@ -84,7 +85,7 @@ class MembersDialog extends React.Component {
                                     <AddIcon data-option="invite" />
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary="add member" />
+                            <ListItemText primary={intl.formatMessage({ id: "dialogs.members.add" })} />
                         </ListItem>
                     </List>
                 </div>
@@ -100,4 +101,5 @@ const mapStateToProps = (state) => ({
 export default compose(
     connect(mapStateToProps),
     withStyles(styles),
+    injectIntl
 )(MembersDialog);

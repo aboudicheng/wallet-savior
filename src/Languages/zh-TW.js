@@ -31,9 +31,9 @@ export const ZH_TW = flatten({
         no_account: "尚未註冊帳號嗎?"
     },
     first_use: {
-        welcome: "歡迎使用錢包救星!",
-        text: "您現在將能夠追蹤您個人或任何您屬於的團體的支出費用。歡迎創建群組並且邀請您的好友們進來!",
-        alright: "好的!"
+        welcome: "歡迎使用錢包救星！",
+        text: "您現在將能夠追蹤您個人或任何您屬於的團體的支出費用。歡迎創建群組並且邀請您的好友們進來！",
+        alright: "好的！"
     },
     nav: {
         personal: "個人",
@@ -55,7 +55,7 @@ export const ZH_TW = flatten({
         reset: "重設",
         delete: "刪除",
         quit: "離開",
-        operation_successful: "操作成功!"
+        operation_successful: "操作成功！"
     },
     dialogs: {
         insert: {
@@ -102,6 +102,22 @@ export const ZH_TW = flatten({
             name: "名字",
             cancel: "取消",
             create: "創建"
+        },
+        members: {
+            title: "成員",
+            you: "您",
+            add: "新增成員"
+        },
+        invite: {
+            error: {
+                not_found: "未找到用戶！",
+                already_in: "用戶已在此群組！"
+            },
+            title: "新增成員",
+            text: "請輸入您想邀請之成員的電子郵件:",
+            email: "電子郵件",
+            cancel: "取消",
+            add: "新增"
         }
     },
     group: {

@@ -8,6 +8,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import * as firebase from "firebase/app";
+import { FormattedMessage, injectIntl } from "react-intl";
 
 class InviteDialog extends React.Component {
     constructor(props) {
@@ -26,7 +27,7 @@ class InviteDialog extends React.Component {
     submit = () => {
         if (this.state.value !== "") {
             const usersRef = firebase.database().ref("users");
-            const membersRef = firebase.database().ref(`groups/${this.props.groupId}/member`) ;
+            const membersRef = firebase.database().ref(`groups/${this.props.groupId}/member`);
             this.setState({ error: null });
             let found = false;
 
@@ -39,7 +40,7 @@ class InviteDialog extends React.Component {
                         //iterate through member id
                         membersRef.once("value", (s) => {
                             if (s.val().hasOwnProperty(key)) {
-                                this.setState({ error: "The member is already in the group!" });
+                                this.setState({ error: this.props.intl.formatMessage({ id: "dialogs.invite.error.already_in" }) });
                             }
                             else {
                                 //push to groups field
@@ -58,7 +59,7 @@ class InviteDialog extends React.Component {
                 }
 
                 if (!found) {
-                    this.setState({ error: "User not found!" });
+                    this.setState({ error: this.props.intl.formatMessage({ id: "dialogs.invite.error.not_found" }) });
                 }
             });
         }
@@ -66,22 +67,23 @@ class InviteDialog extends React.Component {
 
     render() {
         const { error } = this.state;
+        const { intl } = this.props;
         return (
             <Dialog
                 open={this.props.open}
                 onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null); }}
                 aria-labelledby="form-dialog-title"
             >
-                <DialogTitle id="form-dialog-title">Add Member</DialogTitle>
+                <DialogTitle id="form-dialog-title"><FormattedMessage id="dialogs.invite.title" /></DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Please enter the email of the user you would like to add in:
-      </DialogContentText>
+                        <FormattedMessage id="dialogs.invite.text" />
+                    </DialogContentText>
                     <TextField
                         autoFocus
                         margin="dense"
                         id="email"
-                        label="Email"
+                        label={intl.formatMessage({ id: "dialogs.invite.email" })}
                         type="text"
                         fullWidth
                         value={this.state.value}
@@ -93,11 +95,11 @@ class InviteDialog extends React.Component {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => { this.props.handleClose(false); this.props.handleMenuClose(null); }} color="primary">
-                        Cancel
-      </Button>
+                        <FormattedMessage id="dialogs.invite.cancel" />
+                    </Button>
                     <Button onClick={this.submit} color="primary">
-                        Add
-      </Button>
+                        <FormattedMessage id="dialogs.invite.add" />
+                    </Button>
                 </DialogActions>
             </Dialog>
         );
@@ -108,4 +110,4 @@ const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
 })
 
-export default connect(mapStateToProps)(InviteDialog);
+export default connect(mapStateToProps)(injectIntl(InviteDialog));

@@ -102,6 +102,22 @@ export const EN = flatten({
             name: "Name",
             cancel: "Cancel",
             create: "Create"
+        },
+        members: {
+            title: "Members",
+            you: "You",
+            add: "add member"
+        },
+        invite: {
+            error: {
+                not_found: "User not found!",
+                already_in: "The user is already in the group!"
+            },
+            title: "Add Member",
+            text: "Please enter the email of the user you would like to add in:",
+            email: "Email",
+            cancel: "Cancel",
+            add: "Add"
         }
     },
     group: {
