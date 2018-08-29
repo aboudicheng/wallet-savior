@@ -1,7 +1,8 @@
 import * as actions from "../constants/action_types";
 
 const INITIAL_STATE = {
-    language: ""
+    language: "",
+    messsages: {}
 }
 
 function languageReducer(state = INITIAL_STATE, action) {

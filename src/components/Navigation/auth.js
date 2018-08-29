@@ -15,6 +15,8 @@ import Settings from "@material-ui/icons/Settings";
 import Language from "@material-ui/icons/Language";
 import Group from "@material-ui/icons/Group";
 import Exit from "@material-ui/icons/ExitToApp";
+import RadioButtonChecked from "@material-ui/icons/RadioButtonChecked";
+import RadioButtonUnchecked from "@material-ui/icons/RadioButtonUnchecked";
 import AddCircle from "@material-ui/icons/AddCircleOutline";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
@@ -65,6 +67,7 @@ class NavigationAuth extends React.Component {
             open: false,
             walletOpen: false,
             groupOpen: false,
+            languageOpen: false,
             mainWallet: "",
             dialog: false,
             option: "",
@@ -103,8 +106,11 @@ class NavigationAuth extends React.Component {
         if (option === "wallet") {
             this.setState((state) => ({ walletOpen: !state.walletOpen }));
         }
-        else {
+        else if (option === "group") {
             this.setState((state) => ({ groupOpen: !state.groupOpen }));
+        }
+        else {
+            this.setState((state) => ({ languageOpen: !state.languageOpen }));
         }
     };
 
@@ -129,7 +135,16 @@ class NavigationAuth extends React.Component {
 
     render() {
         const { classes, intl } = this.props;
-        const { open, walletOpen, groupOpen, dialog, option, wallets, groupWallets } = this.state;
+        const {
+            open,
+            walletOpen,
+            groupOpen,
+            languageOpen,
+            dialog,
+            option,
+            wallets,
+            groupWallets
+        } = this.state;
 
         const sideList = (
             <div className={classes.list}>
@@ -188,7 +203,13 @@ class NavigationAuth extends React.Component {
 
                 <List><ListItem button onClick={() => this.redirect(routes.HISTORY)}><ListItemIcon><History style={{ color: "#d35400" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.history" })} /></ListItem></List>
                 <List><ListItem button onClick={() => this.redirect(routes.ACCOUNT)}><ListItemIcon><Settings style={{ color: "#7f8c8d" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.account" })} /></ListItem></List>
-                <List><ListItem button><ListItemIcon><Language style={{ color: "#9b59b6" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.language" })} /></ListItem></List>
+                
+                {/* Language Option */}
+                <List><ListItem button onClick={(e) => this.toggleOption(e, "language")}><ListItemIcon><Language style={{ color: "#9b59b6" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.language" })} />{languageOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
+                <Collapse in={languageOpen} timeout="auto" unmountOnExit>
+                    <List><ListItem button><ListItemIcon><RadioButtonUnchecked style={{ color: "#9b59b6" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "languages.en" })} /></ListItem></List>
+                </Collapse>
+                
                 <List><ListItem button onClick={this.signOut}><ListItemIcon><Exit style={{ color: "#2c3e50" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.sign_out" })} /></ListItem></List>
             </div>
         );
