@@ -134,7 +134,7 @@ class NavigationAuth extends React.Component {
     }
 
     render() {
-        const { classes, intl } = this.props;
+        const { classes, intl, language } = this.props;
         const {
             open,
             walletOpen,
@@ -203,13 +203,50 @@ class NavigationAuth extends React.Component {
 
                 <List><ListItem button onClick={() => this.redirect(routes.HISTORY)}><ListItemIcon><History style={{ color: "#d35400" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.history" })} /></ListItem></List>
                 <List><ListItem button onClick={() => this.redirect(routes.ACCOUNT)}><ListItemIcon><Settings style={{ color: "#7f8c8d" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.account" })} /></ListItem></List>
-                
+
                 {/* Language Option */}
                 <List><ListItem button onClick={(e) => this.toggleOption(e, "language")}><ListItemIcon><Language style={{ color: "#9b59b6" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.language" })} />{languageOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
                 <Collapse in={languageOpen} timeout="auto" unmountOnExit>
-                    <List><ListItem button><ListItemIcon><RadioButtonUnchecked style={{ color: "#9b59b6" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "languages.en" })} /></ListItem></List>
+                    {/* English */}
+                    <List>
+                        <ListItem button>
+                            <ListItemIcon>
+                                {language === "en"
+                                    ? <RadioButtonChecked style={{ color: "#9b59b6" }} />
+                                    : <RadioButtonUnchecked style={{ color: "#9b59b6" }} />
+                                }
+                            </ListItemIcon>
+                            <ListItemText primary={intl.formatMessage({ id: "languages.en" })} />
+                        </ListItem>
+                    </List>
+
+                    {/* Chinese (Traditional) */}
+                    <List>
+                        <ListItem button>
+                            <ListItemIcon>
+                                {language === "zh"
+                                    ? <RadioButtonChecked style={{ color: "#9b59b6" }} />
+                                    : <RadioButtonUnchecked style={{ color: "#9b59b6" }} />
+                                }
+                            </ListItemIcon>
+                            <ListItemText primary={intl.formatMessage({ id: "languages.zh" })} />
+                        </ListItem>
+                    </List>
+
+                    {/* Chinese (Simplified) */}
+                    <List>
+                        <ListItem button>
+                            <ListItemIcon>
+                                {language === "zh_cn"
+                                    ? <RadioButtonChecked style={{ color: "#9b59b6" }} />
+                                    : <RadioButtonUnchecked style={{ color: "#9b59b6" }} />
+                                }
+                            </ListItemIcon>
+                            <ListItemText primary={intl.formatMessage({ id: "languages.zh_cn" })} />
+                        </ListItem>
+                    </List>
                 </Collapse>
-                
+
                 <List><ListItem button onClick={this.signOut}><ListItemIcon><Exit style={{ color: "#2c3e50" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.sign_out" })} /></ListItem></List>
             </div>
         );
@@ -251,6 +288,7 @@ class NavigationAuth extends React.Component {
 
 const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
+    language: state.languageState.language
 })
 
 export default compose(
