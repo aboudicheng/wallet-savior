@@ -108,5 +108,10 @@ export const ZH_TW = flatten({
         edit_wallet_name: "編輯錢包名稱",
         members: "成員",
         invite: "邀請",
+        history: "歷史",
+        no_records: "此群組尚未有任何紀錄",
+        user: "用戶",
+        type: "操作類型",
+        amount: "金額"
     }
 })

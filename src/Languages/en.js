@@ -108,5 +108,10 @@ export const EN = flatten({
         edit_wallet_name: "Edit wallet name",
         members: "Members",
         invite: "Invite",
+        history: "History",
+        no_records: "This group has no records yet.",
+        user: "User",
+        type: "Type",
+        amount: "Amount"
     }
 })

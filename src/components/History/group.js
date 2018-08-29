@@ -6,6 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import formatNumber from "format-number";
+import { FormattedMessage, injectIntl } from "react-intl";
 
 //TODO: add remove button for records that belong to the current user
 
@@ -98,7 +99,7 @@ class GroupHistory extends Component {
 
     render() {
         const { history, isLoading } = this.state;
-        const { classes } = this.props;
+        const { classes, intl } = this.props;
 
         const fieldStyle = {
             fontWeight: "bold"
@@ -109,9 +110,9 @@ class GroupHistory extends Component {
 
         return (
             <div>
-                <h1>History</h1>
+                <h1><FormattedMessage id="group.history" /></h1>
                 {history.length === 0
-                    ? <p>This group has no records yet.</p>
+                    ? <p><FormattedMessage id="group.no_records" /></p>
                     : <div>
                         {history.slice().reverse().map((record, i) => {
                             return (
@@ -120,13 +121,13 @@ class GroupHistory extends Component {
                                         {`${record.date.day} ${record.date.month} ${record.date.year} ${record.date.hour}:${record.date.min}`}
                                     </h3>
                                     <div>
-                                        <span style={fieldStyle}>User: </span>{record.user}
+                                        <span style={fieldStyle}><FormattedMessage id="group.user" />: </span>{record.user}
                                     </div>
                                     <div>
-                                        <span style={fieldStyle}>Type: </span>{record.type}
+                                        <span style={fieldStyle}><FormattedMessage id="group.type" />: </span>{record.type}
                                     </div>
                                     <div>
-                                        <span style={fieldStyle}>Amount: </span>{formatNumber({ prefix: "$" })(record.amount)}
+                                        <span style={fieldStyle}><FormattedMessage id="group.amount" />: </span>{formatNumber({ prefix: "$" })(record.amount)}
                                     </div>
                                 </Paper>
                             );
@@ -147,4 +148,5 @@ const mapStateToProps = (state) => ({
 export default compose(
     connect(mapStateToProps),
     withStyles(styles),
+    injectIntl
 )(GroupHistory);
