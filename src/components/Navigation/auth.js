@@ -34,6 +34,11 @@ import { withStyles } from "@material-ui/core/styles";
 import * as routes from "../../constants/routes";
 import * as firebase from "firebase/app";
 import Create from "./create";
+import * as actions from "../../constants/action_types";
+
+//Language messages
+import { EN } from "../../Languages/en";
+import { ZH_TW } from "../../Languages/zh-TW";
 
 const styles = (theme) => ({
     root: {
@@ -209,7 +214,7 @@ class NavigationAuth extends React.Component {
                 <Collapse in={languageOpen} timeout="auto" unmountOnExit>
                     {/* English */}
                     <List>
-                        <ListItem button>
+                        <ListItem button onClick={() => this.props.setLanguage("en", EN)}>
                             <ListItemIcon>
                                 {language === "en"
                                     ? <RadioButtonChecked style={{ color: "#9b59b6" }} />
@@ -222,7 +227,7 @@ class NavigationAuth extends React.Component {
 
                     {/* Chinese (Traditional) */}
                     <List>
-                        <ListItem button>
+                        <ListItem button onClick={() => this.props.setLanguage("zh", ZH_TW)}>
                             <ListItemIcon>
                                 {language === "zh"
                                     ? <RadioButtonChecked style={{ color: "#9b59b6" }} />
@@ -291,9 +296,13 @@ const mapStateToProps = (state) => ({
     language: state.languageState.language
 })
 
+const mapDispatchToProps = (dispatch) => ({
+    setLanguage: (language, messages) => dispatch({ type: actions.SET_LANGUAGE, language, messages })
+})
+
 export default compose(
     withRouter,
     withStyles(styles),
-    connect(mapStateToProps),
+    connect(mapStateToProps, mapDispatchToProps),
     injectIntl
 )(NavigationAuth);
