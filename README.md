@@ -15,6 +15,7 @@ A single page web application that allows users to keep track of their expenditu
 * Firebase
 * Material-UI v1
 * React router v4
+* React-intl
 
 ## Installation
 ```
@@ -39,5 +40,4 @@ Feel free to submit any issue or PR.
 
 ## TODO List
 
-* Multi-language option
 * Group visibility limited to members
