@@ -51,9 +51,27 @@ export const ZH_TW = flatten({
     },
     operations: {
         insert: "存入",
-        withdraw: "提出",
+        withdraw: "提取",
         reset: "重設",
         delete: "刪除",
         operation_successful: "操作成功!"
+    },
+    dialogs: {
+        insert: {
+            title: "存入金錢",
+            text: "請輸入將存入至錢包中的金額:",
+            money_amount: "金額",
+            description: "描述(可選)",
+            cancel: "取消",
+            insert: "存入"
+        },
+        withdraw: {
+            title: "提取金錢",
+            text: "請輸入將從錢包中提出的金額:",
+            money_amount: "金額",
+            description: "描述(可選)",
+            cancel: "取消",
+            withdraw: "提取"
+        }
     }
 })

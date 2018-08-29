@@ -8,6 +8,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import firebase from "firebase/app";
+import { FormattedMessage, injectIntl } from "react-intl";
 import { months } from "../../constants/months";
 
 const usersRef = firebase.database().ref("users/");
@@ -86,6 +87,7 @@ class InsertDialog extends React.Component {
     }
 
     render() {
+        const { intl } = this.props;
         return (
             <div>
                 <Dialog
@@ -93,16 +95,16 @@ class InsertDialog extends React.Component {
                     onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null); }}
                     aria-labelledby="form-dialog-title"
                 >
-                    <DialogTitle id="form-dialog-title">Add Money</DialogTitle>
+                    <DialogTitle id="form-dialog-title"><FormattedMessage id="dialogs.insert.title" /></DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            Please enter the amount of money you are going add to your wallet:
-      </DialogContentText>
+                            <FormattedMessage id="dialogs.insert.text" />
+                        </DialogContentText>
                         <TextField
                             autoFocus
                             margin="dense"
                             id="insert"
-                            label="Money amount"
+                            label={intl.formatMessage({ id: "dialogs.insert.money_amount" })}
                             type="number"
                             fullWidth
                             value={this.state.value}
@@ -111,7 +113,7 @@ class InsertDialog extends React.Component {
                         <TextField
                             margin="dense"
                             id="description"
-                            label="Description (optional)"
+                            label={intl.formatMessage({ id: "dialogs.insert.description" })}
                             type="text"
                             fullWidth
                             value={this.state.text}
@@ -120,11 +122,11 @@ class InsertDialog extends React.Component {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={() => { this.props.handleClose(false); this.props.handleMenuClose(null); }} color="primary">
-                            Cancel
-      </Button>
+                            <FormattedMessage id="dialogs.insert.cancel" />
+                        </Button>
                         <Button onClick={this.submit} color="primary">
-                            Add
-      </Button>
+                            <FormattedMessage id="dialogs.insert.insert" />
+                        </Button>
                     </DialogActions>
                 </Dialog>
             </div>
@@ -136,4 +138,4 @@ const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
 });
 
-export default connect(mapStateToProps)(InsertDialog);
+export default connect(mapStateToProps)(injectIntl(InsertDialog));

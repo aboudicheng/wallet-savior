@@ -8,6 +8,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import * as firebase from "firebase/app";
+import { FormattedMessage, injectIntl } from "react-intl";
 import { months } from "../../constants/months";
 
 const usersRef = firebase.database().ref("users/");
@@ -87,22 +88,23 @@ class WithdrawDialog extends React.Component {
     }
 
     render() {
+        const { intl } = this.props;
         return (
             <Dialog
                 open={this.props.modifyOpen}
                 onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null); }}
                 aria-labelledby="form-dialog-title"
             >
-                <DialogTitle id="form-dialog-title">Withdraw Money</DialogTitle>
+                <DialogTitle id="form-dialog-title"><FormattedMessage id="dialogs.withdraw.title" /></DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Please enter the amount of money you are going to take out from your wallet:
+                        <FormattedMessage id="dialogs.withdraw.text" />
       </DialogContentText>
                     <TextField
                         autoFocus
                         margin="dense"
                         id="withdraw"
-                        label="Money amount"
+                        label={intl.formatMessage({ id: "dialogs.withdraw.money_amount"})}
                         type="number"
                         fullWidth
                         value={this.state.value}
@@ -111,7 +113,7 @@ class WithdrawDialog extends React.Component {
                     <TextField
                         margin="dense"
                         id="description"
-                        label="Description (optional)"
+                        label={intl.formatMessage({ id: "dialogs.withdraw.description"})}
                         type="text"
                         fullWidth
                         value={this.state.text}
@@ -120,10 +122,10 @@ class WithdrawDialog extends React.Component {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => { this.props.handleClose(false); this.props.handleMenuClose(null); }} color="primary">
-                        Cancel
+                        <FormattedMessage id="dialogs.withdraw.cancel" />
       </Button>
                     <Button onClick={this.submit} color="primary">
-                        Withdraw
+                    <FormattedMessage id="dialogs.withdraw.withdraw" />
       </Button>
                 </DialogActions>
             </Dialog>
@@ -135,4 +137,4 @@ const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
 });
 
-export default connect(mapStateToProps)(WithdrawDialog);
+export default connect(mapStateToProps)(injectIntl(WithdrawDialog));

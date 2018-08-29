@@ -55,5 +55,23 @@ export const EN = flatten({
         reset: "Reset",
         delete: "Delete",
         operation_successful: "Operation succefful!"
+    },
+    dialogs: {
+        insert: {
+            title: "Add Money",
+            text: "Please enter the amount of money you are going add to your wallet::",
+            money_amount: "Money amount",
+            description: "Description (optional)",
+            cancle: "Cancel",
+            insert: "Add"
+        },
+        withdraw: {
+            title: "Withdraw Money",
+            text: "Please enter the amount of money you are going to take out from your wallet::",
+            money_amount: "Money amount",
+            description: "Description (optional)",
+            cancle: "Cancel",
+            withdraw: "Withdraw"
+        }
     }
 })
