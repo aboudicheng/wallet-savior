@@ -12,7 +12,7 @@ export const ZH_TW = flatten({
         login: "登入",
         email_address: "電子郵件地址",
         password: "密碼",
-        already_have_an_account: "已經有帳號了嗎?",
+        already_have_an_account: "已經有帳號了嗎？",
         click: "點擊",
         here: "這裡",
         to_login: "以登入",
@@ -21,14 +21,14 @@ export const ZH_TW = flatten({
     },
     password_forget: {
         password_forget: "忘記密碼",
-        ask: "忘記密碼?",
+        ask: "忘記密碼？",
         reset: "重設"
     },
     sign_up: {
         sign_up: "註冊",
         username: "使用者名稱",
         confirm_password: "確認密碼",
-        no_account: "尚未註冊帳號嗎?"
+        no_account: "尚未註冊帳號嗎？"
     },
     first_use: {
         welcome: "歡迎使用錢包救星！",
@@ -137,6 +137,11 @@ export const ZH_TW = flatten({
         wallet: "錢包",
         type: "操作類型",
         amount: "金額",
-        description: "描述"
-    }
+        description: "描述",
+        delete_all: "刪除所有歷史紀錄",
+        text: "您確定要刪除所有歷史紀錄嗎？",
+        no: "不",
+        yes: "是"
+    },
+    not_found: "噢，不！此頁面不存在！"
 })

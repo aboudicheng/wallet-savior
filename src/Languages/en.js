@@ -137,6 +137,11 @@ export const EN = flatten({
         wallet: "Wallet",
         type: "Type",
         amount: "Amount",
-        description: "Description"
-    }
+        description: "Description",
+        delete_all: "Delete all history",
+        text: "Are you sure to delete all history?",
+        no: "No",
+        yes: "Yes"
+    },
+    not_found: "Oh No! Page Not Found!"
 })

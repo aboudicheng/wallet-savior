@@ -5,6 +5,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { FormattedMessage } from "react-intl";
 
 const DeleteAll = (props) =>
     <Dialog
@@ -13,19 +14,19 @@ const DeleteAll = (props) =>
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
     >
-        <DialogTitle id="alert-dialog-title">{"Delete all history"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title"><FormattedMessage id="history.delete_all" /></DialogTitle>
         <DialogContent>
             <DialogContentText id="alert-dialog-description">
-                Are you sure to delete all history?
-      </DialogContentText>
+                <FormattedMessage id="history.text" />
+            </DialogContentText>
         </DialogContent>
         <DialogActions>
             <Button onClick={() => props.handleClose(false)} color="primary">
-                No
-      </Button>
+                <FormattedMessage id="history.no" />
+            </Button>
             <Button onClick={() => { props.deleteHistory(); props.handleClose(false); props.setSnackbar(true); }} color="primary">
-                Yes
-      </Button>
+                <FormattedMessage id="history.yes" />
+            </Button>
         </DialogActions>
     </Dialog>;
 

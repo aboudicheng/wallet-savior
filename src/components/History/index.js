@@ -141,7 +141,7 @@ class History extends Component {
                             }
                         </div>
                 }
-                <Tooltip TransitionComponent={Zoom} title="Delete all history">
+                <Tooltip TransitionComponent={Zoom} title={intl.formatMessage({ id: "history.delete_all"})}>
                     <Button variant="fab" color="secondary" aria-label="Edit" className={classes.deleteButton} onClick={() => this.handleDeleteAllDialog(true)}>
                         <Delete />
                     </Button>
