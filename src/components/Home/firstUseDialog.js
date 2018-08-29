@@ -5,6 +5,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { FormattedMessage } from "react-intl";
 
 const FirstUse = (props) =>
     <Dialog
@@ -13,15 +14,15 @@ const FirstUse = (props) =>
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
     >
-        <DialogTitle id="alert-dialog-title">{"Welcome to Wallet $avior!"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title"><FormattedMessage id="first_use.welcome" /></DialogTitle>
         <DialogContent>
             <DialogContentText id="alert-dialog-description">
-                You will now be able to keep track of your own expenditures as well as any organization you belong to. Feel free to form your own groups and invite your friends in!
-      </DialogContentText>
+                <FormattedMessage id="first_use.text" />
+            </DialogContentText>
         </DialogContent>
         <DialogActions>
             <Button onClick={() => { props.handleClose(false); props.setFirstUse(); }} color="primary" autoFocus>
-                Alright!
+                <FormattedMessage id="first_use.alright" />
       </Button>
         </DialogActions>
     </Dialog>;

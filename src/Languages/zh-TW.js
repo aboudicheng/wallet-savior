@@ -29,5 +29,31 @@ export const ZH_TW = flatten({
         username: "使用者名稱",
         confirm_password: "確認密碼",
         no_account: "尚未註冊帳號嗎?"
+    },
+    first_use: {
+        welcome: "歡迎使用錢包救星!",
+        text: "您現在將能夠追蹤您個人或任何您屬於的團體的支出費用。歡迎創建群組並且邀請您的好友們進來!",
+        alright: "好的!"
+    },
+    nav: {
+        personal: "個人",
+        group: "群組",
+        add_wallet: "新增錢包",
+        create_group: "創建群組",
+        history: "歷史",
+        account: "帳號",
+        sign_out: "登出"
+    },
+    home: {
+        check: "查看",
+        history: "歷史",
+        edit_wallet_name: "編輯錢包名字",
+        operation_successful: "操作成功!"
+    },
+    operations: {
+        insert: "存入",
+        withdraw: "提出",
+        reset: "重設",
+        delete: "刪除"
     }
 })

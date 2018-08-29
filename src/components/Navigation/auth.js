@@ -26,6 +26,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import History from "@material-ui/icons/History";
 import GroupWork from "@material-ui/icons/GroupWork";
 import Money from "@material-ui/icons/MonetizationOn";
+import { FormattedMessage, injectIntl } from "react-intl";
 import { withStyles } from "@material-ui/core/styles";
 import * as routes from "../../constants/routes";
 import * as firebase from "firebase/app";
@@ -126,12 +127,12 @@ class NavigationAuth extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, intl } = this.props;
         const { open, walletOpen, groupOpen, dialog, option, wallets, groupWallets } = this.state;
 
         const sideList = (
             <div className={classes.list}>
-                <List><ListItem button onClick={(e) => this.toggleOption(e, "wallet")}><ListItemIcon><Home style={{ color: "#2ecc71" }} /></ListItemIcon><ListItemText primary="Personal" />{walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
+                <List><ListItem button onClick={(e) => this.toggleOption(e, "wallet")}><ListItemIcon><Home style={{ color: "#2ecc71" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.personal" })} />{walletOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
                 {wallets.length > 0 &&
                     <Collapse in={walletOpen} timeout="auto" unmountOnExit>
                         <List>
@@ -161,10 +162,10 @@ class NavigationAuth extends React.Component {
 
                 {/*Add wallet*/}
                 <Collapse in={walletOpen} timeout="auto" unmountOnExit>
-                    <List><ListItem button onClick={() => this.setDialog(true, "wallet")}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Add Wallet" /></ListItem></List>
+                    <List><ListItem button onClick={() => this.setDialog(true, "wallet")}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.add_wallet" })} /></ListItem></List>
                 </Collapse>
 
-                <List><ListItem button onClick={(e) => this.toggleOption(e, "group")}><ListItemIcon><Group style={{ color: "#2980b9" }} /></ListItemIcon><ListItemText primary="Group" />{groupOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
+                <List><ListItem button onClick={(e) => this.toggleOption(e, "group")}><ListItemIcon><Group style={{ color: "#2980b9" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.group" })} />{groupOpen ? <ExpandLess /> : <ExpandMore />}</ListItem></List>
                 {groupWallets.length > 0 &&
                     groupWallets.map((group, i) =>
                         <Collapse in={groupOpen} timeout="auto" unmountOnExit key={`collapse${i}`}>
@@ -181,12 +182,12 @@ class NavigationAuth extends React.Component {
                     )
                 }
                 <Collapse in={groupOpen} timeout="auto" unmountOnExit>
-                    <List><ListItem button onClick={() => this.setDialog(true, "group")}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary="Create Group" /></ListItem></List>
+                    <List><ListItem button onClick={() => this.setDialog(true, "group")}><ListItemIcon><AddCircle /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.create_group" })} /></ListItem></List>
                 </Collapse>
 
-                <List><ListItem button onClick={() => this.redirect(routes.HISTORY)}><ListItemIcon><History style={{ color: "#d35400" }} /></ListItemIcon><ListItemText primary="History" /></ListItem></List>
-                <List><ListItem button onClick={() => this.redirect(routes.ACCOUNT)}><ListItemIcon><Settings style={{ color: "#7f8c8d" }} /></ListItemIcon><ListItemText primary="Account" /></ListItem></List>
-                <List><ListItem button onClick={this.signOut}><ListItemIcon><Exit style={{ color: "#2c3e50" }} /></ListItemIcon><ListItemText primary="Sign Out" /></ListItem></List>
+                <List><ListItem button onClick={() => this.redirect(routes.HISTORY)}><ListItemIcon><History style={{ color: "#d35400" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.history" })} /></ListItem></List>
+                <List><ListItem button onClick={() => this.redirect(routes.ACCOUNT)}><ListItemIcon><Settings style={{ color: "#7f8c8d" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.account" })} /></ListItem></List>
+                <List><ListItem button onClick={this.signOut}><ListItemIcon><Exit style={{ color: "#2c3e50" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.sign_out" })} /></ListItem></List>
             </div>
         );
 
@@ -210,7 +211,7 @@ class NavigationAuth extends React.Component {
 
                         <Typography variant="title" color="inherit" className={classes.flex}>
                             <span style={{ cursor: "pointer", color: "#3fb5a3" }} onClick={() => this.props.history.push(routes.HOME)}>
-                                Wallet $avior
+                                <FormattedMessage id="wallet_savior" />
                             </span>
                         </Typography>
                     </Toolbar>
@@ -232,5 +233,6 @@ const mapStateToProps = (state) => ({
 export default compose(
     withRouter,
     withStyles(styles),
-    connect(mapStateToProps)
+    connect(mapStateToProps),
+    injectIntl
 )(NavigationAuth);

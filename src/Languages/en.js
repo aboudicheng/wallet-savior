@@ -29,5 +29,31 @@ export const EN = flatten({
         username: "Username",
         confirm_password: "Confirm password",
         no_account: "Don't have an account?"
+    },
+    first_use: {
+        welcome: "Welcome to Wallet $avior!!",
+        text: "You will now be able to keep track of your own expenditures as well as any organization you belong to. Feel free to form your own groups and invite your friends in!!",
+        alright: "Alright!"
+    },
+    nav: {
+        personal: "Personal",
+        group: "Group",
+        add_wallet: "Add Wallet",
+        create_group: "Create Group",
+        history: "History",
+        account: "Account",
+        sign_out: "Sign Out"
+    },
+    home: {
+        check: "Check",
+        history: "history",
+        edit_wallet_name: "Edit wallet name",
+        operation_successful: "Operation succefful!"
+    },
+    operations: {
+        insert: "Insert",
+        withdraw: "Withdraw",
+        reset: "Reset",
+        delete: "Delete"
     }
 })

@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { IntlProvider } from 'react-intl';
-import {addLocaleData} from 'react-intl';
+import { addLocaleData } from 'react-intl';
 import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
 
@@ -23,19 +23,14 @@ const languages = {
 };
 
 const localeData = languages[locale];
-console.log(localeData)
 
-function get_language(locale)
-{
-    const dash_index = locale.indexOf('-')
-    if (dash_index >= 0)
-    {
-        return locale.substring(0, dash_index)
-    }
-    return locale
+function get_language(locale) {
+  const dash_index = locale.indexOf('-')
+  if (dash_index >= 0) {
+    return locale.substring(0, dash_index)
+  }
+  return locale
 }
-
-console.log(get_language(locale))
 
 ReactDOM.render(
   <IntlProvider locale={get_language(locale)} messages={localeData}>

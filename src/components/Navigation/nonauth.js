@@ -1,4 +1,5 @@
 import React from "react";
+import { compose } from "recompose";
 import { withRouter } from "react-router";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -13,6 +14,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { withStyles } from "@material-ui/core/styles";
+import { FormattedMessage, injectIntl } from "react-intl";
 import * as routes from "../../constants/routes";
 
 const styles = {
@@ -51,12 +53,12 @@ class NavigationNonAuth extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, intl } = this.props;
 
         const sideList = (
             <div className={classes.list}>
-                <List><ListItem button onClick={() => this.redirect(routes.LOGIN)}><ListItemIcon><Account /></ListItemIcon><ListItemText primary="Login" /></ListItem></List>
-                <List><ListItem button onClick={() => this.redirect(routes.SIGN_UP)}><ListItemIcon><Person /></ListItemIcon><ListItemText primary="Sign Up" /></ListItem></List>
+                <List><ListItem button onClick={() => this.redirect(routes.LOGIN)}><ListItemIcon><Account /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "sign_in.login" })} /></ListItem></List>
+                <List><ListItem button onClick={() => this.redirect(routes.SIGN_UP)}><ListItemIcon><Person /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "sign_up.sign_up" })} /></ListItem></List>
             </div>
         );
 
@@ -81,7 +83,7 @@ class NavigationNonAuth extends React.Component {
 
                         <Typography variant="title" color="inherit" className={classes.flex}>
                             <span style={{ color: "#3fb5a3" }}>
-                                Wallet $avior
+                                <FormattedMessage id="wallet_savior" />
                             </span>
                         </Typography>
                     </Toolbar>
@@ -91,4 +93,8 @@ class NavigationNonAuth extends React.Component {
     }
 }
 
-export default withRouter(withStyles(styles)(NavigationNonAuth));
+export default compose(
+    withRouter,
+    withStyles(styles),
+    injectIntl
+)(NavigationNonAuth);

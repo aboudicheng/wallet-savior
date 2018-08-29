@@ -20,6 +20,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Zoom from "@material-ui/core/Zoom";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
+import { FormattedMessage, injectIntl } from "react-intl";
 import * as routes from "../../constants/routes";
 
 import InsertDialog from "../Operations/insertDialog";
@@ -138,7 +139,7 @@ class HomePage extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, intl } = this.props;
     const {
       walletName,
       totalAmount,
@@ -161,12 +162,12 @@ class HomePage extends Component {
       <div>
 
         <h1>{walletName}</h1>
-        <div className="wallet" style={{ fontSize: "170%", backgroundColor: totalAmount >= 0 ? "#3fb5a3" : "#c93e3e" }}>{formatNumber({ prefix: "$" })(parseFloat(totalAmount).toFixed(2))}</div>
+        <div className="wallet" style={{ fontSize: "170%", fontWeight: "bold", backgroundColor: totalAmount >= 0 ? "#3fb5a3" : "#c93e3e" }}>{formatNumber({ prefix: "$" })(parseFloat(totalAmount).toFixed(2))}</div>
 
-        <p>Check <Link to={routes.HISTORY}>History</Link></p>
+        <p><FormattedMessage id="home.check" /> <Link to={routes.HISTORY}><FormattedMessage id="home.history" /></Link></p>
         <Divider />
 
-        <Tooltip TransitionComponent={Zoom} title="Edit wallet name">
+        <Tooltip TransitionComponent={Zoom} title={intl.formatMessage({ id: "home.edit_wallet_name" })}>
           <Button variant="fab" color="secondary" aria-label="Edit" className={classes.editButton} onClick={() => this.setRenameDialog(true)}>
             <Edit />
           </Button>
@@ -197,15 +198,15 @@ class HomePage extends Component {
           open={Boolean(anchorEl)}
           onClose={() => this.setAnchorEl(null)}
         >
-          <MenuItem data-option="insert" onClick={this.handleOptionClick}>Insert</MenuItem>
-          <MenuItem data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</MenuItem>
-          <MenuItem data-option="reset" onClick={this.handleOptionClick}>Reset</MenuItem>
+          <MenuItem data-option="insert" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.insert" })}</MenuItem>
+          <MenuItem data-option="withdraw" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.withdraw" })}</MenuItem>
+          <MenuItem data-option="reset" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.reset" })}</MenuItem>
         </Menu>
 
         <div className="menubar">
-          <Button className={classes.menuButton} color="default" data-option="insert" onClick={this.handleOptionClick}><span data-option="insert" onClick={this.handleOptionClick}>Insert</span></Button>
-          <Button className={classes.menuButton} color="default" data-option="withdraw" onClick={this.handleOptionClick}><span data-option="withdraw" onClick={this.handleOptionClick}>Withdraw</span></Button>
-          <Button className={classes.menuButton} color="default" data-option="reset" onClick={this.handleOptionClick}><span data-option="reset" onClick={this.handleOptionClick}>Reset</span></Button>
+          <Button className={classes.menuButton} color="default" data-option="insert" onClick={this.handleOptionClick}><span data-option="insert" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.insert" })}</span></Button>
+          <Button className={classes.menuButton} color="default" data-option="withdraw" onClick={this.handleOptionClick}><span data-option="withdraw" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.withdraw" })}</span></Button>
+          <Button className={classes.menuButton} color="default" data-option="reset" onClick={this.handleOptionClick}><span data-option="reset" onClick={this.handleOptionClick}>{intl.formatMessage({ id: "operations.reset" })}</span></Button>
         </div>
 
         {/*Operation Dialogs*/}
@@ -251,4 +252,5 @@ export default compose(
   connect(mapStateToProps),
   withStyles(styles),
   withRouter,
+  injectIntl
 )(HomePage);
