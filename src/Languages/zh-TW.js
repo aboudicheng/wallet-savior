@@ -72,6 +72,26 @@ export const ZH_TW = flatten({
             description: "描述(可選)",
             cancel: "取消",
             withdraw: "提取"
+        },
+        reset:{
+            title: "重設錢包",
+            text: "請輸入錢包重設後的金額:",
+            money_amount: "金額",
+            cancel: "取消",
+            reset: "重設"
+        },
+        rename: {
+            title: "重新命名錢包",
+            text: "請輸入錢包的新名字:",
+            name: "名字",
+            cancel: "取消",
+            rename: "改名"
+        },
+        delete: {
+            title: "刪除錢包",
+            text: "您將無法復原刪除後的錢包。您確定要刪除嗎？",
+            no: "不",
+            yes: "是"
         }
     }
 })

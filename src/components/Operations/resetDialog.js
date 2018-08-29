@@ -8,6 +8,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import * as firebase from "firebase/app";
+import { FormattedMessage, injectIntl } from "react-intl";
 import { months } from "../../constants/months";
 
 const usersRef = firebase.database().ref("users/");
@@ -81,22 +82,23 @@ class ResetDialog extends React.Component {
     }
 
     render() {
+        const { intl } = this.props;
         return (
             <Dialog
                 open={this.props.modifyOpen}
                 onClose={() => { this.props.handleClose(false); this.props.handleMenuClose(null); }}
                 aria-labelledby="form-dialog-title"
             >
-                <DialogTitle id="form-dialog-title">Reset Wallet</DialogTitle>
+                <DialogTitle id="form-dialog-title"><FormattedMessage id="dialogs.reset.title" /></DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Please enter the amount of money you are going to initialize for your wallet:
+                    <FormattedMessage id="dialogs.reset.text" />
       </DialogContentText>
                     <TextField
                         autoFocus
                         margin="dense"
                         id="insert"
-                        label="Money amount"
+                        label={intl.formatMessage({ id: "dialogs.reset.money_amount" })}
                         type="number"
                         fullWidth
                         value={this.state.value}
@@ -105,11 +107,11 @@ class ResetDialog extends React.Component {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => { this.props.handleClose(false); this.props.handleMenuClose(null); }} color="primary">
-                        Cancel
+                    <FormattedMessage id="dialogs.reset.cancel" />
       </Button>
                     <Button onClick={this.submit} color="primary">
-                        Reset
-      </Button>
+                        <FormattedMessage id="dialogs.reset.reset" />
+                    </Button>
                 </DialogActions>
             </Dialog>
         );
@@ -121,4 +123,4 @@ const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
 });
 
-export default connect(mapStateToProps)(ResetDialog);
+export default connect(mapStateToProps)(injectIntl(ResetDialog));

@@ -59,19 +59,39 @@ export const EN = flatten({
     dialogs: {
         insert: {
             title: "Add Money",
-            text: "Please enter the amount of money you are going add to your wallet::",
+            text: "Please enter the amount of money you are going add to your wallet:",
             money_amount: "Money amount",
             description: "Description (optional)",
-            cancle: "Cancel",
+            cancel: "Cancel",
             insert: "Add"
         },
         withdraw: {
             title: "Withdraw Money",
-            text: "Please enter the amount of money you are going to take out from your wallet::",
+            text: "Please enter the amount of money you are going to take out from your wallet:",
             money_amount: "Money amount",
             description: "Description (optional)",
-            cancle: "Cancel",
+            cancel: "Cancel",
             withdraw: "Withdraw"
+        },
+        reset:{
+            title: "Reset Wallet",
+            text: "Please enter the amount of money you are going to initialize for your wallet:",
+            money_amount: "Money amount",
+            cancel: "Cancel",
+            reset: "Reset"
+        },
+        rename: {
+            title: "Rename Wallet",
+            text: "Please enter a new name for your wallet:",
+            name:"Name",
+            cancel: "Cancel",
+            rename: "Rename"
+        },
+        delete: {
+            title: "Delete Wallet",
+            text: "You won't be able to undo once you delete your wallet. Are you sure to delete it?",
+            no: "No",
+            yes: "Yes"
         }
     }
 })

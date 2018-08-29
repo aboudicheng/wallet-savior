@@ -9,6 +9,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import * as firebase from "firebase/app";
+import { FormattedMessage, injectIntl } from "react-intl";
 import * as routes from "../../constants/routes";
 
 class DeleteDialog extends Component {
@@ -26,19 +27,19 @@ class DeleteDialog extends Component {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">{"Delete Wallet"}</DialogTitle>
+                <DialogTitle id="alert-dialog-title"><FormattedMessage id="dialogs.delete.title" /></DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        You won"t be able to undo once you delete your wallet. Are you sure to delete it?
-          </DialogContentText>
+                        <FormattedMessage id="dialogs.delete.text" />
+                    </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => this.props.handleClose(false)} color="primary">
-                        No
-      </Button>
+                        <FormattedMessage id="dialogs.delete.no" />
+                    </Button>
                     <Button onClick={this.delete} color="primary" autoFocus>
-                        Yes
-          </Button>
+                        <FormattedMessage id="dialogs.delete.yes" />
+                    </Button>
                 </DialogActions>
             </Dialog>
         );
@@ -51,5 +52,6 @@ const mapStateToProps = (state) => ({
 
 export default compose(
     connect(mapStateToProps),
-    withRouter
+    withRouter,
+    injectIntl
 )(DeleteDialog);

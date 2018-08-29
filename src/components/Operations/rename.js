@@ -7,6 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
+import { FormattedMessage, injectIntl } from "react-intl";
 import * as firebase from "firebase/app";
 
 class Rename extends React.Component {
@@ -35,7 +36,7 @@ class Rename extends React.Component {
                 else {
                     firebase.database().ref(`users/${this.props.authUser.uid}/wallets/${this.props.child}`).update({ name: this.state.value });
                 }
-                
+
                 this.props.setSnackbarOpen(true);
                 this.props.setRenameDialog(false);
             }
@@ -47,22 +48,23 @@ class Rename extends React.Component {
 
     render() {
         const { error } = this.state;
+        const { intl } = this.props;
         return (
             <Dialog
                 open={this.props.open}
                 onClose={() => this.props.setRenameDialog(false)}
                 aria-labelledby="form-dialog-title"
             >
-                <DialogTitle id="form-dialog-title">Rename Wallet</DialogTitle>
+                <DialogTitle id="form-dialog-title"><FormattedMessage id="dialogs.rename.title" /></DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Please enter a new name for your wallet:
+                        <FormattedMessage id="dialogs.rename.text" />
       </DialogContentText>
                     <TextField
                         autoFocus
                         margin="dense"
                         id="rename"
-                        label="Name"
+                        label={intl.formatMessage({ id: "dialogs.rename.name" })}
                         type="text"
                         fullWidth
                         value={this.state.value}
@@ -74,11 +76,11 @@ class Rename extends React.Component {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => this.props.setRenameDialog(false)} color="primary">
-                        Cancel
-      </Button>
+                        <FormattedMessage id="dialogs.rename.cancel" />
+                    </Button>
                     <Button onClick={this.submit} color="primary">
-                        Rename
-      </Button>
+                        <FormattedMessage id="dialogs.rename.rename" />
+                    </Button>
                 </DialogActions>
             </Dialog>
         );
@@ -89,4 +91,4 @@ const mapStateToProps = (state) => ({
     authUser: state.sessionState.authUser,
 });
 
-export default connect(mapStateToProps)(Rename);
+export default connect(mapStateToProps)(injectIntl(Rename));
