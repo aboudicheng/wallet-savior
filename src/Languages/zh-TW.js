@@ -6,7 +6,6 @@ export const ZH_TW = flatten({
     languages: {
         en: "英文",
         zh: "中文(繁體)",
-        zh_cn: "中文(簡體)"
     },
     sign_in: {
         login: "登入",

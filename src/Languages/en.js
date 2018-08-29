@@ -6,10 +6,9 @@ export const EN = flatten({
     languages: {
         en: "English",
         zh: "Chinese (Traditional)",
-        zh_cn: "Chinese (Simplified)"
     },
     sign_in: {
-        login: "login",
+        login: "Login",
         email_address: "Email address",
         password: "Password",
         already_have_an_account: "Already have an account?",

@@ -237,19 +237,6 @@ class NavigationAuth extends React.Component {
                             <ListItemText primary={intl.formatMessage({ id: "languages.zh" })} />
                         </ListItem>
                     </List>
-
-                    {/* Chinese (Simplified) */}
-                    <List>
-                        <ListItem button>
-                            <ListItemIcon>
-                                {language === "zh_cn"
-                                    ? <RadioButtonChecked style={{ color: "#9b59b6" }} />
-                                    : <RadioButtonUnchecked style={{ color: "#9b59b6" }} />
-                                }
-                            </ListItemIcon>
-                            <ListItemText primary={intl.formatMessage({ id: "languages.zh_cn" })} />
-                        </ListItem>
-                    </List>
                 </Collapse>
 
                 <List><ListItem button onClick={this.signOut}><ListItemIcon><Exit style={{ color: "#2c3e50" }} /></ListItemIcon><ListItemText primary={intl.formatMessage({ id: "nav.sign_out" })} /></ListItem></List>
