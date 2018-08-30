@@ -16,11 +16,11 @@ import ConnectedIntlProvider from './ConnectedIntlProvider';
 addLocaleData([...en, ...zh]);
 
 ReactDOM.render(
-    <Provider store={store}>
-      <ConnectedIntlProvider>
-        <App />
-      </ConnectedIntlProvider>
-    </Provider>,
+  <Provider store={store}>
+    <ConnectedIntlProvider>
+      <App />
+    </ConnectedIntlProvider>
+  </Provider>,
   document.getElementById("root")
 );
 

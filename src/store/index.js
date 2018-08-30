@@ -6,14 +6,6 @@ import * as actions from "../constants/action_types";
 import { EN } from '../Languages/en';
 import { ZH_TW } from '../Languages/zh-TW';
 
-function get_language(locale) {
-  const dash_index = locale.indexOf('-')
-  if (dash_index >= 0) {
-    return locale.substring(0, dash_index)
-  }
-  return locale
-}
-
 const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
 const languages = {
@@ -28,8 +20,20 @@ if (!languages.hasOwnProperty(locale)) {
   locale = "en";
 }
 
+/**
+ * Check the user's language preference from its local storage.
+ * If the user if using for the first time, set 
+ */
+const localLanguage = localStorage.getItem('lang');
+if (!localLanguage) {
+  localStorage.setItem('lang', locale)
+}
+else {
+  locale = localLanguage;
+}
+
 const localeData = languages[locale];
 
-store.dispatch({ type: actions.SET_LANGUAGE, language: get_language(locale), messages: localeData})
+store.dispatch({ type: actions.SET_LANGUAGE, language: locale, messages: localeData})
 
 export default store;

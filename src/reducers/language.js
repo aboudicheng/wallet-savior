@@ -8,7 +8,8 @@ const INITIAL_STATE = {
 function languageReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
         case actions.SET_LANGUAGE:
-            return { ...state, language: action.language, messages: action.messages}
+            localStorage.setItem('lang', action.language);
+            return { ...state, language: action.language, messages: action.messages }
         default: return state;
     }
 }

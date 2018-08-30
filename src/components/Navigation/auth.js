@@ -227,9 +227,9 @@ class NavigationAuth extends React.Component {
 
                     {/* Chinese (Traditional) */}
                     <List>
-                        <ListItem button onClick={() => this.props.setLanguage("zh", ZH_TW)}>
+                        <ListItem button onClick={() => this.props.setLanguage("zh-TW", ZH_TW)}>
                             <ListItemIcon>
-                                {language === "zh"
+                                {language === "zh-TW"
                                     ? <RadioButtonChecked style={{ color: "#9b59b6" }} />
                                     : <RadioButtonUnchecked style={{ color: "#9b59b6" }} />
                                 }
