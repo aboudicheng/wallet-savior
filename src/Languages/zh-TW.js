@@ -18,6 +18,11 @@ export const ZH_TW = flatten({
         login_with_facebook: "用Facebook登入",
         login_with_google: "用Google登入"
     },
+    password_change: {
+        new_password: "新密碼",
+        confirm: "新密碼",
+        reset: "重設密碼"
+    },
     password_forget: {
         password_forget: "忘記密碼",
         ask: "忘記密碼？",
@@ -92,7 +97,7 @@ export const ZH_TW = flatten({
             title: "刪除錢包",
             text: "您將無法復原刪除後的錢包。您確定要刪除嗎？",
             no: "不",
-            yes: "是"
+            yes: "是的"
         },
         create: {
             wallet_title: "新增錢包",
@@ -118,6 +123,12 @@ export const ZH_TW = flatten({
             email: "電子郵件",
             cancel: "取消",
             add: "新增"
+        },
+        quit: {
+            title: "離開",
+            text: "您確定要離開此群組嗎？",
+            no: "不",
+            yes: "是的"
         }
     },
     group: {
@@ -141,7 +152,7 @@ export const ZH_TW = flatten({
         delete_all: "刪除所有歷史紀錄",
         text: "您確定要刪除所有歷史紀錄嗎？",
         no: "不",
-        yes: "是"
+        yes: "是的"
     },
     account: {
         email: "電子郵件",
@@ -152,7 +163,7 @@ export const ZH_TW = flatten({
         title: "警告",
         text: "至今為止在此平台上儲存過的一切都將被清除。您確定要刪除此帳號嗎？",
         no: "不",
-        yes: "是"
+        yes: "是的"
     },
     not_found: "噢，不！此頁面不存在！"
 })

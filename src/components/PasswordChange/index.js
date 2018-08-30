@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import { injectIntl, FormattedMessage } from 'react-intl';
 import { auth } from "../../firebase";
 
 const styles = (theme) => ({
@@ -64,13 +65,13 @@ class PasswordChangeForm extends Component {
       passwordOne !== passwordTwo ||
       passwordOne === "";
 
-    const { classes } = this.props;
+    const { classes, intl } = this.props;
 
     return (
       <form onSubmit={this.onSubmit} className={classes.container}>
         <TextField
           id="passwordOne"
-          label="New Password"
+          label={intl.formatMessage({ id: "password_change.new_password" })}
           className={classes.textField}
           value={passwordOne}
           onChange={(event) => this.setState(updateByPropertyName("passwordOne", event.target.value))}
@@ -78,14 +79,14 @@ class PasswordChangeForm extends Component {
         />
         <TextField
           id="passwordTwo"
-          label="Confirm New Password"
+          label={intl.formatMessage({ id: "password_change.confirm" })}
           className={classes.textField}
           value={passwordTwo}
           onChange={(event) => this.setState(updateByPropertyName("passwordTwo", event.target.value))}
           margin="normal"
         />
-        
-        <Button variant="contained" color="primary" disabled={isInvalid} type="submit" className={classes.button}>Reset password</Button>
+
+        <Button variant="contained" color="primary" disabled={isInvalid} type="submit" className={classes.button}><FormattedMessage id="password_change.reset" /></Button>
 
         {error && <p>{error.message}</p>}
       </form>
@@ -93,4 +94,4 @@ class PasswordChangeForm extends Component {
   }
 }
 
-export default withStyles(styles)(PasswordChangeForm);
+export default injectIntl(withStyles(styles)(PasswordChangeForm));

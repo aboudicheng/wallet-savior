@@ -10,6 +10,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import * as firebase from "firebase/app";
+import { FormattedMessage } from 'react-intl';
 import * as routes from "../../constants/routes";
 
 class QuitDialog extends Component {
@@ -43,19 +44,19 @@ class QuitDialog extends Component {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">{"Quit"}</DialogTitle>
+                <DialogTitle id="alert-dialog-title"><FormattedMessage id="dialogs.quit.title" /></DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Are you sure to quit this group?
-          </DialogContentText>
+                        <FormattedMessage id="dialogs.quit.text" />
+                    </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => this.props.handleClose(false)} color="primary">
-                        No
-      </Button>
+                        <FormattedMessage id="dialogs.quit.no" />
+                    </Button>
                     <Button onClick={this.delete} color="primary" autoFocus>
-                        Yes
-          </Button>
+                        <FormattedMessage id="dialogs.quit.yes" />
+                    </Button>
                 </DialogActions>
             </Dialog>
         );

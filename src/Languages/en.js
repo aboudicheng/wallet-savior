@@ -18,6 +18,11 @@ export const EN = flatten({
         login_with_facebook: "Login with Facebook",
         login_with_google: "Login with Google"
     },
+    password_change: {
+        new_password: "New Password",
+        confirm: "Confirm New Password",
+        reset: "Reset Password"
+    },
     password_forget: {
         password_forget: "Password Forget",
         ask: "Forgot password?",
@@ -118,6 +123,12 @@ export const EN = flatten({
             email: "Email",
             cancel: "Cancel",
             add: "Add"
+        },
+        quit: {
+            title: "Quit",
+            text: "Are you sure to quit this group?",
+            no: "No",
+            yes: "Yes"
         }
     },
     group: {
