@@ -41,4 +41,4 @@ Feel free to submit any issue or PR.
 ## TODO List
 
 * Group visibility limited to members
-* Add user's locale into database
+* Allow PWA supporting OAuth redirect on iOS
