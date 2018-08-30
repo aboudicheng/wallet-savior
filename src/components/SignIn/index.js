@@ -46,7 +46,7 @@ class SignInForm extends Component {
 
   signInWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    auth.doSignInWithRedirect(provider)
+    auth.doSignInWithPopup(provider)
       .then((res) =>
         signMethodHandler({
           res,
@@ -62,7 +62,7 @@ class SignInForm extends Component {
 
   signInWithFacebook = () => {
     const provider = new firebase.auth.FacebookAuthProvider();
-    auth.doSignInWithRedirect(provider)
+    auth.doSignInWithPopup(provider)
       .then((res) =>
         signMethodHandler({
           res,
