@@ -96,8 +96,8 @@ export const EN = flatten({
         delete: {
             title: "Delete Wallet",
             text: "You won't be able to undo once you delete your wallet. Are you sure to delete it?",
-            no: "No",
-            yes: "Yes"
+            no: "Cancel",
+            yes: "Delete"
         },
         create: {
             wallet_title: "Add a new Wallet",
@@ -127,8 +127,8 @@ export const EN = flatten({
         quit: {
             title: "Quit",
             text: "Are you sure to quit this group?",
-            no: "No",
-            yes: "Yes"
+            no: "Cancel",
+            yes: "Quit"
         }
     },
     group: {
@@ -151,8 +151,8 @@ export const EN = flatten({
         description: "Description",
         delete_all: "Delete all history",
         text: "Are you sure to delete all history?",
-        no: "No",
-        yes: "Yes"
+        no: "Cancel",
+        yes: "Delete"
     },
     account: {
         email: "Email",
@@ -162,8 +162,8 @@ export const EN = flatten({
         delete: "Delete",
         title: "WARNING",
         text: "Everything that you have stored on this platform will be erased. Are you sure to delete this account?",
-        no: "No",
-        yes: "Yes"
+        no: "Cancel",
+        yes: "Delete"
     },
     not_found: "Oh No! Page Not Found!"
 })

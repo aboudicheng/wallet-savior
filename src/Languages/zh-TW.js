@@ -96,8 +96,8 @@ export const ZH_TW = flatten({
         delete: {
             title: "刪除錢包",
             text: "您將無法復原刪除後的錢包。您確定要刪除嗎？",
-            no: "不",
-            yes: "是的"
+            no: "取消",
+            yes: "刪除"
         },
         create: {
             wallet_title: "新增錢包",
@@ -127,8 +127,8 @@ export const ZH_TW = flatten({
         quit: {
             title: "離開",
             text: "您確定要離開此群組嗎？",
-            no: "不",
-            yes: "是的"
+            no: "取消",
+            yes: "離開"
         }
     },
     group: {
@@ -151,8 +151,8 @@ export const ZH_TW = flatten({
         description: "描述",
         delete_all: "刪除所有歷史紀錄",
         text: "您確定要刪除所有歷史紀錄嗎？",
-        no: "不",
-        yes: "是的"
+        no: "取消",
+        yes: "刪除"
     },
     account: {
         email: "電子郵件",
@@ -162,8 +162,8 @@ export const ZH_TW = flatten({
         delete: "刪除",
         title: "警告",
         text: "至今為止在此平台上儲存過的一切都將被清除。您確定要刪除此帳號嗎？",
-        no: "不",
-        yes: "是的"
+        no: "取消",
+        yes: "刪除"
     },
     not_found: "噢，不！此頁面不存在！"
 })
