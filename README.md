@@ -3,7 +3,7 @@
 ![https://david-dm.org/aboudicheng/wallet-savior.](https://img.shields.io/david/aboudicheng/wallet-savior.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4b35277dafad4f34abddd5161ec6f8e3)](https://www.codacy.com/project/aboudicheng/wallet-savior/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=aboudicheng/wallet-savior&amp;utm_campaign=Badge_Grade_Dashboard)
 ## Live Demo
-[https://pingcheng.me/wallet-savior/](https://pingcheng.me/wallet-savior/)
+[https://aboudicheng.github.io/wallet-savior/](https://aboudicheng.github.io/wallet-savior/)
 
 ## Overview
 
